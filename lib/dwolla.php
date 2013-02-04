@@ -917,35 +917,6 @@ class DwollaRestClient
         return TRUE;
     }    
 
-    /**
-     * @return string|bool Error message or false if error message does not exist
-     */
-    public function getError()
-    {
-        if (!$this->errorMessage) {
-            return false;
-        }
-
-        $error = $this->errorMessage;
-        $this->errorMessage = false;
-
-        return $error;
-    }
-
-    /**
-     * Returns properly formatted Dwolla Id
-     * 
-     * @param string|int $id
-     * @return string Properly formatted Dwolla Id 
-     */
-    public function parseDwollaID($id)
-    {
-        $id = preg_replace("/[^0-9]/", "", $id);
-        $id = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "$1-$2-$3", $id);
-
-        return $id;
-    }
-
     public function massPayCreate($pin, $email, $filedata, $assumeCosts = FALSE, $source = FALSE, $user_job_id = FALSE)
     {
         if (!$pin) {
@@ -997,6 +968,35 @@ class DwollaRestClient
         $job = $this->parseMassPay($response);
 
         return $job;
+    }
+
+    /**
+     * @return string|bool Error message or false if error message does not exist
+     */
+    public function getError()
+    {
+        if (!$this->errorMessage) {
+            return false;
+        }
+
+        $error = $this->errorMessage;
+        $this->errorMessage = false;
+
+        return $error;
+    }
+
+    /**
+     * Returns properly formatted Dwolla Id
+     * 
+     * @param string|int $id
+     * @return string Properly formatted Dwolla Id 
+     */
+    public function parseDwollaID($id)
+    {
+        $id = preg_replace("/[^0-9]/", "", $id);
+        $id = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "$1-$2-$3", $id);
+
+        return $id;
     }
 
     /**
