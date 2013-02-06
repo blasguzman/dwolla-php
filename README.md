@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5
+1.5.1
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -18,7 +18,7 @@ run the `php composer.phar install` command to install it:
 
     {
         "require": {
-            "dwolla/dwolla-php": "1.5"
+            "dwolla/dwolla-php": "1.5.1"
         }
     }
 
@@ -113,6 +113,10 @@ Helper Methods:
     setDebug($mode)     ==> (bool) set debog [verbose] mode
 
 ## Changelog
+
+1.5.1
+
+* Fixed the transaction/listings() delimiter (Thanks, @klobyone)
 
 1.5
 
