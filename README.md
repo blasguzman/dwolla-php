@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5.1
+1.5.2
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -18,7 +18,7 @@ run the `php composer.phar install` command to install it:
 
     {
         "require": {
-            "dwolla/dwolla-php": "1.5.1"
+            "dwolla/dwolla-php": "1.5.2"
         }
     }
 
@@ -113,6 +113,11 @@ Helper Methods:
     setDebug($mode)     ==> (bool) set debog [verbose] mode
 
 ## Changelog
+
+1.5.2
+
+* Add error handling for requestToken() (Thanks, CFG / @CoGoFinance)
+* Add more curl debug reporting
 
 1.5.1
 

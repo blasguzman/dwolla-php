@@ -28,7 +28,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.1
+ * @version   1.5.2
  * @link      http://www.dwolla.com
  */
 
@@ -40,14 +40,6 @@ if (!function_exists('json_decode')) {
     throw new Exception("Dwolla's API Client Library requires the JSON PHP extension.");
 }
 
-/**
- * Dwolla REST API Library for PHP
- *
- * @package   Dwolla
- * @author    Michael Schonfeld <michael@dwolla.com>
- * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
- * @license   http://opensource.org/licenses/MIT MIT
- */
 class DwollaRestClient
 {
 
@@ -165,8 +157,11 @@ class DwollaRestClient
         $response = $this->curl($url, 'GET');
 
         if (isset($response['error'])) {
-            $this->errorMessage = $response['error_description'];
-            return false;
+            return $this->setError($response['error_description']);
+        }
+
+        if (!$response['access_token']) {
+            return $this->setError($response['Message'] ? $response['Message'] : 'Failed to request token. No error message given. Use debug mode to find out more.');
         }
 
         return $response['access_token'];
@@ -834,8 +829,7 @@ class DwollaRestClient
         $response = $this->curl('https://www.dwolla.com/payment/request', 'POST', $request);
 
         if ($response['Result'] != 'Success') {
-            $this->errorMessage = $response['Message'];
-            return false;
+            $this->setError($response['Message']);
         }
 
         return 'https://www.dwolla.com/payment/checkout/' . $response['CheckoutId'];
@@ -1005,6 +999,8 @@ class DwollaRestClient
     protected function setError($message)
     {
         $this->errorMessage = $message;
+
+        return false;
     }
 
     /**
@@ -1016,7 +1012,7 @@ class DwollaRestClient
     protected function parse($response)
     {
         if (!$response['Success']) {
-            $this->errorMessage = $response['Message'];
+            $this->setError($response['Message']);
 
             // Exception for /register method
             if ($response['Response']) {
@@ -1038,9 +1034,7 @@ class DwollaRestClient
     protected function parseMassPay($response)
     {
         if (!$response['success']) {
-            $this->errorMessage = $response['message'];
-
-            return false;
+            return $this->setError($response['message']);
         }
 
         return $response['job'];
@@ -1148,6 +1142,12 @@ class DwollaRestClient
         // log it as an error!
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($code !== 200) {
+            if($this->debugMode) {
+                echo "Here is all the information we got from curl: \n";
+                print_r(curl_getinfo($ch));
+                print_r(curl_error($ch));
+            }
+
             return array(
                 'Success' => false,
                 'Message' => "Request failed. Server responded with: {$code}"
