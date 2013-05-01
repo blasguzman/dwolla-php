@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5.2
+1.5.3
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -113,6 +113,10 @@ Helper Methods:
     setDebug($mode)     ==> (bool) set debog [verbose] mode
 
 ## Changelog
+
+1.5.3
+
+* Implement a replacement for getallheaders for non-Apache envs (Thanks, @PrplHaz4)
 
 1.5.2
 

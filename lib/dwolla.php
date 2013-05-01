@@ -28,7 +28,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.2
+ * @version   1.5.3
  * @link      http://www.dwolla.com
  */
 
@@ -39,6 +39,23 @@ if (!function_exists('curl_init')) {
 if (!function_exists('json_decode')) {
     throw new Exception("Dwolla's API Client Library requires the JSON PHP extension.");
 }
+
+if (!function_exists('getallheaders')){ 
+    function getallheaders()
+    { 
+       $headers = ''; 
+
+       foreach ($_SERVER as $name => $value) 
+       { 
+           if (substr($name, 0, 5) == 'HTTP_') 
+           { 
+               $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
+           } 
+       } 
+
+       return $headers; 
+    } 
+} 
 
 class DwollaRestClient
 {
@@ -889,10 +906,6 @@ class DwollaRestClient
      */
     public function verifyWebhookSignature()
     {
-        if (!function_exists('getallheaders')) { 
-            throw new Exception("This function can only be used in an Apache environment.");
-        }
-
         // 1. Get the request body
         $body = file_get_contents('php://input');
         
