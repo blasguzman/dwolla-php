@@ -357,7 +357,7 @@ class DwollaRestClient
      */
     public function addFundingSource($accountNumber, $routingNumber, $accountType, $accountName)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$accountNumber) {
           return $this->setError('Please enter a bank account number.');
         } else if (!$routingNumber) {
@@ -388,7 +388,7 @@ class DwollaRestClient
      */
     public function verifyFundingSource($fundingSourceId, $deposit1, $deposit2)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$deposit1) {
           return $this->setError('Please enter an amount for deposit1.');
         } else if (!$deposit2) {
@@ -415,7 +415,7 @@ class DwollaRestClient
      */
     public function withdraw($fundingSourceId, $pin, $amount)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$pin) {
           return $this->setError('Please enter a PIN.');
         } else if (!$fundingSourceId) {
@@ -442,7 +442,7 @@ class DwollaRestClient
      */
     public function deposit($fundingSourceId, $pin, $amount)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$pin) {
           return $this->setError('Please enter a PIN.');
         } else if (!$fundingSourceId) {
@@ -490,7 +490,7 @@ class DwollaRestClient
     public function send($pin = false, $destinationId = false, $amount = false, $destinationType = 'Dwolla', $notes = '', $facilitatorAmount = 0, $assumeCosts = false, $fundsSource = 'balance'
     )
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$pin) {
             return $this->setError('Please enter a PIN.');
         } else if (!$destinationId) {
@@ -531,7 +531,7 @@ class DwollaRestClient
      */
     public function request($sourceId = false, $amount = false, $sourceType = 'Dwolla', $notes = '', $facilitatorAmount = 0)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$sourceId) {
             return $this->setError('Please enter a source ID.');
         } else if (!$amount) {
@@ -561,7 +561,7 @@ class DwollaRestClient
      */
     public function requestById($requestId)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$requestId) {
           return $this->setError('Please enter a request ID.');
         }
@@ -582,7 +582,7 @@ class DwollaRestClient
      */
     public function fulfillRequest($requestId, $pin, $amount = false, $notes = false, $fundsSource = false, $assumeCosts = false)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$pin) {
           return $this->setError('Please enter a PIN.');
         } else if (!$requestId) {
@@ -609,7 +609,7 @@ class DwollaRestClient
      */
     public function cancelRequest($requestId)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$requestId) {
           return $this->setError('Please enter a request ID.');
         }
@@ -643,7 +643,7 @@ class DwollaRestClient
      */
     public function transaction($transactionId)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$transactionId) {
             return $this->setError('Please enter a transaction ID.');
         }
@@ -847,7 +847,7 @@ class DwollaRestClient
      */
 
     /**
-     * Verifiy the signature returned from Offsite-Gateway Redirect
+     * Verify the signature returned from Offsite-Gateway Redirect
      * 
      * @param string $signature
      * @param string $checkoutId
@@ -856,7 +856,7 @@ class DwollaRestClient
      */
     public function verifyGatewaySignature($signature = false, $checkoutId = false, $amount = false)
     {
-        // Verify required paramteres
+        // Verify required parameters
         if (!$signature) {
             return $this->setError('Please pass a proposed signature.');
         }
@@ -883,7 +883,7 @@ class DwollaRestClient
     }
     
     /**
-     * Verifiy the signature returned from Webhook notifications
+     * Verify the signature returned from Webhook notifications
      * 
      * @return bool Is signature valid?
      */
