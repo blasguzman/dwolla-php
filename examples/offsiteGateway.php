@@ -82,13 +82,13 @@ else { echo "<p>Example 2 URL: <a href='{$url}'>{$url}</a></p>"; } // Forward th
  *   Dwolla's offsite gateway redirect
  **/
 // Grab Dwolla's proposed signature
-$signature = $_GET['signature'];
+$signature = isset( $_GET['signature'] ) ? $_GET['signature'] : false;
 
 // Grab Dwolla's checkout ID
-$checkoutId = $_GET['checkoutId'];
+$checkoutId = isset( $_GET['checkoutId'] ) ? $_GET['checkoutId'] : false;
 
 // Grab the reported total transaction amount
-$amount = $_GET['amount'];
+$amount = isset( $_GET['amount'] ) ? $_GET['amount'] : false;
 
 // Verify the proposed signature
 $didVerify = $Dwolla->verifyGatewaySignature($signature, $checkoutId, $amount);
