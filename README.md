@@ -33,7 +33,14 @@ $Dwolla->setToken('[OAuth Token Goes Here]');
 // Send money to a given Dwolla ID
 $transactionId = $Dwolla->send('[PIN]', '812-734-7288', 1.00);
 ```
-## Examples / Quickstart
+
+## Generating Application Credentials
+
+To acquire an application `key` and `secret` pair, you'll need to [create a new Application on Dwolla](https://www.dwolla.com/applications/create).  It's free, quick, and easy!
+
+If you'd like to use the API to act only behalf of your own account (i.e. to make payments from your account, check your account balance), you can generate an OAuth token for your account [here](https://developers.dwolla.com/dev/token).
+
+## Examples
 
 This repo includes various usage examples, including:
 
@@ -43,6 +50,8 @@ This repo includes various usage examples, including:
 * Grabbing a user's contacts [contacts.php]
 * Listing a user's funding sources [fundingSources.php]
 * Creating offsite gateway sessions [offsiteGateway.php]
+
+Before trying out the examples, you'll need to specify your Application credentials (`key`, `secret`, an OAuth Token for your account, and your account's `PIN` -- see the above section on how to acquire these) in the `_keys.dist.php` file.  Then rename the file to `_keys.php` and you're all set!
 
 ## Methods
 
