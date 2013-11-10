@@ -802,7 +802,7 @@ class DwollaRestClient
             $notes = '';
         }
 
-        // Calcualte subtotal
+        // Calculate subtotal
         $subtotal = 0;
 
         foreach ($this->gatewaySession as $product) {
