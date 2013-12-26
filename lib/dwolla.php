@@ -288,6 +288,7 @@ class DwollaRestClient
         return $user;
     }
 
+
     /**
      * Search contacts
      * 
@@ -489,6 +490,78 @@ class DwollaRestClient
         $response = $this->get('balance/');
         return $this->parse($response);
     }
+
+
+    /**
+     * Send funds to a destination user from the user associated with the 
+     * authorized access token.
+     * @param string $destinationId Dwolla identifier, Facebook identifier, Twitter identifier, phone number, or email address
+     * @param float $amount Amount of funds to transfer to the destination user.
+     * @param string $firstName The source bank account holder's first name
+     * @param string $lastName The source bank account holder's last name
+     * @param string $email The source bank account holder's email address
+     * @param int $routingNumber The source bank routing number
+     * @param int $accountNumber The source bank account number
+     * @param string $accountType "Checking" or "Savings"
+     *
+     * The following are NON-essential params: *
+     * @param bool $assumeCosts defaults to false
+     * @param string $destinationType  Type of destination user. Can be Dwolla, Facebook, Twitter, Email, or Phone. Defaults to Dwolla.
+     * @param string $notes Note to attach to the transaction. Limited to 250 characters.
+     * @param int $groupId ID specified by the client application, to be associated with the transaction. May be used to group transactions by the given ID. Note: Transactions can be polled by their given 'groupId' using the transactions/Listing method.
+     * @param array $additionalFees Array of Additional facilitator fees, array('destinationId'=Facilitator's Dwolla ID,  'amount'=Faciliator Amount)
+     * @param float $facilitatorAmount facilitatorAmount    Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the 'amount'.
+     * @param bool $assumeAdditionalFees assumeAdditionalFees     Set to true if the sending user will assume all Facilitator fees. Set to false if the destination user will assume all Facilitator fees. Does not affect the Dwolla fee.
+     * @return string Transaction Id 
+*/
+
+    public function guestsend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType, $assumeCosts=false, $destinationType = 'Dwolla', $notes = '', $groupId =false, $additionalFees=false, $facilitatorAmount = 0, $assumeAdditionalFees = false)
+    {
+        // Verify required parameters
+        if (!$destinationId) {
+            return $this->setError('Please enter a destination ID.');
+        } else if (!$amount) {
+            return $this->setError('Please enter a transaction amount.');
+        } else if (!$firstName) {
+            return $this->setError('Please enter a destination ID.');
+        } else if (!$lastName) {
+            return $this->setError('Please enter a transaction amount.');
+        } else if (!$email) {
+            return $this->setError('Please enter a destination ID.');
+        } else if (!$routingNumber) {
+            return $this->setError('Please enter a transaction amount.');
+        } else if (!$accountNumber) {
+            return $this->setError('Please enter a destination ID.');
+        } else if (!$accountType) {
+            return $this->setError('Please enter a transaction amount.');
+        }
+
+        // Build request, and send it to Dwolla
+        $params = array(
+            'destinationId' => $destinationId,
+            'amount' => $amount,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'email' => $email,   
+            'routingNumber' => $routingNumber,
+            'accountNumber' => $accountNumber,
+            'accountType' => $accountType,    
+            'assumeCosts' => $assumeCosts,       
+            'destinationType' => $destinationType,    
+            'notes' => $notes,
+            'groupId' => $groupId,  
+            'additionalFees' => $additionalFees,        
+            'facilitatorAmount' => $facilitatorAmount,          
+            'assumeAdditionalFees' => $assumeAdditionalFees
+        );
+        $response = $this->post('transactions/guestsend', $params);
+
+        // Parse Dwolla's response
+        $transactionId = $this->parse($response);
+
+        return $transactionId;
+    }
+
 
     /**
      * Send funds to a destination user from the user associated with the 
@@ -953,8 +1026,18 @@ class DwollaRestClient
 
         return $job;
     }
+
     
-    public function massPayDetails($uid, $job_id = FALSE, $user_job_id = FALSE)
+    /**
+     * massPayDetails
+     * 
+     * @param string $uid The Dwolla ID of the user associated with the MassPay job
+     * @param string $job_id The job ID of the desired MassPay job. You must specify either a 'job_id', or a 'user_job_id'   
+     * @param bool $user_job_id The user assigned job ID of the desired MassPay job.
+     * @return bool $include_details  Whether to include a detailed response baout each job row. Defaults to: 'false'
+     */
+
+     public function massPayDetails($uid, $job_id = FALSE, $user_job_id = FALSE, $include_details = FALSE)
     {
         if (!$uid) {
           return $this->setError('Please pass the associated Dwolla ID.');
@@ -969,13 +1052,19 @@ class DwollaRestClient
         if($job_id) { $params['job_id'] = $job_id; }
         if($user_job_id) { $params['user_job_id'] = $user_job_id; }
 
+        $params['user_job_id'] = $user_job_id ? 'true' : 'false';
+        $params['include_details'] = $include_details ? 'true' : 'false'; 
+
         // Send off the request
         $response = $this->curl('https://masspay.dwollalabs.com/api/status/', 'POST', $params);
 
-        $job = $this->parseMassPay($response);
+        if (!$response['success']) {
+            $this->errorMessage = $response['message'];
+        }
 
-        return $job;
+        return $response;
     }
+    
 
     /**
      * @return string|bool Error message or false if error message does not exist

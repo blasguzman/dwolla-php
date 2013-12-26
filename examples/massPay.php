@@ -35,5 +35,6 @@ else { echo "Job information: \n"; print_r($job); } // Print job info
  *   job we just created
  **/
 $details = $Dwolla->massPayDetails('812-734-7288', $job['job_id']);
+
 if(!$details) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { echo "Job information: \n"; print_r($details); } // Print job info

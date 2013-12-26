@@ -85,7 +85,11 @@ Funding Sources Methods:
     verifyFundingSource($fundingSourceId, $deposit1, $deposit2) ==> 
     withdraw($fundingSourceId, $pin, $amount) ==>
     deposit($fundingSourceId, $pin, $amount)  ==> 
+
+MassPay Methods:
     
+    massPayCreate($pin, $email, $filedata, $assumeCosts = FALSE, $source = FALSE, $user_job_id = FALSE)
+    massPayDetails($uid, $job_id = FALSE, $user_job_id = FALSE, $include_details = FALSE)
     
 Balance Methods:
 
@@ -99,9 +103,9 @@ Requests Method:
     fulfillRequest($requestId, $pin, $amount = false, $notes = false, $fundsSource = false, $assumeCosts = false)
     cancelRequest($requestId)
     
-    
 Transactions Methods:
 
+    guestsend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType[, $assumeCosts, $destinationType, $notes, $groupId, $additionalFees, $facilitatorAmount, $assumeAdditionalFees])   ==> (string) 
     send($pin, $destinationId, $amount[, $destinationType, $notes, $facilitatorAmount, $assumeCosts])   ==> (string) transaction ID
     transaction($transactionId)                     ==> (array) transaction details
     listings([$sinceDate, $types, $limit, $skip])   ==> (array) a list of recent transactions matching the search criteria
