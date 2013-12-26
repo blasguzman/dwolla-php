@@ -28,7 +28,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.3
+ * @version   1.5.4
  * @link      http://www.dwolla.com
  */
 
@@ -515,7 +515,7 @@ class DwollaRestClient
      * @return string Transaction Id 
 */
 
-    public function guestsend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType, $assumeCosts=false, $destinationType = 'Dwolla', $notes = '', $groupId =false, $additionalFees=false, $facilitatorAmount = 0, $assumeAdditionalFees = false)
+    public function guestSend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType, $assumeCosts=false, $destinationType = 'Dwolla', $notes = '', $groupId =false, $additionalFees=false, $facilitatorAmount = 0, $assumeAdditionalFees = false)
     {
         // Verify required parameters
         if (!$destinationId) {
@@ -1027,7 +1027,7 @@ class DwollaRestClient
         return $job;
     }
 
-    
+
     /**
      * massPayDetails
      * 
