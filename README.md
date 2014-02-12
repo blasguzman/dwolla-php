@@ -222,13 +222,13 @@ Helper Methods:
 
 ## Credits
 
-- Michael Schonfeld &lt;michael@dwolla.com&gt;
+- Michael Schonfeld
 - Jeremy Kendall &lt;http://about.me/jeremykendall&gt;
 
 ## Support
 
 - Dwolla API &lt;api@dwolla.com&gt;
-- Michael Schonfeld &lt;michael@dwolla.com&gt;
+- Gordon Zheng &lt;gordon@dwolla.com&gt;
 
 ## References / Documentation
 
