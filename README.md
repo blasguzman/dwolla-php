@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5.4
+1.5.5
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -126,6 +126,9 @@ Helper Methods:
     setDebug($mode)     ==> (bool) set debog [verbose] mode
 
 ## Changelog
+
+1.5.5
+* Added Sandbox support via setSandbox(bool) to make it easier to switch between sandbox/non-sandbox testing. 
 
 1.5.4
 * Add guestSend() and added param include_details back to massPayDetails().  (Thanks, @tim-peterson!)

@@ -28,7 +28,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.4
+ * @version   1.5.5
  * @link      http://www.dwolla.com
  */
 
@@ -106,7 +106,13 @@ class DwollaRestClient
      */
     private $debugMode = false;
 
+    /**
+     * @var bool use sandbox for API_SERVER
+     */
+    private $sandboxMode = false; 
+
     const API_SERVER = "https://www.dwolla.com/oauth/rest/";
+    const SANDBOX_SERVER = "https://uat.dwolla.com/oauth/rest/";
 
     /**
      * Sets the initial state of the client
@@ -118,13 +124,13 @@ class DwollaRestClient
      * @param string $mode 
      * @throws InvalidArgumentException
      */
-    public function __construct($apiKey = false, $apiSecret = false, $redirectUri = false, $permissions = array("send", "transactions", "balance", "request", "contacts", "accountinfofull", "funding"), $mode = 'live', $debugMode = false)
+    public function __construct($apiKey = false, $apiSecret = false, $redirectUri = false, $permissions = array("send", "transactions", "balance", "request", "contacts", "accountinfofull", "funding"), $mode = 'live', $debugMode = false, $sandboxMode = false)
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->redirectUri = $redirectUri;
         $this->permissions = $permissions;
-        $this->apiServerUrl = self::API_SERVER;
+        $this->apiServerUrl = $sandboxMode ? self::SANDBOX_SERVER : self::API_SERVER;
         $this->setMode($mode);
     }
     
@@ -1316,5 +1322,17 @@ class DwollaRestClient
       $this->debugMode = $mode;
       
       return true;
+    }
+
+    /**
+     * Set sandbox mode
+     * 
+     * @return boolean True
+     */
+    public function setSandbox($mode)
+    {
+        $this->sandboxMode = $mode;
+        $this->apiServerUrl = $this->sandboxMode ? self::SANDBOX_SERVER : self::API_SERVER;
+        return true;
     }
 }
