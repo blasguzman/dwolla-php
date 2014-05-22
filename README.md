@@ -123,7 +123,8 @@ Helper Methods:
     getError()          ==> (string) error message
     parseDwollaID($id)  ==> (bool) is valid Dwolla ID?
     setMode($mode)      ==> (bool) did mode change?
-    setDebug($mode)     ==> (bool) set debog [verbose] mode
+    setDebug($mode)     ==> (bool) set debug [verbose] mode
+    setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
 
