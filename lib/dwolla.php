@@ -28,7 +28,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.5
+ * @version   1.5.6
  * @link      http://www.dwolla.com
  */
 
@@ -152,7 +152,7 @@ class DwollaRestClient
             $params['redirect_uri'] = $this->redirectUri;
         }
 
-        $url = 'https://www.dwolla.com/oauth/v2/authenticate?' . http_build_query($params);
+        $url = (($this->sandboxMode) ? 'https://uat.dwolla.com/oauth/v2/authenticate?' : 'https://www.dwolla.com/oauth/v2/authenticate?') . http_build_query($params);
 
         return $url;
     }
@@ -176,7 +176,7 @@ class DwollaRestClient
             'grant_type' => 'authorization_code',
             'code' => $code
         );
-        $url = 'https://www.dwolla.com/oauth/v2/token?' . http_build_query($params);
+        $url = (($this->sandboxMode) ? 'https://uat.dwolla.com/oauth/v2/token?' : 'https://www.dwolla.com/oauth/v2/token?') . http_build_query($params);
         $response = $this->curl($url, 'GET');
 
         if (isset($response['error'])) {
@@ -922,13 +922,13 @@ class DwollaRestClient
         }
 
         // Send off the request
-        $response = $this->curl('https://www.dwolla.com/payment/request', 'POST', $request);
+        $response = $this->curl(($this->sandboxMode) ? 'https://uat.dwolla.com/payment/request/' : 'https://www.dwolla.com/payment/request/', 'POST', $request);
 
         if ($response['Result'] != 'Success') {
             $this->setError($response['Message']);
         }
 
-        return 'https://www.dwolla.com/payment/checkout/' . $response['CheckoutId'];
+        return (($this->sandboxMode) ? 'https://uat.dwolla.com/payment/checkout/' : 'https://www.dwolla.com/payment/checkout/') . $response['CheckoutId'];
     }
 
     /**

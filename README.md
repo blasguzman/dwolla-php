@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5.5
+1.5.6
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -127,6 +127,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.5.6
+* Fixed Sandbox support issues with getAuthUrl(), requestToken(), and getGatewayURL(). (Thanks, @theophila!)
 
 1.5.5
 * Added Sandbox support via setSandbox(bool) to make it easier to switch between sandbox/non-sandbox testing. 
