@@ -973,7 +973,7 @@ class DwollaRestClient
         if (!$amount) {
             return $this->setError('Please pass a total transaction amount.');
         }
-
+        $amount = number_format($amount, 2);
         // Calculate an HMAC-SHA1 hexadecimal hash
         // of the checkoutId and amount ampersand separated
         // using the consumer secret of the application
