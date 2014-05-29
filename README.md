@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5.6
+1.5.7
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -127,6 +127,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.5.7
+* Fixed facilitator fee bug and "can't set error message" issue [#18] (thanks, @gpszymczak!)
 
 1.5.6
 * Fixed Sandbox support issues with getAuthUrl(), requestToken(), and getGatewayURL(). (Thanks, @theophila!)

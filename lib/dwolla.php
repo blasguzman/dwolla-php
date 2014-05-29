@@ -521,7 +521,7 @@ class DwollaRestClient
      * @return string Transaction Id 
 */
 
-    public function guestSend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType, $assumeCosts=false, $destinationType = 'Dwolla', $notes = '', $groupId =false, $additionalFees=false, $facilitatorAmount = 0, $assumeAdditionalFees = false)
+    public function guestSend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType, $assumeCosts=false, $destinationType = 'Dwolla', $notes = '', $groupId =false, $additionalFees=false, $facilitatorAmount = NULL, $assumeAdditionalFees = false)
     {
         // Verify required parameters
         if (!$destinationId) {
@@ -583,7 +583,7 @@ class DwollaRestClient
      * @param string $fundsSource Funding source ID to use. Defaults to Dwolla balance.
      * @return string Transaction Id 
      */
-    public function send($pin = false, $destinationId = false, $amount = false, $destinationType = 'Dwolla', $notes = '', $facilitatorAmount = 0, $assumeCosts = false, $fundsSource = 'balance'
+    public function send($pin = false, $destinationId = false, $amount = false, $destinationType = 'Dwolla', $notes = '', $facilitatorAmount = NULL, $assumeCosts = false, $fundsSource = 'balance'
     )
     {
         // Verify required parameters
@@ -625,7 +625,7 @@ class DwollaRestClient
      * @param float $facilitatorAmount
      * @return int Request Id 
      */
-    public function request($sourceId = false, $amount = false, $sourceType = 'Dwolla', $notes = '', $facilitatorAmount = 0)
+    public function request($sourceId = false, $amount = false, $sourceType = 'Dwolla', $notes = '', $facilitatorAmount = NULL)
     {
         // Verify required parameters
         if (!$sourceId) {
@@ -1141,10 +1141,12 @@ class DwollaRestClient
      */
     protected function parseMassPay($response)
     {
-        if (!$response['success']) {
-            return $this->setError($response['message']);
+        $success = isset($response['success']) ? $response['success'] : $response['Success'];
+        if (!$success) 
+        {
+            $message = isset($response['message']) ? $response['message'] : $response['Message'];
+            return $this->setError($message);
         }
-
         return $response['job'];
     }
 
