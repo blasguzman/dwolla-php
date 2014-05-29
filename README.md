@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.5.8
+1.5.9
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -127,11 +127,14 @@ Helper Methods:
 
 ## Changelog
 
+1.5.9
+* Addressed [issue #21](https://github.com/Dwolla/dwolla-php/issues/21) (thanks @teddyKenshiro!)
+
 1.5.8
 * Removed all hardcoded URLs to be current with dynamic changes (re: sandbox and other URLs)
 
 1.5.7
-* Fixed facilitator fee bug and "can't set error message" issue [#18] (thanks @sampath and @gpszymczak!)
+* Fixed facilitator fee bug and "can't set error message" issue #18 (thanks @sampath and @gpszymczak!)
 
 1.5.6
 * Fixed Sandbox support issues with getAuthUrl(), requestToken(), and getGatewayURL(). (Thanks, @theophila!)

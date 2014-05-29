@@ -25,8 +25,10 @@ else { print_r($contacts); } // Print contacts
  * EXAMPLE 2: 
  *   Search through the contacts of the
  *   account associated with the provided
- *   OAuth token
+ *   OAuth token for 'David', return 20 
+ *   "Dwolla" type results. 
  **/
-$contacts = $Dwolla->contacts('Ben');
+
+$contacts = $Dwolla->contacts('David', array('dwolla'), 20);
 if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { print_r($contacts); } // Print contacts

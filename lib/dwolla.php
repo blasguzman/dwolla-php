@@ -23,12 +23,16 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * SUPPORT
+ * Users should seek support on our API Support board located at:
+ * https://discuss.dwolla.com/category/api-support
  * 
  * @package   Dwolla
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.8
+ * @version   1.5.9
  * @link      http://www.dwolla.com
  */
 
@@ -138,6 +142,7 @@ class DwollaRestClient
         $this->permissions = $permissions;
         $this->apiServerUrl = $sandboxMode ? self::SANDBOX_SERVER : self::API_SERVER;
         $this->setMode($mode);
+        $this->debugMode = $debugMode;
     }
     
     /**

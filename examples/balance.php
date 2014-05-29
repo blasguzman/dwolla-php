@@ -18,5 +18,5 @@ $Dwolla->setToken($token);
  *   OAuth token
  **/
 $balance = $Dwolla->balance();
-if(!$balance) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
+if($balance == NULL) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { echo $balance; } // Print user's balance
