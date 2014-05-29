@@ -28,7 +28,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.6
+ * @version   1.5.8
  * @link      http://www.dwolla.com
  */
 
@@ -111,8 +111,14 @@ class DwollaRestClient
      */
     private $sandboxMode = false; 
 
-    const API_SERVER = "https://www.dwolla.com/oauth/rest/";
-    const SANDBOX_SERVER = "https://uat.dwolla.com/oauth/rest/";
+    /**
+     * @var default URL tail for 
+     */
+
+    private $OAUTH_TAIL = "oauth/rest/";
+
+    const API_SERVER = "https://www.dwolla.com/";
+    const SANDBOX_SERVER = "https://uat.dwolla.com/";
 
     /**
      * Sets the initial state of the client
@@ -152,7 +158,7 @@ class DwollaRestClient
             $params['redirect_uri'] = $this->redirectUri;
         }
 
-        $url = (($this->sandboxMode) ? 'https://uat.dwolla.com/oauth/v2/authenticate?' : 'https://www.dwolla.com/oauth/v2/authenticate?') . http_build_query($params);
+        $url = $this->apiServerUrl . 'oauth/v2/authenticate?' . http_build_query($params);
 
         return $url;
     }
@@ -176,7 +182,7 @@ class DwollaRestClient
             'grant_type' => 'authorization_code',
             'code' => $code
         );
-        $url = (($this->sandboxMode) ? 'https://uat.dwolla.com/oauth/v2/token?' : 'https://www.dwolla.com/oauth/v2/token?') . http_build_query($params);
+        $url = $this->apiServerUrl . 'oauth/v2/token?' . http_build_query($params);
         $response = $this->curl($url, 'GET');
 
         if (isset($response['error'])) {
@@ -922,13 +928,13 @@ class DwollaRestClient
         }
 
         // Send off the request
-        $response = $this->curl(($this->sandboxMode) ? 'https://uat.dwolla.com/payment/request/' : 'https://www.dwolla.com/payment/request/', 'POST', $request);
+        $response = $this->curl(($this->apiServerUrl . 'payment/request/'), 'POST', $request);
 
         if ($response['Result'] != 'Success') {
             $this->setError($response['Message']);
         }
 
-        return (($this->sandboxMode) ? 'https://uat.dwolla.com/payment/checkout/' : 'https://www.dwolla.com/payment/checkout/') . $response['CheckoutId'];
+        return ($this->apiServerUrl . 'payment/checkout/' . $response['CheckoutId']);
     }
 
     /**
@@ -1160,7 +1166,7 @@ class DwollaRestClient
      */
     protected function post($request, $params = false, $includeToken = true)
     {
-        $url = $this->apiServerUrl . $request . ($includeToken ? "?oauth_token=" . urlencode($this->oauthToken) : "");
+        $url = $this->apiServerUrl . $this->OAUTH_TAIL . $request . ($includeToken ? "?oauth_token=" . urlencode($this->oauthToken) : "");
         
         if($this->debugMode) {
           echo "Posting request to: {$url} :: With params: \n";
@@ -1190,7 +1196,7 @@ class DwollaRestClient
         $params['oauth_token'] = $this->oauthToken;
 
         $delimiter = (strpos($request, '?') === false) ? '?' : '&';
-        $url = $this->apiServerUrl . $request . $delimiter . http_build_query($params);
+        $url = $this->apiServerUrl . $this->OAUTH_TAIL . $request . $delimiter . http_build_query($params);
 
         if($this->debugMode) {
           echo "Getting request from: {$url} \n";

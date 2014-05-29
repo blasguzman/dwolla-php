@@ -128,6 +128,9 @@ Helper Methods:
 
 ## Changelog
 
+1.5.8
+* Removed all hardcoded URLs to be current with dynamic changes (re: sandbox and other URLs)
+
 1.5.7
 * Fixed facilitator fee bug and "can't set error message" issue [#18] (thanks @sampath and @gpszymczak!)
 
