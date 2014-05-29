@@ -865,9 +865,11 @@ class DwollaRestClient
      * @param string $notes
      * @param string $callback
      * @param boolean $allowFundingSources
+     * @param boolean $allowGuestCheckout
+     * @param string $additionalFundingSources
      * @return string Checkout URL 
      */
-    public function getGatewayURL($destinationId, $orderId = null, $discount = 0, $shipping = 0, $tax = 0, $notes = '', $callback = null, $allowFundingSources = TRUE)
+    public function getGatewayURL($destinationId, $orderId = null, $discount = 0, $shipping = 0, $tax = 0, $notes = '', $callback = null, $allowFundingSources = TRUE, $allowGuestCheckout = TRUE, $additionalFundingSources = 'true')
     {
         // TODO add validation? Throw exception if malformed?
         $destinationId = $this->parseDwollaID($destinationId);
@@ -907,6 +909,8 @@ class DwollaRestClient
             'Key' => $this->apiKey,
             'Secret' => $this->apiSecret,
             'Test' => ($this->mode == 'test') ? 'true' : 'false',
+            'AdditionalFundingSources' => $additionalFundingSources,
+            'AllowGuestCheckout' => $allowGuestCheckout ? 'true' : 'false',
             'AllowFundingSources' => $allowFundingSources ? 'true' : 'false',
             'PurchaseOrder' => array(
                 'DestinationId' => $destinationId,

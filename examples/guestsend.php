@@ -20,7 +20,7 @@ $Dwolla->setToken($token);
     $destinationId='';
     $amount='0.05';
     $firstName='Michael';
-    $lastName='Schonfeld'
+    $lastName='Schonfeld';
     $email='michael@dwolla.com';   
     $routingNumber='';
     $accountNumber='';
