@@ -239,8 +239,7 @@ Helper Methods:
 
 ## Support
 
-- Dwolla API &lt;api@dwolla.com&gt;
-- Gordon Zheng &lt;gordon@dwolla.com&gt;
+- Get support on our forum [by clicking here](https://discuss.dwolla.com/category/api-support).
 
 ## References / Documentation
 
