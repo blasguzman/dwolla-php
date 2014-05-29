@@ -3,7 +3,7 @@
 
 ## Version 
 
-1.5.7
+1.5.8
 
 ## Requirements
 - [PHP](http://www.php.net/)
