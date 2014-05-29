@@ -129,7 +129,7 @@ Helper Methods:
 ## Changelog
 
 1.5.7
-* Fixed facilitator fee bug and "can't set error message" issue [#18] (thanks, @gpszymczak!)
+* Fixed facilitator fee bug and "can't set error message" issue [#18] (thanks @sampath and @gpszymczak!)
 
 1.5.6
 * Fixed Sandbox support issues with getAuthUrl(), requestToken(), and getGatewayURL(). (Thanks, @theophila!)
