@@ -1044,7 +1044,7 @@ class DwollaRestClient
           'fundsSource' => ($fundsSource) ? $fundsSource : 'Balance',
           'pin' => $pin,
           'items' => $filedata,
-          'assumeCosts' => $assumeCosts ?
+          'assumeCosts' => $assumeCosts 
         );
         if($user_job_id) { $params['userJobId'] = $user_job_id; }
 
