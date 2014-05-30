@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.0
+1.6.1
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -126,6 +126,8 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+1.6.1
+* Updated MassPay bindings to point to new Dwolla REST API
 
 1.6.0
 * Added additionalFees support to send() function (thanks @sampath!)

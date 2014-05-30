@@ -32,7 +32,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.0
+ * @version   1.6.1
  * @link      http://www.dwolla.com
  */
 
@@ -1022,30 +1022,34 @@ class DwollaRestClient
         return TRUE;
     }    
 
-    public function massPayCreate($pin, $email, $filedata, $assumeCosts = FALSE, $source = FALSE, $user_job_id = FALSE)
+    /**
+     * Create a MassPay job
+     *
+     * @param string $pin User's account PIN
+     * @param array $filedata Array of Item JSON objects
+     * @param bool $assumeCosts Set to true if the sender should assume the $0.25 Dwolla fee rather than the recipients (default: false)
+     * @param string $fundsSource Funding source ID of the desired funcding source from which payments will be processed from (if no value is set, it defaults to 'Balance')
+     * @param string $user_job_id Optional user defined job ID. 
+     * @return array Information on submitted job (view full obj "Response" details here: https://developers.dwolla.com/dev/docs/masspay/create)
+     */
+
+    public function massPayCreate($pin, $filedata, $fundsSource = FALSE, $assumeCosts = FALSE, $user_job_id = FALSE)
     {
-        if (!$pin) {
-          return $this->setError('Please enter a PIN.');
-        } else if (!$email) {
-          return $this->setError('Please pass an reporting email.');
-        } else if (!$filedata) {
-          return $this->setError('Please pass the MassPay bulk data.');
-        }
+        if (!$pin) { return $this->setError('Please enter a PIN.'); } 
+        else if (!$filedata) { return $this->setError('Please pass the MassPay bulk data.'); }
 
         // Create request body
         $params = array(
-          'token' => $this->oauthToken,
+          'oauth_token' => $this->oauthToken,
+          'fundsSource' => ($fundsSource) ? $fundsSource : 'Balance',
           'pin' => $pin,
-          'email' => $email,
-          'filedata' => $filedata,
-          'assumeCosts' => $assumeCosts ? 'true' : 'false',
-          'test' => ($this->mode == 'test') ? 'true' : 'false'
+          'items' => $filedata,
+          'assumeCosts' => $assumeCosts ?
         );
-        if($source) { $params['source'] = $source; }
-        if($user_job_id) { $params['user_job_id'] = $user_job_id; }
+        if($user_job_id) { $params['userJobId'] = $user_job_id; }
 
         // Send off the request
-        $response = $this->curl('https://masspay.dwollalabs.com/api/create/', 'POST', $params);
+        $response = $this->curl($this->apiServerUrl . $this->OAUTH_TAIL . 'masspay/' , 'POST', $params);
 
         $job = $this->parseMassPay($response);
 
@@ -1055,39 +1059,26 @@ class DwollaRestClient
 
     /**
      * massPayDetails
-     * 
-     * @param string $uid The Dwolla ID of the user associated with the MassPay job
-     * @param string $job_id The job ID of the desired MassPay job. You must specify either a 'job_id', or a 'user_job_id'   
-     * @param bool $user_job_id The user assigned job ID of the desired MassPay job.
-     * @return bool $include_details  Whether to include a detailed response baout each job row. Defaults to: 'false'
+     *
+     * @param string $job_id The job ID of the desired MassPay job. This can either be the generated MP job id or a user-specified one.  
+     * @return array $response Contains details on the job tied to the passed in ID.
      */
 
-     public function massPayDetails($uid, $job_id = FALSE, $user_job_id = FALSE, $include_details = FALSE)
+     public function massPayDetails($job_id)
     {
-        if (!$uid) {
-          return $this->setError('Please pass the associated Dwolla ID.');
-        } else if (!$job_id && !$user_job_id) {
-          return $this->setError('Please pass either a MassPay job ID, or a user assigned job ID.');
-        }
+        if (!$job_id) { return $this->setError('Please pass either a MassPay job ID, or a user assigned job ID.'); }
 
         // Create request body
         $params = array(
-          'uid' => $uid
+          'oauth_token' => $uid,
+          'id' => $job_id
         );
-        if($job_id) { $params['job_id'] = $job_id; }
-        if($user_job_id) { $params['user_job_id'] = $user_job_id; }
-
-        $params['user_job_id'] = $user_job_id ? 'true' : 'false';
-        $params['include_details'] = $include_details ? 'true' : 'false'; 
 
         // Send off the request
-        $response = $this->curl('https://masspay.dwollalabs.com/api/status/', 'POST', $params);
+        $response = $this->curl($this->apiServerUrl . $this->OAUTH_TAIL . 'masspay/job/', 'POST', $params);
 
-        if (!$response['success']) {
-            $this->errorMessage = $response['message'];
-        }
-
-        return $response;
+        if (!$response['Success']) { $this->errorMessage = $response['Message']; }
+        return $response['Response'];
     }
     
 
@@ -1160,13 +1151,13 @@ class DwollaRestClient
      */
     protected function parseMassPay($response)
     {
-        $success = isset($response['success']) ? $response['success'] : $response['Success'];
+        $success = isset($response['Success']) ? $response['Success'] : $response['success'];
         if (!$success) 
         {
-            $message = isset($response['message']) ? $response['message'] : $response['Message'];
+            $message = isset($response['Message']) ? $response['Message'] : $response['message'];
             return $this->setError($message);
         }
-        return $response['job'];
+        return $response['Response'];
     }
 
     /**

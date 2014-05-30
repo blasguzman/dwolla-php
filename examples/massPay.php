@@ -23,10 +23,10 @@ $filedata = array();
 $filedata[] = array('destination' => 'b@dwolla.com', 'amount' => '0.01');
 $filedata[] = array('destination' => 'alext@dwolla.com', 'amount' => '0.01');
 
-$job = $Dwolla->massPayCreate($pin, 'michael@dwolla.com', $filedata);
+$job = $Dwolla->massPayCreate($pin, $filedata);
 
 if(!$job) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo "Job information: \n"; print_r($job); } // Print job info
+else { echo "Job information: \n"; print_r($job); }   // Print job info
 
 
 /**
@@ -34,7 +34,7 @@ else { echo "Job information: \n"; print_r($job); } // Print job info
  *   Get information about the previous
  *   job we just created
  **/
-$details = $Dwolla->massPayDetails('812-734-7288', $job['job_id']);
+$details = $Dwolla->massPayDetails($job['Id']);
 
 if(!$details) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo "Job information: \n"; print_r($details); } // Print job info
+else { echo "Job information: \n"; print_r($details); }   // Print job info
