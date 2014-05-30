@@ -32,7 +32,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.5.9
+ * @version   1.6.0
  * @link      http://www.dwolla.com
  */
 
@@ -592,10 +592,11 @@ class DwollaRestClient
      * @param float $facilitatorAmount
      * @param bool $assumeCosts Will sending user assume the Dwolla fee?
      * @param string $fundsSource Funding source ID to use. Defaults to Dwolla balance.
+     * @param array $additionalFees JSON array of facilitator fee objects ({$destinationId, $amount}).
+     * @param bool $assumeAdditionalFees Determines whether or not the sender assumes the facilitator fees (false by default)
      * @return string Transaction Id 
      */
-    public function send($pin = false, $destinationId = false, $amount = false, $destinationType = 'Dwolla', $notes = '', $facilitatorAmount = NULL, $assumeCosts = false, $fundsSource = 'balance'
-    )
+    public function send($pin = false, $destinationId = false, $amount = false, $destinationType = 'Dwolla', $notes = '', $facilitatorAmount = NULL, $assumeCosts = false, $fundsSource = 'balance', $additionalFees = FALSE, $assumeAdditionalFees = FALSE)
     {
         // Verify required parameters
         if (!$pin) {
@@ -617,6 +618,9 @@ class DwollaRestClient
             'notes' => $notes,
             'fundsSource' => $fundsSource,
         );
+        if ($additionalFees) { $params['additionalFees'] = $additionalFees; }
+        if ($assumeAdditionalFees) { $params['assumeAdditionalFees'] = $assumeAdditionalFees; }
+
         $response = $this->post('transactions/send', $params);
 
         // Parse Dwolla's response

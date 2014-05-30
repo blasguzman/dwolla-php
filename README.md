@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.5.9
+1.6.0
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -126,6 +126,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.6.0
+* Added additionalFees support to send() function (thanks @sampath!)
 
 1.5.9
 * Addressed [issue #21](https://github.com/Dwolla/dwolla-php/issues/21) (thanks @teddyKenshiro!)
