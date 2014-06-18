@@ -32,7 +32,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.1
+ * @version   1.6.2
  * @link      http://www.dwolla.com
  */
 
@@ -945,6 +945,7 @@ class DwollaRestClient
 
         if ($response['Result'] != 'Success') {
             $this->setError($response['Message']);
+            return null; 
         }
 
         return ($this->apiServerUrl . 'payment/checkout/' . $response['CheckoutId']);

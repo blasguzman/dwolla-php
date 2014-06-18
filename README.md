@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.1
+1.6.2
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -126,6 +126,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+1.6.2
+* Improved error handling for getGatewayUrl (thanks @PrplHaz4)!
+
 1.6.1
 * Updated MassPay bindings to point to new Dwolla REST API
 
