@@ -126,6 +126,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+1.6.3
+* Updated getGatewayUrl to match new endpoint specs (thanks again, @PrplHaz4)
+
 1.6.2
 * Improved error handling for getGatewayUrl (thanks @PrplHaz4)!
 

@@ -32,7 +32,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.2
+ * @version   1.6.3
  * @link      http://www.dwolla.com
  */
 
@@ -863,6 +863,7 @@ class DwollaRestClient
      * 
      * @param string $destinationId
      * @param string $orderId
+     * @param float $total 
      * @param float $discount
      * @param float $shipping
      * @param float $tax
@@ -873,7 +874,7 @@ class DwollaRestClient
      * @param string $additionalFundingSources
      * @return string Checkout URL 
      */
-    public function getGatewayURL($destinationId, $orderId = null, $discount = 0, $shipping = 0, $tax = 0, $notes = '', $callback = null, $allowFundingSources = TRUE, $allowGuestCheckout = TRUE, $additionalFundingSources = 'true')
+    public function getGatewayURL($destinationId, $orderId = null, $total = FALSE, $discount = 0, $shipping = 0, $tax = 0, $notes = '', $callback = null, $allowFundingSources = TRUE, $allowGuestCheckout = TRUE, $additionalFundingSources = TRUE)
     {
         // TODO add validation? Throw exception if malformed?
         $destinationId = $this->parseDwollaID($destinationId);
@@ -898,16 +899,6 @@ class DwollaRestClient
             $notes = '';
         }
 
-        // Calculate subtotal
-        $subtotal = 0;
-
-        foreach ($this->gatewaySession as $product) {
-            $subtotal += floatval($product['Price']) * floatval($product['Quantity']);
-        }
-
-        // Calculate grand total
-        $total = round($subtotal - $discount + $shipping + $tax, 2);
-
         // Create request body
         $request = array(
             'Key' => $this->apiKey,
@@ -918,14 +909,26 @@ class DwollaRestClient
             'AllowFundingSources' => $allowFundingSources ? 'true' : 'false',
             'PurchaseOrder' => array(
                 'DestinationId' => $destinationId,
-                'OrderItems' => $this->gatewaySession,
+                'OrderItems' => $total ? null : $this->gatewaySession,
                 'Discount' => -$discount,
                 'Shipping' => $shipping,
                 'Tax' => $tax,
-                'Total' => $total,
                 'Notes' => $notes
             )
         );
+
+        $subtotal = $total ? $total : 0;
+
+        // If we did not pass a total, calculate the subtotal of the session items.
+        if (!$total) { 
+            foreach ($this->gatewaySession as $product) {
+                $subtotal += floatval($product['Price']) * floatval($product['Quantity']);
+            }
+        }
+
+        // Calculate grand total, set parameter
+        $total = round($subtotal - $discount + $shipping + $tax, 2);
+        $request['Total'] = $total; 
 
         // Append optional parameters
         if ($this->redirectUri) {
