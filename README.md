@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.3
+1.6.4
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -17,7 +17,7 @@ run the `php composer.phar install` command to install it:
 
     {
         "require": {
-            "dwolla/dwolla-php": "1.6.3"
+            "dwolla/dwolla-php": "1.6.4"
         }
     }
 
@@ -126,6 +126,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+1.6.4
+* Fixed bugs with $total (thanks @PrplHaz4)!
+
 1.6.3
 * Updated getGatewayUrl to match new endpoint specs (thanks again, @PrplHaz4)
 

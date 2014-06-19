@@ -32,7 +32,7 @@
  * @author    Michael Schonfeld <michael@dwolla.com>
  * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.3
+ * @version   1.6.4
  * @link      http://www.dwolla.com
  */
 
@@ -928,7 +928,7 @@ class DwollaRestClient
 
         // Calculate grand total, set parameter
         $total = round($subtotal - $discount + $shipping + $tax, 2);
-        $request['Total'] = $total; 
+        $request['PurchaseOrder']['Total'] = $total; 
 
         // Append optional parameters
         if ($this->redirectUri) {
