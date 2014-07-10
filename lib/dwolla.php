@@ -1074,12 +1074,12 @@ class DwollaRestClient
 
         // Create request body
         $params = array(
-          'oauth_token' => $uid,
+          'oauth_token' => $this->oauthToken,
           'id' => $job_id
         );
 
         // Send off the request
-        $response = $this->curl($this->apiServerUrl . $this->OAUTH_TAIL . 'masspay/job/', 'POST', $params);
+        $response = $this->get("masspay/{$job_id}", $params);
 
         if (!$response['Success']) { $this->errorMessage = $response['Message']; }
         return $response['Response'];

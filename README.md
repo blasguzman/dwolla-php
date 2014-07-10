@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.4
+1.6.5
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -126,6 +126,10 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.6.5
+* Fixed bugs with the massPayDetails function (thanks @bcgood)!
+
 1.6.4
 * Fixed bugs with $total (thanks @PrplHaz4)!
 
