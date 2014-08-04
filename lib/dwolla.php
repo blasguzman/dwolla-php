@@ -29,11 +29,11 @@
  * https://discuss.dwolla.com/category/api-support
  * 
  * @package   Dwolla
- * @author    Michael Schonfeld <michael@dwolla.com>
- * @copyright Copyright (c) 2012 Dwolla Inc. (http://www.dwolla.com)
+ * @author    Dwolla <api@dwolla.com>
+ * @copyright Copyright (c) 2014 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.5
- * @link      http://www.dwolla.com
+ * @version   1.6.6
+ * @link      https://developers.dwolla.com/
  */
 
 if (!function_exists('curl_init')) { 

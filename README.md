@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.5
+1.6.6
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -126,6 +126,10 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.6.6
+* Intead of errors reporting "Server responded with: 0", we now dump out the specific cURL error behind it.
+* Increase request timeout from 5 seconds to 15 seconds.
 
 1.6.5
 * Fixed bugs with the massPayDetails function (thanks @bcgood)!
