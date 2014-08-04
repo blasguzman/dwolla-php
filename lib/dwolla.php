@@ -1272,10 +1272,20 @@ class DwollaRestClient
                 print_r(curl_error($ch));
             }
 
-            return array(
-                'Success' => false,
-                'Message' => "Request failed. Server responded with: {$code}"
-            );
+            if ($code == 0) {
+                return array(
+                    'Success' => false,
+                    'Message' => "Request failed.  ".curl_error($ch)
+                );
+            }
+
+            else { 
+                return array(
+                    'Success' => false,
+                    'Message' => "Request failed. Server responded with: {$code}"
+                );
+            }
+            
         }
 
         // All done with CURL
