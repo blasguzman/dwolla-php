@@ -6,9 +6,9 @@
     "license": "MIT",
     "authors": [
     {
-        "name": "Michael Schonfeld",
-        "email": "michael@dwolla.com",
-        "homepage": "http://dwolla.com"
+        "name": "Dwolla",
+        "email": "api@dwolla.com",
+        "homepage": "https://developers.dwolla.com/"
     }
     ],
     "require": {
