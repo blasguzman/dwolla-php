@@ -32,7 +32,7 @@
  * @author    Dwolla <api@dwolla.com>
  * @copyright Copyright (c) 2014 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.6
+ * @version   1.6.7
  * @link      https://developers.dwolla.com/
  */
 
@@ -113,7 +113,7 @@ class DwollaRestClient
     /**
      * @var bool use sandbox for API_SERVER
      */
-    private $sandboxMode = false; 
+    private $sandboxMode = false;
 
     /**
      * @var default URL tail for 
@@ -441,7 +441,48 @@ class DwollaRestClient
         $response = $this->post("fundingsources/{$fundingSourceId}/verify", $params);
         return $this->parse($response);
     }
-    
+
+    /**
+     * Get the status of the auto-withdrawal feature for the account
+     * associtaed with the OAuth token
+     *
+     * @return array Details
+     */
+
+    public function getAutoWithdrawalStatus()
+    {
+        // Build request, and send it to Dwolla
+        $params = array('oauth_token' => $this->oauthToken);
+
+        $response = $this->get("accounts/features/auto_withdrawal", $params);
+        return $this->parse($response);
+    }
+
+    /**
+     * Toggle the status of the auto-withdrawal feature for a
+     * funding source under the account associated with the
+     * OAuth token
+     *
+     * @param bool enabled
+     * @param string fundingId
+     *
+     * @return array Details
+     */
+
+    public function toggleAutoWithdrawalStatus($enabled, $fundingId)
+    {
+        if (!$enabled) { return $this->setError('Please enter a value for bool enabled.'); }
+        if (!$fundingId) { return $this->setError('Please enter a funding ID.'); }
+
+        $params = array('oauth_token' => $this->oauthToken,
+            'enabled'     => $enabled,
+            'fundingId'   => $fundingId
+        );
+
+        $response = $this->post("accounts/features/auto_withdrawal", $params);
+        return $this->parse($response);
+    }
+
     /**
      * Verify a funding source for the user associated 
      * with the authorized access token.
@@ -944,7 +985,7 @@ class DwollaRestClient
         }
 
         // Send off the request
-        $response = $this->curl(($this->apiServerUrl . 'payment/request/'), 'POST', $request);
+        $response = $this->curl(($this->apiServerUrl . 'oauth/rest/offsitegateway/checkouts'), 'POST', $request);
 
         if ($response['Result'] != 'Success') {
             $this->setError($response['Message']);

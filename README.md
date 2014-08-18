@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.6
+1.6.7
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -17,7 +17,7 @@ run the `php composer.phar install` command to install it:
 
     {
         "require": {
-            "dwolla/dwolla-php": "1.6.6"
+            "dwolla/dwolla-php": "1.6.7"
         }
     }
 
@@ -53,6 +53,10 @@ This repo includes various usage examples, including:
 Before trying out the examples, you'll need to specify your Application credentials (`key`, `secret`, an OAuth Token for your account, and your account's `PIN` -- see the above section on how to acquire these) in the `_keys.dist.php` file.  Then rename the file to `_keys.php` and you're all set!
 
 ## Methods
+
+Autowithdrawal Methods:
+    getAutoWithdrawalStatus() ==> (array) an array with the status and funding ID of the funding sources with the autowithdrawal feature
+    toggleAutoWithdrawalStatus($enabled, $fundingId) ==> (bool) success of toggle action
 
 Authentication Methods:
 
@@ -127,8 +131,12 @@ Helper Methods:
 
 ## Changelog
 
+1.6.7
+* Added `getAutoWithdrawalStatus()` and `toggleAutoWithdrawalStatus()` functions for `accounts/autowithdraw` endpoint functionality.
+* Changed `getGatewayUrl()` to point to new off-site gateway endpoint (issue #32, thanks @kzap!).
+
 1.6.6
-* Intead of errors reporting "Server responded with: 0", we now dump out the specific cURL error behind it.
+* Instead of errors reporting "Server responded with: 0", we now dump out the specific cURL error behind it.
 * Increase request timeout from 5 seconds to 15 seconds.
 
 1.6.5
