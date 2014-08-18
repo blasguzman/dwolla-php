@@ -54,7 +54,8 @@ Before trying out the examples, you'll need to specify your Application credenti
 
 ## Methods
 
-Autowithdrawal Methods:
+Auto-withdrawal Methods:
+
     getAutoWithdrawalStatus() ==> (array) an array with the status and funding ID of the funding sources with the autowithdrawal feature
     toggleAutoWithdrawalStatus($enabled, $fundingId) ==> (bool) success of toggle action
 
