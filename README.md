@@ -17,7 +17,7 @@ run the `php composer.phar install` command to install it:
 
     {
         "require": {
-            "dwolla/dwolla-php": "1.6.7"
+            "dwolla/dwolla-php": "1.6.8"
         }
     }
 
