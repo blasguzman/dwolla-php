@@ -32,7 +32,7 @@
  * @author    Dwolla <api@dwolla.com>
  * @copyright Copyright (c) 2014 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.7
+ * @version   1.6.8
  * @link      https://developers.dwolla.com/
  */
 
@@ -942,8 +942,8 @@ class DwollaRestClient
 
         // Create request body
         $request = array(
-            'Key' => $this->apiKey,
-            'Secret' => $this->apiSecret,
+            'client_id' => $this->apiKey,
+            'client_secret' => $this->apiSecret,
             'Test' => ($this->mode == 'test') ? 'true' : 'false',
             'AdditionalFundingSources' => $additionalFundingSources,
             'AllowGuestCheckout' => $allowGuestCheckout ? 'true' : 'false',

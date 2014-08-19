@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.7
+1.6.8
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -131,6 +131,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.6.8
+* Fixed `client_id` vs `key` and `client_secret` vs `secret` mismatch.
 
 1.6.7
 * Added `getAutoWithdrawalStatus()` and `toggleAutoWithdrawalStatus()` functions for `accounts/autowithdraw` endpoint functionality.
