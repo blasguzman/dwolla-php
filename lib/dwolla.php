@@ -948,7 +948,7 @@ class DwollaRestClient
             'AdditionalFundingSources' => $additionalFundingSources,
             'AllowGuestCheckout' => $allowGuestCheckout ? 'true' : 'false',
             'AllowFundingSources' => $allowFundingSources ? 'true' : 'false',
-            'PurchaseOrder' => array(
+            'purchaseOrder' => array(
                 'DestinationId' => $destinationId,
                 'OrderItems' => $total ? null : $this->gatewaySession,
                 'Discount' => -$discount,
@@ -969,7 +969,7 @@ class DwollaRestClient
 
         // Calculate grand total, set parameter
         $total = round($subtotal - $discount + $shipping + $tax, 2);
-        $request['PurchaseOrder']['Total'] = $total; 
+        $request['purchaseOrder']['Total'] = $total;
 
         // Append optional parameters
         if ($this->redirectUri) {
