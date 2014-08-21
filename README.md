@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.8
+1.6.9
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -120,7 +120,7 @@ Offsite Gateway Methods:
     startGatewaySession()                                           ==> (bool) did session start?
     addGatewayProduct($name, $amount[, $quantity, $description])    ==> (bool) was product added?
     verifyGatewaySignature($signature, $checkoutId, $amount)        ==> (bool) is signature valid?
-    getGatewayURL($destinationId[, $orderId, $discount, $shipping, $tax, $notes, $callback])    ==> (string) checkout URL
+    getGatewayURL($destinationId[, $orderId, $discount, $shipping, $tax, $notes, $callback, $metadata])    ==> (string) checkout URL
     
 Helper Methods:
 
@@ -131,6 +131,10 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.6.9
+* Fixed casing on new offsite-gateway endpoint, added optional metadata parameter to `getGatewayURL()`.
+* Fixed checkout ID return by resolving array properly (thanks @echodreamz!)
 
 1.6.8
 * Fixed `client_id` vs `key` and `client_secret` vs `secret` mismatch.

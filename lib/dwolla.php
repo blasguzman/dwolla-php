@@ -32,7 +32,7 @@
  * @author    Dwolla <api@dwolla.com>
  * @copyright Copyright (c) 2014 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.8
+ * @version   1.6.9
  * @link      https://developers.dwolla.com/
  */
 
@@ -915,7 +915,7 @@ class DwollaRestClient
      * @param string $additionalFundingSources
      * @return string Checkout URL 
      */
-    public function getGatewayURL($destinationId, $orderId = null, $total = FALSE, $discount = 0, $shipping = 0, $tax = 0, $notes = '', $callback = null, $allowFundingSources = TRUE, $allowGuestCheckout = TRUE, $additionalFundingSources = TRUE)
+    public function getGatewayURL($destinationId, $orderId = null, $total = FALSE, $discount = 0, $shipping = 0, $tax = 0, $notes = '', $callback = null, $allowFundingSources = TRUE, $allowGuestCheckout = TRUE, $additionalFundingSources = TRUE, $metadata = false)
     {
         // TODO add validation? Throw exception if malformed?
         $destinationId = $this->parseDwollaID($destinationId);
@@ -944,55 +944,59 @@ class DwollaRestClient
         $request = array(
             'client_id' => $this->apiKey,
             'client_secret' => $this->apiSecret,
-            'Test' => ($this->mode == 'test') ? 'true' : 'false',
-            'AdditionalFundingSources' => $additionalFundingSources,
-            'AllowGuestCheckout' => $allowGuestCheckout ? 'true' : 'false',
-            'AllowFundingSources' => $allowFundingSources ? 'true' : 'false',
+            'test' => ($this->mode == 'test') ? 'true' : 'false',
+            'additionalFundingSources' => $additionalFundingSources,
+            'allowGuestCheckout' => $allowGuestCheckout ? 'true' : 'false',
+            'allowFundingSources' => $allowFundingSources ? 'true' : 'false',
             'purchaseOrder' => array(
-                'DestinationId' => $destinationId,
-                'OrderItems' => $total ? null : $this->gatewaySession,
-                'Discount' => -$discount,
-                'Shipping' => $shipping,
-                'Tax' => $tax,
-                'Notes' => $notes
+                'destinationId' => $destinationId,
+                'orderItems' => $this->gatewaySession,
+                'discount' => -$discount,
+                'shipping' => $shipping,
+                'tax' => $tax,
+                'notes' => $notes
             )
         );
 
         $subtotal = $total ? $total : 0;
 
         // If we did not pass a total, calculate the subtotal of the session items.
-        if (!$total) { 
+        if (!$total) {
             foreach ($this->gatewaySession as $product) {
-                $subtotal += floatval($product['Price']) * floatval($product['Quantity']);
+                $subtotal += floatval($product['price']) * floatval($product['quantity']);
             }
         }
 
         // Calculate grand total, set parameter
         $total = round($subtotal - $discount + $shipping + $tax, 2);
-        $request['purchaseOrder']['Total'] = $total;
+        $request['purchaseOrder']['total'] = $total;
 
         // Append optional parameters
         if ($this->redirectUri) {
-            $request['Redirect'] = $this->redirectUri;
+            $request['redirect'] = $this->redirectUri;
         }
 
         if ($callback) {
-            $request['Callback'] = $callback;
+            $request['callback'] = $callback;
         }
 
         if ($orderId) {
-            $request['OrderId'] = $orderId;
+            $request['orderId'] = $orderId;
+        }
+
+        if ($metadata) {
+            $request['purchaseOrder']['metadata'] = $metadata;
         }
 
         // Send off the request
         $response = $this->curl(($this->apiServerUrl . 'oauth/rest/offsitegateway/checkouts'), 'POST', $request);
 
-        if ($response['Result'] != 'Success') {
+        if ($response['Success'] != true) {
             $this->setError($response['Message']);
-            return null; 
+            return null;
         }
 
-        return ($this->apiServerUrl . 'payment/checkout/' . $response['CheckoutId']);
+        return ($this->apiServerUrl . 'payment/checkout/' . $response['Response']['CheckoutId']);
     }
 
     /**
