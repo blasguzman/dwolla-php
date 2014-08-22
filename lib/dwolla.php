@@ -889,10 +889,10 @@ class DwollaRestClient
     public function addGatewayProduct($name, $price, $quantity = 1, $description = '')
     {
         $product = array(
-            'Name' => $name,
-            'Description' => $description,
-            'Price' => $price,
-            'Quantity' => $quantity
+            'name' => $name,
+            'description' => $description,
+            'price' => $price,
+            'quantity' => $quantity
         );
 
         $this->gatewaySession[] = $product;
