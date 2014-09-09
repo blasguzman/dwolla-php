@@ -2,7 +2,7 @@
 
 ## Version 
 
-1.6.9
+1.6.10
 
 ## Requirements
 - [PHP](http://www.php.net/)
@@ -17,7 +17,7 @@ run the `php composer.phar install` command to install it:
 
     {
         "require": {
-            "dwolla/dwolla-php": "1.6.8"
+            "dwolla/dwolla-php": "1.6.10"
         }
     }
 
@@ -131,6 +131,9 @@ Helper Methods:
     setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
 
 ## Changelog
+
+1.6.10
+* Fixed URL for Transactions Listing and Funding Sources Listing.
 
 1.6.9
 * Fixed casing on new offsite-gateway endpoint, added optional metadata parameter to `getGatewayURL()`.

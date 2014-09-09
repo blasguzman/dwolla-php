@@ -32,7 +32,7 @@
  * @author    Dwolla <api@dwolla.com>
  * @copyright Copyright (c) 2014 Dwolla Inc. (http://www.dwolla.com)
  * @license   http://opensource.org/licenses/MIT MIT
- * @version   1.6.9
+ * @version   1.6.10
  * @link      https://developers.dwolla.com/
  */
 
