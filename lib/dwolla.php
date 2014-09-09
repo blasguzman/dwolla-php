@@ -321,7 +321,7 @@ class DwollaRestClient
             'types' => implode(',', $types),
             'limit' => $limit
         );
-        $response = $this->get('contacts', $params);
+        $response = $this->get('contacts/', $params);
 
         $contacts = $this->parse($response);
 
@@ -367,7 +367,7 @@ class DwollaRestClient
      */
     public function fundingSources()
     {
-        $response = $this->get('fundingsources');
+        $response = $this->get('fundingsources/');
         return $this->parse($response);
     }
 
@@ -836,7 +836,7 @@ class DwollaRestClient
         if($types) { $params['types'] = implode(',', $types); }
 
         // Build request, and send it to Dwolla
-        $response = $this->get("transactions", $params);
+        $response = $this->get("transactions/", $params);
 
         // Parse Dwolla's response
         $listings = $this->parse($response);
