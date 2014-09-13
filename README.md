@@ -1,7 +1,7 @@
 dwolla-php
 =========
 
-[![Build Status](https://travis-ci.org/mach-kernel/dwolla-php.svg?branch=master)](https://travis-ci.org/mach-kernel/dwolla-php)
+[![Build Status](https://travis-ci.org/Dwolla/dwolla-php.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-php)
 
 The new and improved Dwolla library based off of the Guzzle REST client. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
 
@@ -138,7 +138,11 @@ cd tests
 
 This wrapper is based on [Guzzle](https://github.com/guzzle/guzzle) for REST capability and uses [PHPUnit](https://phpunit.de/) for unit testing and [Travis](https://travis-ci.org/) for automagical build verification. 
 
-Initially written by [David Stancu](http://davidstancu.me) (david@dwolla.com).
+Version `2.x` initially written by [David Stancu](http://davidstancu.me) (david@dwolla.com).
+
+Versions `1.x` written by:
+* Michael Schonfeld
+* Jeremy Kendall <http://about.me/jeremykendall>
 
 ## License
 
