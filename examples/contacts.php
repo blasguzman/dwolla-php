@@ -1,34 +1,42 @@
 <?php
-// Include the Dwolla REST Client
-require '../lib/dwolla.php';
-
-// Include any required keys
-require '_keys.php';
-
-// Instantiate a new Dwolla REST Client
-$Dwolla = new DwollaRestClient();
-
-// Seed a previously generated access token
-$Dwolla->setToken($token);
 
 /**
- * EXAMPLE 1: 
- *   Fetch last 10 contacts from the 
- *   account associated with the provided
- *   OAuth token
- **/
-$contacts = $Dwolla->contacts('Ben');
-if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($contacts); } // Print contacts
+ *      _               _ _
+ *   __| |_      _____ | | | __ _
+ *  / _` \ \ /\ / / _ \| | |/ _` |
+ * | (_| |\ V  V / (_) | | | (_| |
+ *  \__,_| \_/\_/ \___/|_|_|\__,_|
+
+ * An official Guzzle based wrapper for the Dwolla API.
+
+ * The following is a quick-start example for the Contacts class,
+ * which encapsulates methods for all account endpoints.
+ */
+
+// We need the Contacts class in order to do anything
+require '../lib/contacts.php';
+$Account = new Dwolla\Contacts();
 
 /**
- * EXAMPLE 2: 
- *   Search through the contacts of the
- *   account associated with the provided
- *   OAuth token for 'David', return 20 
- *   "Dwolla" type results. 
- **/
+ * Example 1: Get the first 10 contacts from the user
+ * associated with the current OAuth token.
+ */
 
-$contacts = $Dwolla->contacts('David', array('dwolla'), 20);
-if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($contacts); } // Print contacts
+print_r($Account->get());
+
+/**
+ * Example 2: Get the first 2 contacts from the user
+ * associated with the current OAuth token.
+ */
+
+print_r($Account->get(
+    ['limit' => 2
+    ])
+);
+
+/**
+ * Example 3: Get Dwolla spots near NYC's official
+ * coordinates.
+ */
+
+print_r($Account->nearby(40.7127, 74.0059));

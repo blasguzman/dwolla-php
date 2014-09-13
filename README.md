@@ -1,315 +1,163 @@
-# dwolla-php: PHP Wrapper for Dwolla's API
+dwollaphp
+=========
 
-## Version 
+[![Build Status](https://travis-ci.org/mach-kernel/dwollaphp.svg?branch=master)](https://travis-ci.org/mach-kernel/dwollaphp)
 
-1.6.10
+The new and improved Dwolla library based off of the Guzzle REST client. `dwollaphp` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
 
-## Requirements
-- [PHP](http://www.php.net/)
-- [CURL PHP](http://php.net/manual/en/book.curl.php)
-- [JSON PHP](http://php.net/manual/en/book.json.php)
+## Version
+
+2.0.0
 
 ## Installation
 
-The recommended way to install dwolla-php is [through
-composer](http://getcomposer.org). Just create a `composer.json` file and
-run the `php composer.phar install` command to install it:
+`dwollaphp` is available on [Packagist](http://packagist.org), and therefore can be installed automagically via [Composer](http://getcomposer.org).
 
-    {
-        "require": {
-            "dwolla/dwolla-php": "1.6.10"
-        }
-    }
+**The PHP JSON and CURL extensions are required for `dwollaphp` to operate.** 
 
-Alternatively, you can simply include dwolla.php in your PHP code
+*To install without adding to `composer.json`:*
 
-## Usage
-```php
-require 'dwolla.php';
-$Dwolla = new DwollaRestClient();
-$Dwolla->setToken('[OAuth Token Goes Here]');
-
-// Send money to a given Dwolla ID
-$transactionId = $Dwolla->send('[PIN]', '812-734-7288', 1.00);
+```
+composer install dwollaphp
 ```
 
-## Generating Application Credentials
+*To add to `composer.json` and make this a permanent dependency of your package:*
+```
+composer require "dwolla/dwollaphp=2.*"
+composer update && composer install
+```
 
-To acquire an application `key` and `secret` pair, you'll need to [create a new Application on Dwolla](https://www.dwolla.com/applications/create).  It's free, quick, and easy!
+## Quickstart
 
-If you'd like to use the API to act only behalf of your own account (i.e. to make payments from your account, check your account balance), you can generate an OAuth token for your account [here](https://developers.dwolla.com/dev/token).
+`dwollaphp` makes it easy for developers to hit the ground running with our API. Before attempting the following, you should ideally create [an application key and secret](https://www.dwolla.com/applications).
 
-## Examples
+* Set any variables in `_settings.php` or the `Settings` class. All fields are public.
+* Instantiate `dwollaphp` with the class that contains the endpoints you require.
+* Use at will!
 
-This repo includes various usage examples, including:
+```php
+require '../lib/account.php';
+$Account = new Dwolla\Account();
 
-* Authenticating with OAuth [oauth.php]
-* Sending money [send.php]
-* Fetching account information [accountInfo.php]
-* Grabbing a user's contacts [contacts.php]
-* Listing a user's funding sources [fundingSources.php]
-* Creating offsite gateway sessions [offsiteGateway.php]
+/**
+ * Example 1: Get basic information for
+ * a Dwolla user using their Dwolla ID.
+ */
+print_r($Account->basic('812-121-7199'));
+```
 
-Before trying out the examples, you'll need to specify your Application credentials (`key`, `secret`, an OAuth Token for your account, and your account's `PIN` -- see the above section on how to acquire these) in the `_keys.dist.php` file.  Then rename the file to `_keys.php` and you're all set!
+---
 
-## Methods
+There are 8 quickstart files which will walk you through working with `dwollaphp`'s classes/endpoint groupings. 
 
-Auto-withdrawal Methods:
+* `account.php`: Retrieve account information, such as balance.
+* `checkouts.php`: Offsite-gateway endpoints, server-to-server checkout example.
+* `contacts.php`: Retrieve/sort through user contacts.
+* `fundingSources.php`: Modify and get information with regards to funding sources.
+* `masspay.php`: Create and retrieve jobs/data regarding MassPay jobs. 
+* `oauth.php`: Examples on retrieving OAuth access/refresh token pairs.
+* `requests.php`: Create and retrieve money requests/information regarding money requests.
+* `transactions.php`: Send money, get transaction info by ID, etc.
 
-    getAutoWithdrawalStatus() ==> (array) an array with the status and funding ID of the funding sources with the autowithdrawal feature
-    toggleAutoWithdrawalStatus($enabled, $fundingId) ==> (bool) success of toggle action
+## Structure
 
-Authentication Methods:
+`dwollaphp` is a conglomerate of multiple classes; each file in the `lib/` directory contains a class which contains all the endpoints for that certain category ([similar to Dwolla's developer documentation](https://developers.dwolla.com/dev/docs)). 
 
-    getAuthUrl()        ==> (string) OAuth permissions page URL
-    requestToken($code) ==> (string) a never-expiring OAuth access token
-    setToken($token)    ==> (bool) was token saved?
-    getToken()          ==> (string) current OAuth token
+### Endpoint Classes / Methods
 
-Users Methods:
+Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClient::Account()`).
 
-    me()                ==> (array) the user entity associated with the token
-    getUser($user_id)   ==> (array) the user entity for {$user_id}
-    usersNearby($lat, $long)  ==> (array) users nearby the given geolocation
-    
-Register Methods:
+* `Account()`:
+ * `basic()`: Retrieves basic account information
+ * `full()`: Retrieve full account information
+ * `balance()`: Get user balance
+ * `nearby()`: Get nearby users
+ * `getAutoWithdrawal()`: Get auto-withdrawal status
+ * `toggleAutoWithdrawal()`: Toggle auto-withdrawal
+* `Checkouts()`:
+ * `resetCart()`: Clears out item cart.
+ * `addToCart()`: Adds item to cart.
+ * `create()`: Creates a checkout session.
+ * `get()`: Gets status of existing checkout session.
+ * `complete()`: Completes a checkout session.
+ * `verify()`: Verifies a checkout session.
+* `Contacts()`:
+ * `get()`: Retrieve a user's contacts.
+ * `nearby()`: Get spots near a location.
+* `FundingSources()`:
+ * `info()`: Retrieve information regarding a funding source via ID.
+ * `get()`: List all funding sources.
+ * `add()`: Add a funding source.
+ * `verify()`: Verify a funding source.
+ * `withdraw()`: Withdraw from Dwolla into funding source.
+ * `deposit()`: Deposit to Dwolla from funding source.
+* `MassPay()`:
+ * `create()`: Creates a MassPay job.
+ * `getJob()`: Gets a MassPay job.
+ * `getJobItems()`: Gets all items for a specific job.
+ * `getItem()`: Gets an item from a specific job.
+ * `listJobs()`: Lists all MassPay jobs.
+* `OAuth()`:
+ * `genAuthUrl()`: Generates OAuth permission link URL
+ * `get()`: Retrieves OAuth + Refresh token pair from Dwolla servers.
+ * `refresh()`: Retrieves OAuth + Refresh pair with refresh token.
+* `Requests()`:
+ * `create()`: Request money from user.
+ * `get()`: Lists all pending money requests.
+ * `info()`: Retrieves info for a pending money request.
+ * `cancel()`: Cancels a money request.
+ * `fulfill()`: Fulfills a money request.
+* `Transactions()`:
+ * `send()`: Sends money
+ * `refund()`: Refunds money
+ * `get()`: Lists transactions for user
+ * `info()`: Get information for transaction by ID.
+ * `stats()`: Get transaction statistics for current user.
 
-    register($email, $password, $pin, $firstName, $lastName, $address, $address2, $city, $state, $zip, $phone, $dateOfBirth, $acceptTerms[, $type, $organization, $ein])    ==> (array) the newly created user record
-    
-Contacts Methods:
+### Internal Use
 
-    contacts([$search, $types, $limit])         ==> (array) list of contacts matching the search criteria
-    nearbyContacts([$search, $types, $limit])   ==> (array) list of nearby spots matching the search criteria
-    
-Funding Sources Methods:
+`client.php/RestClient()` is the base class for all of the aforementioned classes, `_settings.php/Settings()` does not inherit from anything and only contains configuration parameters. 
 
-    fundingSources()    ==> (array) a list of funding sources associated with the token
-    fundingSource($id)  ==> (array) information about the {$id} funding source
-    addFundingSource($accountNumber, $routingNumber, $accountType, $accountName)  ==>
-    verifyFundingSource($fundingSourceId, $deposit1, $deposit2) ==> 
-    withdraw($fundingSourceId, $pin, $amount) ==>
-    deposit($fundingSourceId, $pin, $amount)  ==> 
+## Unit Testing
 
-MassPay Methods:
-    
-    massPayCreate($pin, $email, $filedata, $assumeCosts = FALSE, $source = FALSE, $user_job_id = FALSE)
-    massPayDetails($uid, $job_id = FALSE, $user_job_id = FALSE, $include_details = FALSE)
-    
-Balance Methods:
+`dwollaphp` uses [PHPUnit](https://phpunit.de/) for unit testing. These tests do not test integration and will occassionally show console API errors due to 'dummy' data being used. Integration testing is planned sometime in the future. 
 
-    balance()           ==> (string) the Dwolla balance of the account associated with the token
+To run the tests, install `require\dev` from `composer.json` and run:
 
-Requests Method:
-
-    request($pin, $sourceId, $amount[, $sourceType, $notes, $facilitatorAmount])  ==> (string) request ID
-    requests()
-    requestById($requestId)
-    fulfillRequest($requestId, $pin, $amount = false, $notes = false, $fundsSource = false, $assumeCosts = false)
-    cancelRequest($requestId)
-    
-Transactions Methods:
-
-    guestsend($destinationId, $amount, $firstName, $lastName, $email, $routingNumber, $accountNumber, $accountType[, $assumeCosts, $destinationType, $notes, $groupId, $additionalFees, $facilitatorAmount, $assumeAdditionalFees])   ==> (string) 
-    send($pin, $destinationId, $amount[, $destinationType, $notes, $facilitatorAmount, $assumeCosts])   ==> (string) transaction ID
-    transaction($transactionId)                     ==> (array) transaction details
-    listings([$sinceDate, $types, $limit, $skip])   ==> (array) a list of recent transactions matching the search criteria
-    stats([$types, $sinceDate, $endDate])           ==> (array) statistics about the account associated with the token
-    
-Offsite Gateway Methods:
-
-    startGatewaySession()                                           ==> (bool) did session start?
-    addGatewayProduct($name, $amount[, $quantity, $description])    ==> (bool) was product added?
-    verifyGatewaySignature($signature, $checkoutId, $amount)        ==> (bool) is signature valid?
-    getGatewayURL($destinationId[, $orderId, $discount, $shipping, $tax, $notes, $callback, $metadata])    ==> (string) checkout URL
-    
-Helper Methods:
-
-    getError()          ==> (string) error message
-    parseDwollaID($id)  ==> (bool) is valid Dwolla ID?
-    setMode($mode)      ==> (bool) did mode change?
-    setDebug($mode)     ==> (bool) set debug [verbose] mode
-    setSandbox($mode)   ==> (bool) changes API URL to Sandbox/UAT URL
+```
+cd tests
+../vendor/bin/phpunit
+```
 
 ## Changelog
 
-1.6.10
-* Fixed URL for Transactions Listing and Funding Sources Listing.
-
-1.6.9
-* Fixed casing on new offsite-gateway endpoint, added optional metadata parameter to `getGatewayURL()`.
-* Fixed checkout ID return by resolving array properly (thanks @echodreamz!)
-
-1.6.8
-* Fixed `client_id` vs `key` and `client_secret` vs `secret` mismatch.
-
-1.6.7
-* Added `getAutoWithdrawalStatus()` and `toggleAutoWithdrawalStatus()` functions for `accounts/autowithdraw` endpoint functionality.
-* Changed `getGatewayUrl()` to point to new off-site gateway endpoint (issue #32, thanks @kzap!).
-
-1.6.6
-* Instead of errors reporting "Server responded with: 0", we now dump out the specific cURL error behind it.
-* Increase request timeout from 5 seconds to 15 seconds.
-
-1.6.5
-* Fixed bugs with the massPayDetails function (thanks @bcgood)!
-
-1.6.4
-* Fixed bugs with $total (thanks @PrplHaz4)!
-
-1.6.3
-* Updated getGatewayUrl to match new endpoint specs (thanks again, @PrplHaz4)
-
-1.6.2
-* Improved error handling for getGatewayUrl (thanks @PrplHaz4)!
-
-1.6.1
-* Updated MassPay bindings to point to new Dwolla REST API
-
-1.6.0
-* Added additionalFees support to send() function (thanks @sampath!)
-
-1.5.9
-* Addressed [issue #21](https://github.com/Dwolla/dwolla-php/issues/21) (thanks @teddyKenshiro!)
-
-1.5.8
-* Removed all hardcoded URLs to be current with dynamic changes (re: sandbox and other URLs)
-
-1.5.7
-* Fixed facilitator fee bug and "can't set error message" issue #18 (thanks @sampath and @gpszymczak!)
-
-1.5.6
-* Fixed Sandbox support issues with getAuthUrl(), requestToken(), and getGatewayURL(). (Thanks, @theophila!)
-
-1.5.5
-* Added Sandbox support via setSandbox(bool) to make it easier to switch between sandbox/non-sandbox testing. 
-
-1.5.4
-* Add guestSend() and added param include_details back to massPayDetails().  (Thanks, @tim-peterson!)
-
-1.5.3
-
-* Implement a replacement for getallheaders for non-Apache envs (Thanks, @PrplHaz4)
-
-1.5.2
-
-* Add error handling for requestToken() (Thanks, CFG / @CoGoFinance)
-* Add more curl debug reporting
-
-1.5.1
-
-* Fixed the transaction/listings() delimiter (Thanks, @klobyone)
-
-1.5
-
-* Added massPayCreate(), massPayDetails()
-* Added MassPay examples
-
-1.4.1
-
-* Fix me() method by adding trailing slash (Thanks, @brettneese)
-
-1.4
-
-* Fix offsite gateway signature verification fn
-* Add Webhook signature verification fn
-* Add Webhook signature verification example
-
-1.3.2
-
-* Modify transaction/byId to use app creds rather than oauth token (thanks to @chrishiestand)
-
-1.3.1
-
-* Implemented nearbyContacts (thanks to @brettneese)
-
-1.3
-
-* Fixed CAINFO cert issue on non-Win machines
-* Add users/nearby() method
-* Add contacts/nearby() method
-* Add requests/pending() method
-* Add requests/byId() method
-* Add requests/fulfill() method
-* Add requests/cancel() method
-* Add fundingSources/withdraw() method
-* Add fundingSources/deposit() method
-* Add fundingSources/add() method
-* Add fundingSources/verify() method
-* Clean up examples
-* Add debug mode for verbose operations
-
-1.2.6
-
-* Fix listings() method
-
-1.2.5
-
-* Set an error message when signature validation fails
-
-1.2.4
-
-* Round the offsite gateway total amount
-
-1.2.3
-
-* Add support for offsite gateway's guest checkout mode
-
-1.2.2 (Thanks to Chris Hiestand)
-
-* Added the fundsSource parameter to the Send() method
-
-1.2.0 (Thanks to Jeremy Kendall)
-
-* Major code refactor, reformat to PSR
-* Changed license to MIT License
-* Added register user example
-
-1.1.0 (Thanks to Jeremy Kendall)
-
-* Added tests
-* Added support for composer
-* Renamed _keys.php to _keys.dist.php
-
-1.0.0
-
-* Added support for Dwolla's offsite gateway
-* Refactored methods
-* Extended documentation
+2.0.0
+* Initial release
 
 ## Credits
 
-- Michael Schonfeld
-- Jeremy Kendall &lt;http://about.me/jeremykendall&gt;
+This wrapper is based on [Guzzle](https://github.com/guzzle/guzzle) for REST capability and uses [PHPUnit](https://phpunit.de/) for unit testing and [Travis](https://travis-ci.org/) for automagical build verification. 
 
-## Support
+Initially written by [David Stancu](http://davidstancu.me) (david@dwolla.com).
 
-- Get support on our forum [by clicking here](https://discuss.dwolla.com/category/api-support).
+## License
 
-## References / Documentation
+Copyright (c) 2014 Dwolla Inc, David Stancu
 
-http://developers.dwolla.com/dev
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## License 
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-(The MIT License)
-
-Copyright (c) 2012 Dwolla &lt;michael@dwolla.com&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
