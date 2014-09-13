@@ -11,7 +11,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Installation
 
-`dwolla-php` is available on [Packagist](http://packagist.org), and therefore can be installed automagically via [Composer](http://getcomposer.org).
+`dwolla-php` is available on [Packagist](https://packagist.org/packages/dwolla/dwolla-php), and therefore can be installed automagically via [Composer](http://getcomposer.org).
 
 **The PHP JSON and CURL extensions are required for `dwolla-php` to operate.** 
 
