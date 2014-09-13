@@ -1,9 +1,9 @@
-dwollaphp
+dwolla-php
 =========
 
-[![Build Status](https://travis-ci.org/mach-kernel/dwollaphp.svg?branch=master)](https://travis-ci.org/mach-kernel/dwollaphp)
+[![Build Status](https://travis-ci.org/mach-kernel/dwolla-php.svg?branch=master)](https://travis-ci.org/mach-kernel/dwolla-php)
 
-The new and improved Dwolla library based off of the Guzzle REST client. `dwollaphp` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
+The new and improved Dwolla library based off of the Guzzle REST client. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
 
 ## Version
 
@@ -11,28 +11,28 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Installation
 
-`dwollaphp` is available on [Packagist](http://packagist.org), and therefore can be installed automagically via [Composer](http://getcomposer.org).
+`dwolla-php` is available on [Packagist](http://packagist.org), and therefore can be installed automagically via [Composer](http://getcomposer.org).
 
-**The PHP JSON and CURL extensions are required for `dwollaphp` to operate.** 
+**The PHP JSON and CURL extensions are required for `dwolla-php` to operate.** 
 
 *To install without adding to `composer.json`:*
 
 ```
-composer install dwollaphp
+composer install dwolla-php
 ```
 
 *To add to `composer.json` and make this a permanent dependency of your package:*
 ```
-composer require "dwolla/dwollaphp=2.*"
+composer require "dwolla/dwolla-php=2.*"
 composer update && composer install
 ```
 
 ## Quickstart
 
-`dwollaphp` makes it easy for developers to hit the ground running with our API. Before attempting the following, you should ideally create [an application key and secret](https://www.dwolla.com/applications).
+`dwolla-php` makes it easy for developers to hit the ground running with our API. Before attempting the following, you should ideally create [an application key and secret](https://www.dwolla.com/applications).
 
 * Set any variables in `_settings.php` or the `Settings` class. All fields are public.
-* Instantiate `dwollaphp` with the class that contains the endpoints you require.
+* Instantiate `dwolla-php` with the class that contains the endpoints you require.
 * Use at will!
 
 ```php
@@ -48,7 +48,7 @@ print_r($Account->basic('812-121-7199'));
 
 ---
 
-There are 8 quickstart files which will walk you through working with `dwollaphp`'s classes/endpoint groupings. 
+There are 8 quickstart files which will walk you through working with `dwolla-php`'s classes/endpoint groupings. 
 
 * `account.php`: Retrieve account information, such as balance.
 * `checkouts.php`: Offsite-gateway endpoints, server-to-server checkout example.
@@ -61,7 +61,7 @@ There are 8 quickstart files which will walk you through working with `dwollaphp
 
 ## Structure
 
-`dwollaphp` is a conglomerate of multiple classes; each file in the `lib/` directory contains a class which contains all the endpoints for that certain category ([similar to Dwolla's developer documentation](https://developers.dwolla.com/dev/docs)). 
+`dwolla-php` is a conglomerate of multiple classes; each file in the `lib/` directory contains a class which contains all the endpoints for that certain category ([similar to Dwolla's developer documentation](https://developers.dwolla.com/dev/docs)). 
 
 ### Endpoint Classes / Methods
 
@@ -120,7 +120,7 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
 
 ## Unit Testing
 
-`dwollaphp` uses [PHPUnit](https://phpunit.de/) for unit testing. These tests do not test integration and will occassionally show console API errors due to 'dummy' data being used. Integration testing is planned sometime in the future. 
+`dwolla-php` uses [PHPUnit](https://phpunit.de/) for unit testing. These tests do not test integration and will occassionally show console API errors due to 'dummy' data being used. Integration testing is planned sometime in the future. 
 
 To run the tests, install `require\dev` from `composer.json` and run:
 
