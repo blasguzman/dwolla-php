@@ -31,15 +31,15 @@
             "Dwolla\\" : "lib/"
         },
         "files": [
-            "lib/client.php",
-            "lib/account.php",
-            "lib/checkouts.php",
-            "lib/contacts.php",
-            "lib/fundingSources.php",
-            "lib/masspay.php",
-            "lib/oauth.php",
-            "lib/requests.php",
-            "lib/transactions.php"
+            "/dwolla/dwolla-php/lib/client.php",
+            "/dwolla/dwolla-php/lib/account.php",
+            "/dwolla/dwolla-php/lib/checkouts.php",
+            "/dwolla/dwolla-php/lib/contacts.php",
+            "/dwolla/dwolla-php/lib/fundingSources.php",
+            "/dwolla/dwolla-php/lib/masspay.php",
+            "/dwolla/dwolla-php/lib/oauth.php",
+            "/dwolla/dwolla-php/lib/requests.php",
+            "/dwolla/dwolla-php/lib/transactions.php"
         ]
     }
 }
