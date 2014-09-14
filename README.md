@@ -18,7 +18,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 *To install without adding to `composer.json`:*
 
 ```
-composer install dwolla-php
+composer install dwolla/dwolla-php
 ```
 
 *To add to `composer.json` and make this a permanent dependency of your package:*

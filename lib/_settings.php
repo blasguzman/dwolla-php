@@ -14,8 +14,6 @@
 
 namespace Dwolla;
 
-require_once '../vendor/autoload.php';
-
 // Instead of manually setting multiple variables in the main constructor, we just use one big settings class.
 
 class Settings {
