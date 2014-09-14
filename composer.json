@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Dwolla" : "lib/"
+            "dwolla/dwolla-php" : "lib/"
         }
     }
 }

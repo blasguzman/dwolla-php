@@ -21,8 +21,7 @@
 
 namespace Dwolla;
 
-require_once('_settings.php');
-require_once('../vendor/autoload.php');
+require_once '_settings.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
