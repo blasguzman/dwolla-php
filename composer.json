@@ -31,7 +31,15 @@
             "Dwolla\\" : "lib/"
         },
         "files": [
-            "lib/"
+            "lib/client.php",
+            "lib/account.php",
+            "lib/checkouts.php",
+            "lib/contacts.php",
+            "lib/fundingSources.php",
+            "lib/masspay.php",
+            "lib/oauth.php",
+            "lib/requests.php",
+            "lib/transactions.php"
         ]
     }
 }
