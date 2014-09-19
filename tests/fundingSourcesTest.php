@@ -2,8 +2,6 @@
 
 require_once('../vendor/autoload.php');
 
-require ('../lib/fundingSources.php');
-
 use Dwolla\fundingSources;
 
 use GuzzleHttp\Stream\Stream;

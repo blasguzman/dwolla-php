@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.0
+2.0.1
 
 ## Installation
 
@@ -131,8 +131,11 @@ cd tests
 
 ## Changelog
 
+2.0.1
+* Fixed settings class inheritance issue,  made unit tests use autoload file. 
+
 2.0.0
-* Initial release
+* Initial release.
 
 ## Credits
 

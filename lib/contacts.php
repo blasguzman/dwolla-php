@@ -30,7 +30,7 @@ class Contacts extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => RestClient::$settings->oauth_token
+            'oauth_token' => $this->settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -52,8 +52,8 @@ class Contacts extends RestClient {
         if (!$lon) { return RestClient::_error("nearby() requires `$lon` parameter.\n"); }
 
         $p = [
-            'client_id' => RestClient::$settings->client_id,
-            'client_secret' => RestClient::$settings->client_secret,
+            'client_id' => $this->settings->client_id,
+            'client_secret' => $this->settings->client_secret,
             'latitude' => $lat,
             'longitude' => $lon
         ];

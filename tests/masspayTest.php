@@ -2,8 +2,6 @@
 
 require_once('../vendor/autoload.php');
 
-require ('../lib/masspay.php');
-
 use Dwolla\MassPay;
 
 use GuzzleHttp\Stream\Stream;

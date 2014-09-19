@@ -2,8 +2,6 @@
 
 require_once('../vendor/autoload.php');
 
-require ('../lib/oauth.php');
-
 use Dwolla\OAuth;
 
 use GuzzleHttp\Stream\Stream;

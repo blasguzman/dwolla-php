@@ -2,8 +2,6 @@
 
 require_once('../vendor/autoload.php');
 
-require ('../lib/checkouts.php');
-
 use Dwolla\Checkouts;
 
 use GuzzleHttp\Stream\Stream;

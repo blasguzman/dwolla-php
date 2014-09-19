@@ -2,8 +2,6 @@
 
 require_once('../vendor/autoload.php');
 
-require ('../lib/transactions.php');
-
 use Dwolla\Transactions;
 
 use GuzzleHttp\Stream\Stream;

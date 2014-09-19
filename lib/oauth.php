@@ -33,11 +33,11 @@ class OAuth extends RestClient {
      * @return string
      */
     public function genAuthUrl($redirect = false, $scope = false) {
-        if (!$scope) { $scope = RestClient::$settings->oauth_scope; }
+        if (!$scope) { $scope = $this->settings->oauth_scope; }
 
-        return RestClient::$settings->host
+        return $this->settings->host
         . 'oauth/v2/authenticate?client_id='
-        . urlencode(RestClient::$settings->client_id)
+        . urlencode($this->settings->client_id)
         . "&response_type=code&scope="
         . urlencode($scope)
         . ($redirect ? "&redirect_uri=" . urlencode($redirect) : "");
@@ -56,8 +56,8 @@ class OAuth extends RestClient {
         if (!$code) { return RestClient::_error("get() requires `$code` parameter.\n"); }
 
         $params = [
-            'client_id' => RestClient::$settings->client_id,
-            'client_secret' => RestClient::$settings->client_secret,
+            'client_id' => $this->settings->client_id,
+            'client_secret' => $this->settings->client_secret,
             'grant_type' => 'authorization_code',
             'code' => $code
         ];
@@ -77,8 +77,8 @@ class OAuth extends RestClient {
         if (!$refreshToken) { return RestClient::_error("refresh() requires `$refreshToken` parameter.\n"); }
 
         $params = [
-            'client_id' => RestClient::$settings->client_id,
-            'client_secret' => RestClient::$settings->client_secret,
+            'client_id' => $this->settings->client_id,
+            'client_secret' => $this->settings->client_secret,
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken
         ];

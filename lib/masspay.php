@@ -38,8 +38,8 @@ class MassPay extends RestClient {
         if (!$items) { return RestClient::_error("create() requires `$items` parameter.\n"); }
 
         $p = [
-            'oauth_token' => RestClient::$settings->oauth_token,
-            'pin' => RestClient::$settings->pin,
+            'oauth_token' => $this->settings->oauth_token,
+            'pin' => $this->settings->pin,
             'fundsSource' => $fundsSource,
             'items' => $items
         ];
@@ -62,7 +62,7 @@ class MassPay extends RestClient {
 
         return RestClient::_get('/masspay/' . $id,
             [
-                'oauth_token' => RestClient::$settings->oauth_token
+                'oauth_token' => $this->settings->oauth_token
             ]);
     }
 
@@ -78,7 +78,7 @@ class MassPay extends RestClient {
         if (!$id) { return RestClient::_error("getJobItems() requires `$id` parameter.\n"); }
 
         $p = [
-            'oauth_token' => RestClient::$settings->oauth_token
+            'oauth_token' => $this->settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -100,7 +100,7 @@ class MassPay extends RestClient {
 
         return RestClient::_get('/masspay/' . $job_id . '/items/' . $item_id,
             [
-                'oauth_token' => RestClient::$settings->oauth_token
+                'oauth_token' => $this->settings->oauth_token
             ]);
     }
 
@@ -113,7 +113,7 @@ class MassPay extends RestClient {
     public function listJobs() {
         return RestClient::_get('/masspay/',
             [
-                'oauth_token' => RestClient::$settings->oauth_token
+                'oauth_token' => $this->settings->oauth_token
             ]);
     }
 }

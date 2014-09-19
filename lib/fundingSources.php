@@ -37,7 +37,7 @@ class fundingSources extends RestClient {
 
         return RestClient::_get('/fundingsources/' . $funding_id,
             [
-                'oauth_token' => RestClient::$settings->oauth_token
+                'oauth_token' => $this->settings->oauth_token
             ]);
     }
 
@@ -51,7 +51,7 @@ class fundingSources extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => RestClient::$settings->oauth_token
+            'oauth_token' => $this->settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -78,7 +78,7 @@ class fundingSources extends RestClient {
 
         return RestClient::_post('/fundingsources/',
             [
-                'oauth_token' => RestClient::$settings->oauth_token,
+                'oauth_token' => $this->settings->oauth_token,
                 'account_number' => $account,
                 'routing_number' => $routing,
                 'account_type' => $type,
@@ -104,7 +104,7 @@ class fundingSources extends RestClient {
 
         return RestClient::_post('/fundingsources/' . $funding_id . '/verify',
             [
-                'oauth_token' => RestClient::$settings->oauth_token,
+                'oauth_token' => $this->settings->oauth_token,
                 'deposit1' => $dep1,
                 'deposit2' => $dep2
             ]);
@@ -126,8 +126,8 @@ class fundingSources extends RestClient {
 
         return RestClient::_post('/fundingsources/' . $funding_id . '/withdraw',
             [
-                'oauth_token' => RestClient::$settings->oauth_token,
-                'pin' => RestClient::$settings->pin,
+                'oauth_token' => $this->settings->oauth_token,
+                'pin' => $this->settings->pin,
                 'amount' => $amount
             ]);
     }
@@ -148,8 +148,8 @@ class fundingSources extends RestClient {
 
         return RestClient::_post('/fundingsources/' . $funding_id . '/deposit',
             [
-                'oauth_token' => RestClient::$settings->oauth_token,
-                'pin' => RestClient::$settings->pin,
+                'oauth_token' => $this->settings->oauth_token,
+                'pin' => $this->settings->pin,
                 'amount' => $amount
             ]);
     }

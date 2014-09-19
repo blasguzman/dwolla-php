@@ -2,8 +2,6 @@
 
 require_once('../vendor/autoload.php');
 
-require ('../lib/contacts.php');
-
 use Dwolla\Contacts;
 
 use GuzzleHttp\Stream\Stream;
