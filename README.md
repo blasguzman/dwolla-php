@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.1
+2.0.2
 
 ## Installation
 
@@ -130,6 +130,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.0.2
+* Fixed fundsSource parameter in refund function, thanks @echodreamz.
 
 2.0.1
 * Fixed settings class inheritance issue,  made unit tests use autoload file. 

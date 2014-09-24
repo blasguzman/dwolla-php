@@ -107,6 +107,7 @@ class Transactions extends RestClient {
         $p = [
             'oauth_token' => $this->settings->oauth_token,
             'pin' => $this->settings->pin,
+	    'fundsSource' => $fundingSource,
             'transactionId' => $id,
             'amount' => $amount
         ];

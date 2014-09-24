@@ -55,6 +55,7 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->Transactions->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
         $this->assertEquals($this->Transactions->settings->pin, json_decode($this->history->getLastRequest()->getBody(), true)['pin']);
         $this->assertEquals('12345', json_decode($this->history->getLastRequest()->getBody(), true)['transactionId']);
+	$this->assertEquals('Balance', json_decode($this->history->getLastRequest()->getBody(), true)['fundsSource']);
         $this->assertEquals(5.50, json_decode($this->history->getLastRequest()->getBody(), true)['amount']);
     }
 
