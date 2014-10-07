@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.2
+2.0.3
 
 ## Installation
 
@@ -130,6 +130,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.0.3
+* Changed token retrieval methods to POST to avoid querystring errors with GET and invalid access tokens/code/etc.
 
 2.0.2
 * Fixed fundsSource parameter in refund function, thanks @echodreamz.

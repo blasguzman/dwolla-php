@@ -63,7 +63,7 @@ class OAuth extends RestClient {
         ];
 
         if ($redirect) { $params['redirect_uri'] = $redirect; }
-        return RestClient::_get('token', $params, 'oauth/v2/', false);
+        return RestClient::_post('token', $params, 'oauth/v2/', false);
     }
 
     /**
@@ -83,6 +83,6 @@ class OAuth extends RestClient {
             'refresh_token' => $refreshToken
         ];
 
-        return RestClient::_get('token', $params, 'oauth/v2/', false);
+        return RestClient::_post('token', $params, 'oauth/v2/', false);
     }
 }
