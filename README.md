@@ -35,9 +35,30 @@ composer update && composer install
 * Instantiate `dwolla-php` with the class that contains the endpoints you require.
 * Use at will!
 
+### Use variables in `_settings.php`
+
 ```php
 require '../lib/account.php';
 $Account = new Dwolla\Account();
+
+/**
+ * Example 1: Get basic information for
+ * a Dwolla user using their Dwolla ID.
+ */
+print_r($Account->basic('812-121-7199'));
+```
+
+### Set your own
+
+** Visit `accountInst.php` to see an example of the following. **
+
+```php
+require '../lib/account.php';
+$Account = new Dwolla\Account();
+
+$Account->settings->client_id = "MY KEY";
+$Account->settings->client_secret = "MY SECRET";
+$Account->settings->sandbox = true;
 
 /**
  * Example 1: Get basic information for
