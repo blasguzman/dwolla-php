@@ -79,7 +79,7 @@ class Checkouts extends RestClient {
         if (!$purchaseOrder) { return RestClient::_error("create() requires `$purchaseOrder` parameter.\n"); }
         if (is_array($purchaseOrder)) {
             if (!$purchaseOrder['destinationId']) { return RestClient::_error("`$purchaseOrder` has no `destinationId` key."); }
-            if (!$this->cart && !$purchaseOrder['total']) { return RestClient::_error("`$purchaseOrder` has no `items' key. Create a cart or pass in your own items."); }
+            if (!$this->cart && !$purchaseOrder['total']) { return RestClient::_error("`$purchaseOrder` has no `total` amount. Create a cart or pass in a total order amount."); }
         }
         else { return RestClient::_error("createCheckout() requires `$purchaseOrder` to be of type array."); }
 
