@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.3
+2.0.4
 
 ## Installation
 
@@ -18,7 +18,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 *To install without adding to `composer.json`:*
 
 ```
-composer install dwolla/dwolla-php
+composer require dwolla/dwolla-php
 ```
 
 *To add to `composer.json` and make this a permanent dependency of your package:*
@@ -151,6 +151,11 @@ cd tests
 ```
 
 ## Changelog
+
+2.0.4
+* Fixed `Checkouts->Create`.  It now requires `total` to be included in `purchaseOrder` instead of `items` (`orderItems`).
+* Revise `composer.json` keywords
+* Fix README library installation command.  Composer command is `require` instead of `install`.
 
 2.0.3
 * Changed token retrieval methods to POST to avoid querystring errors with GET and invalid access tokens/code/etc.
