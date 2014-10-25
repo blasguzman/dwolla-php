@@ -31,12 +31,9 @@ class Settings {
     public $sandbox_host = 'https://uat.dwolla.com/';
     public $default_postfix = 'oauth/rest';
 
-    // Do NOT touch this, the library will set this on its own.
-    public $host;
-
     // Client behavior
     public $sandbox = true;
-    public $debug = false;
+    public $debug = true;
     public $browserMessages = false;
     public $rest_timeout = 15;
     public $proxy = false;

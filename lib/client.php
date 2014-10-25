@@ -94,6 +94,16 @@ class RestClient {
         return $response['Response'];
     }
 
+
+    /**
+     * Returns default host URL dependent on sandbox flag.
+     *
+     * @return {String} Host
+     */
+    protected function _host() {
+        return self::$settings->sandbox ? self::$settings->sandbox_host : self::$settings->production_host;
+    }
+
     /**
      * Wrapper around Guzzle POST request.
      *
@@ -107,7 +117,7 @@ class RestClient {
     protected function _post($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->post(($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
+            $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
         }
         catch (RequestException $exception) {
             if (self::$settings->debug){
@@ -144,7 +154,7 @@ class RestClient {
     protected function _get($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->get(($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
+            $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
         }
         catch (RequestException $exception) {
             if (self::$settings->debug){
@@ -179,7 +189,6 @@ class RestClient {
         $this->settings = self::$settings;
 
         $p = [
-            'base_url' => self::$settings->host,
             'defaults' => [
                 'headers' => ['Content-Type' => 'application/json'],
                 'timeout' => self::$settings->rest_timeout
