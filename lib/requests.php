@@ -39,7 +39,7 @@ class Requests extends RestClient {
         if (!$amount) { return RestClient::_error("create() requires `$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
+            'oauth_token' => self::$settings->oauth_token,
             'sourceId' => $sourceId,
             'amount' => $amount
         ];
@@ -59,7 +59,7 @@ class Requests extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token
+            'oauth_token' => self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -80,7 +80,7 @@ class Requests extends RestClient {
 
         return RestClient::_get('/requests/' . $request_id,
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -96,7 +96,7 @@ class Requests extends RestClient {
 
         return RestClient::_post('/requests/' . $request_id . '/cancel',
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -114,8 +114,8 @@ class Requests extends RestClient {
         if (!$amount) { return RestClient::_error("fulfill() requires `$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
+            'oauth_token' => self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
             'amount' => $amount
         ];
 

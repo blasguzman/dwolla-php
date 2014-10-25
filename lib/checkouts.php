@@ -84,8 +84,8 @@ class Checkouts extends RestClient {
         else { return RestClient::_error("createCheckout() requires `$purchaseOrder` to be of type array."); }
 
         $p = [
-            'client_id' => $this->settings->client_id,
-            'client_secret' => $this->settings->client_secret,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret,
             'purchaseOrder' => $purchaseOrder
         ];
 
@@ -116,7 +116,7 @@ class Checkouts extends RestClient {
         $id = RestClient::_post('/offsitegateway/checkouts', $p);
         if ($id['CheckoutId']) {
             return array_merge($id,
-                [ 'URL' => $this->settings->host . "payment/checkout/" . $id['CheckoutId' ]]);
+                [ 'URL' => self::_host() . "payment/checkout/" . $id['CheckoutId' ]]);
         }
         else {
             return RestClient::_error("Unable to create checkout due to API error.");
@@ -136,8 +136,8 @@ class Checkouts extends RestClient {
 
         return RestClient::_get('/offsitegateway/checkouts/'. $id,
             [
-                'client_id' => $this->settings->client_id,
-                'client_secret' => $this->settings->client_secret
+                'client_id' => self::$settings->client_id,
+                'client_secret' => self::$settings->client_secret
             ]);
     }
 
@@ -153,8 +153,8 @@ class Checkouts extends RestClient {
 
         return RestClient::_post('/offsitegateway/checkouts/' . $id . '/complete',
             [
-                'client_id' => $this->settings->client_id,
-                'client_secret' => $this->settings->client_secret
+                'client_id' => self::$settings->client_id,
+                'client_secret' => self::$settings->client_secret
             ]);
     }
 

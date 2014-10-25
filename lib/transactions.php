@@ -38,8 +38,8 @@ class Transactions extends RestClient {
         if (!$amount) { return RestClient::_error("send() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
+            'oauth_token' =>self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount
         ];
@@ -59,9 +59,9 @@ class Transactions extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'client_id' => $this->settings->client_id,
-            'client_secret' => $this->settings->client_secret
+            'oauth_token' => self::$settings->oauth_token,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -82,9 +82,9 @@ class Transactions extends RestClient {
 
         return RestClient::_get('/transactions/' . $id,
             [
-                'oauth_token' => $this->settings->oauth_token,
-                'client_id' => $this->settings->client_id,
-                'client_secret' => $this->settings->client_secret
+                'oauth_token' => self::$settings->oauth_token,
+                'client_id' => self::$settings->client_id,
+                'client_secret' => self::$settings->client_secret
             ]);
     }
 
@@ -105,9 +105,9 @@ class Transactions extends RestClient {
         if (!$amount) { return RestClient::_error("refund() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
-	    'fundsSource' => $fundingSource,
+            'oauth_token' => self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
+	        'fundsSource' => $fundingSource,
             'transactionId' => $id,
             'amount' => $amount
         ];
@@ -126,7 +126,7 @@ class Transactions extends RestClient {
      */
     public function stats($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token
+            'oauth_token' => self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
