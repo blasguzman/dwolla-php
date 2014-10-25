@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.4
+2.0.5
 
 ## Installation
 
@@ -151,6 +151,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.0.5
+* Fixed "stuck hostname" bug.
 
 2.0.4
 * Fixed `Checkouts->Create`.  It now requires `total` to be included in `purchaseOrder` instead of `items` (`orderItems`).

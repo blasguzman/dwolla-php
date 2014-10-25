@@ -33,7 +33,7 @@ class Settings {
 
     // Client behavior
     public $sandbox = true;
-    public $debug = true;
+    public $debug = false;
     public $browserMessages = false;
     public $rest_timeout = 15;
     public $proxy = false;

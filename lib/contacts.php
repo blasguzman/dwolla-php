@@ -35,7 +35,7 @@ class Contacts extends RestClient {
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/contacts', $p);
+        return self::_get('/contacts', $p);
     }
 
     /**
@@ -48,8 +48,8 @@ class Contacts extends RestClient {
      * @return {Array} Returned spots.
      */
     public function nearby($lat, $lon, $params = false) {
-        if (!$lat) { return RestClient::_error("nearby() requires `$lat` parameter.\n"); }
-        if (!$lon) { return RestClient::_error("nearby() requires `$lon` parameter.\n"); }
+        if (!$lat) { return self::_error("nearby() requires `$lat` parameter.\n"); }
+        if (!$lon) { return self::_error("nearby() requires `$lon` parameter.\n"); }
 
         $p = [
             'client_id' => self::$settings->client_id,
@@ -60,6 +60,6 @@ class Contacts extends RestClient {
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/contacts/nearby', $p);
+        return self::_get('/contacts/nearby', $p);
     }
 }
