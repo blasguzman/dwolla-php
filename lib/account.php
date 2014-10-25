@@ -38,8 +38,8 @@ class Account extends RestClient {
 
         return RestClient::_get('/users/' . $id,
             [
-                'client_id' => $this->settings->client_id,
-                'client_secret' => $this->settings->client_secret
+                'client_id' => self::$settings->client_id,
+                'client_secret' => self::$settings->client_secret
             ]);
     }
 
@@ -52,7 +52,7 @@ class Account extends RestClient {
     public function full() {
         return RestClient::_get('/users/',
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -65,7 +65,7 @@ class Account extends RestClient {
     public function balance() {
         return RestClient::_get('/balance/',
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -83,8 +83,8 @@ class Account extends RestClient {
 
         return RestClient::_get('/users/nearby',
             [
-                'client_id' => $this->settings->client_id,
-                'client_secret' => $this->settings->client_secret,
+                'client_id' => self::$settings->client_id,
+                'client_secret' => self::$settings->client_secret,
                 'latitude' => $lat,
                 'longitude' => $lon
             ]);
@@ -99,7 +99,7 @@ class Account extends RestClient {
     public function getAutoWithdrawalStatus() {
         return RestClient::_get('/accounts/features/auto_withdrawl',
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -119,7 +119,7 @@ class Account extends RestClient {
 
         return RestClient::_post('/accounts/features/auto_withdrawl',
             [
-                'oauth_token' => $this->settings->oauth_token,
+                'oauth_token' => self::$settings->oauth_token,
                 'enabled' => $status,
                 'fundingId' => $fundingId
             ]);
