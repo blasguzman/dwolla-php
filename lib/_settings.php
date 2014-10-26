@@ -37,4 +37,25 @@ class Settings {
     public $browserMessages = false;
     public $rest_timeout = 15;
     public $proxy = false;
+
+   /**
+     * PHP "magic" getter.
+     *
+     * @param $name
+     * @return $value
+     */
+    public function __get($name) {
+        return $this->$name;
+    }
+
+   /**
+     * PHP "magic" setter.
+     *
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value) {
+        $this->$name = $value;
+    }
+
 }

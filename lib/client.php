@@ -45,6 +45,26 @@ class RestClient {
     public static $client;
 
     /**
+     * PHP "magic" getter.
+     *
+     * @param $name
+     * @return $value
+     */
+    public function __get($name) {
+        return $this->$name;
+    }
+
+   /**
+     * PHP "magic" setter.
+     *
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value) {
+        $this->$name = $value;
+    }
+
+    /**
      * Echos output and logs to console (and js console to make browser debugging easier).
      *
      * @param $data {???} Can be anything.
