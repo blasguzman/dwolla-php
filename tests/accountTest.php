@@ -14,6 +14,8 @@ class AccountTest extends PHPUnit_Framework_TestCase
         $this->Account = new Account();
         $this->history = new History();
 
+        error_reporting(-1);
+
         $this->Account->client->getEmitter()->attach($this->history);
     }
 
