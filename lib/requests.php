@@ -35,18 +35,18 @@ class Requests extends RestClient {
      * @return {Integer} Request ID of submitted request.
      */
     public function create($sourceId, $amount, $params = false) {
-        if (!$sourceId) { return RestClient::_error("create() requires `$sourceId` parameter.\n"); }
-        if (!$amount) { return RestClient::_error("create() requires `$amount` parameter.\n"); }
+        if (!$sourceId) { return self::_error("create() requires `$sourceId` parameter.\n"); }
+        if (!$amount) { return self::_error("create() requires `$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
+            'oauth_token' => self::$settings->oauth_token,
             'sourceId' => $sourceId,
             'amount' => $amount
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_post('/requests/', $p);
+        return self::_post('/requests/', $p);
     }
 
     /**
@@ -59,12 +59,12 @@ class Requests extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token
+            'oauth_token' => self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/requests', $p);
+        return self::_get('/requests', $p);
     }
 
     /**
@@ -76,11 +76,11 @@ class Requests extends RestClient {
      * @return {Array} Information relevant to the request.
      */
     public function info($request_id) {
-        if (!$request_id) { return RestClient::_error("info() requires `$request_id` parameter.\n"); }
+        if (!$request_id) { return self::_error("info() requires `$request_id` parameter.\n"); }
 
-        return RestClient::_get('/requests/' . $request_id,
+        return self::_get('/requests/' . $request_id,
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -92,11 +92,11 @@ class Requests extends RestClient {
      * @return null
      */
     public function cancel($request_id) {
-        if (!$request_id) { return RestClient::_error("cancel() requires `$request_id` parameter.\n"); }
+        if (!$request_id) { return self::_error("cancel() requires `$request_id` parameter.\n"); }
 
-        return RestClient::_post('/requests/' . $request_id . '/cancel',
+        return self::_post('/requests/' . $request_id . '/cancel',
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -110,17 +110,17 @@ class Requests extends RestClient {
      * @return {Array} Information (transaction/request IDs) relevant to fulfilled request.
      */
     public function fulfill($request_id, $amount, $params = false) {
-        if (!$request_id) { return RestClient::_error("fulfill() requires `$request_id` parameter.\n"); }
-        if (!$amount) { return RestClient::_error("fulfill() requires `$amount` parameter.\n"); }
+        if (!$request_id) { return self::_error("fulfill() requires `$request_id` parameter.\n"); }
+        if (!$amount) { return self::_error("fulfill() requires `$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
+            'oauth_token' => self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
             'amount' => $amount
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_post('/requests/' . $request_id . '/fulfill', $p);
+        return self::_post('/requests/' . $request_id . '/fulfill', $p);
     }
 }

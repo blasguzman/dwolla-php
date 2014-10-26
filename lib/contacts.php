@@ -30,12 +30,12 @@ class Contacts extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token
+            'oauth_token' => self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/contacts', $p);
+        return self::_get('/contacts', $p);
     }
 
     /**
@@ -48,18 +48,18 @@ class Contacts extends RestClient {
      * @return {Array} Returned spots.
      */
     public function nearby($lat, $lon, $params = false) {
-        if (!$lat) { return RestClient::_error("nearby() requires `$lat` parameter.\n"); }
-        if (!$lon) { return RestClient::_error("nearby() requires `$lon` parameter.\n"); }
+        if (!$lat) { return self::_error("nearby() requires `$lat` parameter.\n"); }
+        if (!$lon) { return self::_error("nearby() requires `$lon` parameter.\n"); }
 
         $p = [
-            'client_id' => $this->settings->client_id,
-            'client_secret' => $this->settings->client_secret,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret,
             'latitude' => $lat,
             'longitude' => $lon
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/contacts/nearby', $p);
+        return self::_get('/contacts/nearby', $p);
     }
 }

@@ -11,6 +11,9 @@ class OAuthTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp() {
+        // As of 10/26/14 we test against all possible PHP errors.
+        error_reporting(-1);
+
         $this->OAuth = new OAuth();
         $this->history = new History();
 

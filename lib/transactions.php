@@ -34,19 +34,19 @@ class Transactions extends RestClient {
      * @return {Integer} Transaction ID of sent funds.
      */
     public function send($destinationId, $amount, $params = false) {
-        if (!$destinationId) { return RestClient::_error("send() requires `\$destinationId` parameter.\n"); }
-        if (!$amount) { return RestClient::_error("send() requires `\$amount` parameter.\n"); }
+        if (!$destinationId) { return self::_error("send() requires `\$destinationId` parameter.\n"); }
+        if (!$amount) { return self::_error("send() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
+            'oauth_token' =>self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_post('/transactions/send', $p);
+        return self::_post('/transactions/send', $p);
     }
 
     /**
@@ -59,14 +59,14 @@ class Transactions extends RestClient {
      */
     public function get($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'client_id' => $this->settings->client_id,
-            'client_secret' => $this->settings->client_secret
+            'oauth_token' => self::$settings->oauth_token,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/transactions', $p);
+        return self::_get('/transactions', $p);
     }
 
     /**
@@ -78,13 +78,13 @@ class Transactions extends RestClient {
      * @return {Array} Information about transaction.
      */
     public function info($id) {
-        if (!$id) { return RestClient::_error("info() requires `\$id` parameter.\n"); }
+        if (!$id) { return self::_error("info() requires `\$id` parameter.\n"); }
 
-        return RestClient::_get('/transactions/' . $id,
+        return self::_get('/transactions/' . $id,
             [
-                'oauth_token' => $this->settings->oauth_token,
-                'client_id' => $this->settings->client_id,
-                'client_secret' => $this->settings->client_secret
+                'oauth_token' => self::$settings->oauth_token,
+                'client_id' => self::$settings->client_id,
+                'client_secret' => self::$settings->client_secret
             ]);
     }
 
@@ -100,21 +100,21 @@ class Transactions extends RestClient {
      * @return {Array} Information about refund transaction.
      */
     public function refund($id, $fundingSource, $amount, $params = false) {
-        if (!$id) { return RestClient::_error("refund() requires `\$id` parameter.\n"); }
-        if (!$fundingSource) { return RestClient::_error("refund() requires `\$fundingSource` parameter.\n"); }
-        if (!$amount) { return RestClient::_error("refund() requires `\$amount` parameter.\n"); }
+        if (!$id) { return self::_error("refund() requires `\$id` parameter.\n"); }
+        if (!$fundingSource) { return self::_error("refund() requires `\$fundingSource` parameter.\n"); }
+        if (!$amount) { return self::_error("refund() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
-	    'fundsSource' => $fundingSource,
+            'oauth_token' => self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
+	        'fundsSource' => $fundingSource,
             'transactionId' => $id,
             'amount' => $amount
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_post('/transactions/refund', $p);
+        return self::_post('/transactions/refund', $p);
     }
 
     /**
@@ -126,11 +126,11 @@ class Transactions extends RestClient {
      */
     public function stats($params = false) {
         $p = [
-            'oauth_token' => $this->settings->oauth_token
+            'oauth_token' => self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/transactions/stats', $p);
+        return self::_get('/transactions/stats', $p);
     }
 }

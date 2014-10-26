@@ -35,7 +35,7 @@ class OAuth extends RestClient {
     public function genAuthUrl($redirect = false, $scope = false) {
         if (!$scope) { $scope = $this->settings->oauth_scope; }
 
-        return $this->settings->host
+        return self::_host()
         . 'oauth/v2/authenticate?client_id='
         . urlencode($this->settings->client_id)
         . "&response_type=code&scope="
@@ -53,17 +53,17 @@ class OAuth extends RestClient {
      * @return {Array} Access and refresh token pair.
      */
     public function get($code, $redirect = false) {
-        if (!$code) { return RestClient::_error("get() requires `$code` parameter.\n"); }
+        if (!$code) { return self::_error("get() requires `$code` parameter.\n"); }
 
         $params = [
-            'client_id' => $this->settings->client_id,
-            'client_secret' => $this->settings->client_secret,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret,
             'grant_type' => 'authorization_code',
             'code' => $code
         ];
 
         if ($redirect) { $params['redirect_uri'] = $redirect; }
-        return RestClient::_post('token', $params, 'oauth/v2/', false);
+        return self::_post('token', $params, 'oauth/v2/', false);
     }
 
     /**
@@ -74,15 +74,15 @@ class OAuth extends RestClient {
      * @return {Array} Access and refresh token pair.
      */
     public function refresh($refreshToken) {
-        if (!$refreshToken) { return RestClient::_error("refresh() requires `$refreshToken` parameter.\n"); }
+        if (!$refreshToken) { return self::_error("refresh() requires `$refreshToken` parameter.\n"); }
 
         $params = [
-            'client_id' => $this->settings->client_id,
-            'client_secret' => $this->settings->client_secret,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret,
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken
         ];
 
-        return RestClient::_post('token', $params, 'oauth/v2/', false);
+        return self::_post('token', $params, 'oauth/v2/', false);
     }
 }

@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.0.3
+ * @version 2.0.5
  * @link http://developers.dwolla.com
  */
 
@@ -43,6 +43,26 @@ class RestClient {
      * Placeholder for Guzzle REST client.
      */
     public static $client;
+
+    /**
+     * PHP "magic" getter.
+     *
+     * @param $name
+     * @return $value
+     */
+    public function __get($name) {
+        return $this->$name;
+    }
+
+   /**
+     * PHP "magic" setter.
+     *
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value) {
+        $this->$name = $value;
+    }
 
     /**
      * Echos output and logs to console (and js console to make browser debugging easier).
@@ -94,6 +114,16 @@ class RestClient {
         return $response['Response'];
     }
 
+
+    /**
+     * Returns default host URL dependent on sandbox flag.
+     *
+     * @return {String} Host
+     */
+    protected function _host() {
+        return self::$settings->sandbox ? self::$settings->sandbox_host : self::$settings->production_host;
+    }
+
     /**
      * Wrapper around Guzzle POST request.
      *
@@ -107,7 +137,7 @@ class RestClient {
     protected function _post($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->post(($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
+            $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
         }
         catch (RequestException $exception) {
             if (self::$settings->debug){
@@ -144,7 +174,7 @@ class RestClient {
     protected function _get($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->get(($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
+            $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
         }
         catch (RequestException $exception) {
             if (self::$settings->debug){
@@ -179,7 +209,6 @@ class RestClient {
         $this->settings = self::$settings;
 
         $p = [
-            'base_url' => self::$settings->host,
             'defaults' => [
                 'headers' => ['Content-Type' => 'application/json'],
                 'timeout' => self::$settings->rest_timeout

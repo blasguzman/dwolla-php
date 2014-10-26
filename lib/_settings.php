@@ -31,13 +31,31 @@ class Settings {
     public $sandbox_host = 'https://uat.dwolla.com/';
     public $default_postfix = 'oauth/rest';
 
-    // Do NOT touch this, the library will set this on its own.
-    public $host;
-
     // Client behavior
     public $sandbox = true;
     public $debug = false;
     public $browserMessages = false;
     public $rest_timeout = 15;
     public $proxy = false;
+
+   /**
+     * PHP "magic" getter.
+     *
+     * @param $name
+     * @return $value
+     */
+    public function __get($name) {
+        return $this->$name;
+    }
+
+   /**
+     * PHP "magic" setter.
+     *
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value) {
+        $this->$name = $value;
+    }
+
 }

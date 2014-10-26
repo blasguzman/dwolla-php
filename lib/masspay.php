@@ -34,19 +34,19 @@ class MassPay extends RestClient {
      * @return null
      */
     public function create($fundsSource, $items, $params = false) {
-        if (!$fundsSource) { return RestClient::_error("create() requires `$fundsSource` parameter.\n"); }
-        if (!$items) { return RestClient::_error("create() requires `$items` parameter.\n"); }
+        if (!$fundsSource) { return self::_error("create() requires `$fundsSource` parameter.\n"); }
+        if (!$items) { return self::_error("create() requires `$items` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token,
-            'pin' => $this->settings->pin,
+            'oauth_token' => self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
             'fundsSource' => $fundsSource,
             'items' => $items
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_post('/masspay/', $p);
+        return self::_post('/masspay/', $p);
     }
 
     /**
@@ -58,11 +58,11 @@ class MassPay extends RestClient {
      * @return null
      */
     public function getJob($id) {
-        if (!$id) { return RestClient::_error("getJob() requires `$id` parameter.\n"); }
+        if (!$id) { return self::_error("getJob() requires `$id` parameter.\n"); }
 
-        return RestClient::_get('/masspay/' . $id,
+        return self::_get('/masspay/' . $id,
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -75,15 +75,15 @@ class MassPay extends RestClient {
      * @return null
      */
     public function getJobItems($id, $params = false) {
-        if (!$id) { return RestClient::_error("getJobItems() requires `$id` parameter.\n"); }
+        if (!$id) { return self::_error("getJobItems() requires `$id` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $this->settings->oauth_token
+            'oauth_token' => self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return RestClient::_get('/masspay/' . $id . '/items', $p);
+        return self::_get('/masspay/' . $id . '/items', $p);
     }
 
     /**
@@ -95,12 +95,12 @@ class MassPay extends RestClient {
      * @return null
      */
     public function getItem($job_id, $item_id) {
-        if (!$job_id) { return RestClient::_error("getItem() requires `$job_id` parameter.\n"); }
-        if (!$item_id) { return RestClient::_error("getItem() requires `$item_id` parameter.\n"); }
+        if (!$job_id) { return self::_error("getItem() requires `$job_id` parameter.\n"); }
+        if (!$item_id) { return self::_error("getItem() requires `$item_id` parameter.\n"); }
 
-        return RestClient::_get('/masspay/' . $job_id . '/items/' . $item_id,
+        return self::_get('/masspay/' . $job_id . '/items/' . $item_id,
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -111,9 +111,9 @@ class MassPay extends RestClient {
      * @return {Array} MassPay jobs.
      */
     public function listJobs() {
-        return RestClient::_get('/masspay/',
+        return self::_get('/masspay/',
             [
-                'oauth_token' => $this->settings->oauth_token
+                'oauth_token' => self::$settings->oauth_token
             ]);
     }
 }
