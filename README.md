@@ -154,6 +154,9 @@ cd tests
 
 2.0.5
 * Fixed "stuck hostname" bug.
+* Fixed improper class resolution.
+* Added PHP magic methods `__get()` and `__set()` for compliance with PHP strict (`E_STRICT`).
+* All tests are now set to also test against *all* PHP errors with `error_reporting(-1)`.
 
 2.0.4
 * Fixed `Checkouts->Create`.  It now requires `total` to be included in `purchaseOrder` instead of `items` (`orderItems`).
