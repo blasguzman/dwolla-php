@@ -34,9 +34,9 @@ class Account extends RestClient {
      * @return {Array} Array of basic account information.
      */
     public function basic($id) {
-        if (!$id) { return RestClient::_error("basic() requires `\$id` parameter.\n"); }
+        if (!$id) { return self::_error("basic() requires `\$id` parameter.\n"); }
 
-        return RestClient::_get('/users/' . $id,
+        return self::_get('/users/' . $id,
             [
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret
@@ -50,7 +50,7 @@ class Account extends RestClient {
      * @return {Array} Array of full account information.
      */
     public function full() {
-        return RestClient::_get('/users/',
+        return self::_get('/users/',
             [
                 'oauth_token' => self::$settings->oauth_token
             ]);
@@ -63,7 +63,7 @@ class Account extends RestClient {
      * @return {Integer} Balance of account.
      */
     public function balance() {
-        return RestClient::_get('/balance/',
+        return self::_get('/balance/',
             [
                 'oauth_token' => self::$settings->oauth_token
             ]);
@@ -78,10 +78,10 @@ class Account extends RestClient {
      * @return {Array} Array with users, venues, and relevant info.
      */
     public function nearby($lat, $lon) {
-        if (!$lat) { return RestClient::_error("nearby() requires `\$lat` parameter.\n"); }
-        if (!$lon) { return RestClient::_error("nearby() requires `\$lon` parameter.\n"); }
+        if (!$lat) { return self::_error("nearby() requires `\$lat` parameter.\n"); }
+        if (!$lon) { return self::_error("nearby() requires `\$lon` parameter.\n"); }
 
-        return RestClient::_get('/users/nearby',
+        return self::_get('/users/nearby',
             [
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret,
@@ -97,7 +97,7 @@ class Account extends RestClient {
      * @return {Array} Status (with funding id if applicable)
      */
     public function getAutoWithdrawalStatus() {
-        return RestClient::_get('/accounts/features/auto_withdrawl',
+        return self::_get('/accounts/features/auto_withdrawl',
             [
                 'oauth_token' => self::$settings->oauth_token
             ]);
@@ -114,10 +114,10 @@ class Account extends RestClient {
      * @return {String} Either "Enabled" or "Disabled"
      */
     public function toggleAutoWithdrawalStatus($status, $fundingId) {
-        if (!$status) { return RestClient::_error("toggleAutoWithdrawalStatus() requires `\$status` parameter.\n"); }
-        if (!$fundingId) { return RestClient::_error("toggleAutoWithdrawalStatus() requires `\$fundingId` parameter.\n"); }
+        if (!$status) { return self::_error("toggleAutoWithdrawalStatus() requires `\$status` parameter.\n"); }
+        if (!$fundingId) { return self::_error("toggleAutoWithdrawalStatus() requires `\$fundingId` parameter.\n"); }
 
-        return RestClient::_post('/accounts/features/auto_withdrawl',
+        return self::_post('/accounts/features/auto_withdrawl',
             [
                 'oauth_token' => self::$settings->oauth_token,
                 'enabled' => $status,

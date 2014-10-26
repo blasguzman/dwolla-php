@@ -53,7 +53,7 @@ class OAuth extends RestClient {
      * @return {Array} Access and refresh token pair.
      */
     public function get($code, $redirect = false) {
-        if (!$code) { return RestClient::_error("get() requires `$code` parameter.\n"); }
+        if (!$code) { return self::_error("get() requires `$code` parameter.\n"); }
 
         $params = [
             'client_id' => self::$settings->client_id,
@@ -63,7 +63,7 @@ class OAuth extends RestClient {
         ];
 
         if ($redirect) { $params['redirect_uri'] = $redirect; }
-        return RestClient::_post('token', $params, 'oauth/v2/', false);
+        return self::_post('token', $params, 'oauth/v2/', false);
     }
 
     /**
@@ -74,7 +74,7 @@ class OAuth extends RestClient {
      * @return {Array} Access and refresh token pair.
      */
     public function refresh($refreshToken) {
-        if (!$refreshToken) { return RestClient::_error("refresh() requires `$refreshToken` parameter.\n"); }
+        if (!$refreshToken) { return self::_error("refresh() requires `$refreshToken` parameter.\n"); }
 
         $params = [
             'client_id' => self::$settings->client_id,
@@ -83,6 +83,6 @@ class OAuth extends RestClient {
             'refresh_token' => $refreshToken
         ];
 
-        return RestClient::_post('token', $params, 'oauth/v2/', false);
+        return self::_post('token', $params, 'oauth/v2/', false);
     }
 }
