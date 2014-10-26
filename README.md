@@ -50,7 +50,7 @@ print_r($Account->basic('812-121-7199'));
 
 ### Set your own
 
-**See `accountInst.php` to see an example of the following.**
+**See `accountInst.php` for an example of the following.**
 
 ```php
 require '../lib/account.php';
