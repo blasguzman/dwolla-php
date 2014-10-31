@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.0.5
+ * @version 2.0.6
  * @link http://developers.dwolla.com
  */
 
@@ -65,18 +65,46 @@ class RestClient {
     }
 
     /**
+     * Logs console messages to file for convenience.
+     * (Thank you, @redzarf for your contribution)
+     *
+     * @param $data {???} Can be anything.
+     */
+    protected function _logtofile($data) {
+        if (!empty(self::$settings->logfilePath) && file_exists(self::$settings->logfilePath . "/")) {
+            /*
+            $t             = microtime(true);
+            $micro         = sprintf("%06d", ($t - floor($t)) * 1000000);
+            $d             = new DateTime(date('Y-m-d H:i:s.' . $micro, $t));
+            $logDate       =;
+            $logEntry      = date("Y/m/d H:i:s") . "  $message\n";
+            */
+            file_put_contents(
+                self::$settings->logfilePath . "/" . date("Y-m-d") . ".log",
+                date("Y-m-d H:i:s") . '  ' . (is_array($data) ? print_r($data) : trim($data)) . "\n",
+                FILE_APPEND
+            );
+        }
+    }
+
+    /**
      * Echos output and logs to console (and js console to make browser debugging easier).
      *
      * @param $data {???} Can be anything.
      */
     protected function _console($data)
     {
-        if (self::$settings->browserMessages){
-            print("<script>console.log(");
-            is_array($data) ? print_r($data) : print($data);
-            print(");</script>\n\n");
+        if (self::$settings->debug) {
+            if (self::$settings->browserMessages) {
+                print("<script>console.log(");
+                is_array($data) ? print_r($data) : print($data);
+                print(");</script>\n\n");
+            }
+            if (!empty(self::$settings->logfilePath)) {
+                $this->_logtofile($data);
+            }
+            is_array($data) ? (print_r($data) && print("\n")) : print($data . "\n");
         }
-        is_array($data) ? (print_r($data) && print("\n")) : print($data . "\n");
     }
 
     /**
@@ -87,6 +115,7 @@ class RestClient {
      */
     protected function _error($message) {
         print("DwollaPHP: " . $message);
+        $this->_console("DwollaPHP: " . $message);
         return false;
     }
 
@@ -101,14 +130,11 @@ class RestClient {
     {
         if ($response['Success'] != true)
         {
-            if(self::$settings->debug)
-            {
-                $this->_console("DwollaPHP: An API error was encountered.\nServer Message:\n");
-                $this->_console($response['Message']);
-                if ($response['Response']) {
-                    $this->_console("Server Response:\n");
-                    $this->_console($response['Response']);
-                }
+            $this->_console("DwollaPHP: An API error was encountered.\nServer Message:\n");
+            $this->_console($response['Message']);
+            if ($response['Response']) {
+                $this->_console("Server Response:\n");
+                $this->_console($response['Response']);
             }
         }
         return $response['Response'];
@@ -140,6 +166,7 @@ class RestClient {
             $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
         }
         catch (RequestException $exception) {
+            $response = false;
             if (self::$settings->debug){
                 $this->_console("DwollaPHP: An error has occurred during a POST request.\nRequest Body:\n");
                 $this->_console($exception->getRequest());
@@ -149,9 +176,11 @@ class RestClient {
                 }
             }
         }
-        if ($response->getBody()){
-            // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-            return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+        if ($response) {
+            if ($response->getBody()) {
+                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+            }
         }
         else {
             if (self::$settings->debug) {
@@ -177,6 +206,7 @@ class RestClient {
             $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
         }
         catch (RequestException $exception) {
+            $response = false;
             if (self::$settings->debug){
                 $this->_console("DwollaPHP: An error has occurred during a GET request.\nRequest Body:\n");
                 $this->_console($exception->getRequest());
@@ -186,9 +216,11 @@ class RestClient {
                 }
             }
         }
-        if ($response->getBody()) {
-            // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-            return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+        if ($response) {
+            if ($response->getBody()) {
+                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+            }
         }
         else {
             if (self::$settings->debug) {

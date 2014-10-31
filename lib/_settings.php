@@ -35,6 +35,7 @@ class Settings {
     public $sandbox = true;
     public $debug = false;
     public $browserMessages = false;
+    public $logfilePath = '';
     public $rest_timeout = 15;
     public $proxy = false;
 

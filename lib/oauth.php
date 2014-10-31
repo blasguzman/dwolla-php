@@ -33,7 +33,7 @@ class OAuth extends RestClient {
      * @return string
      */
     public function genAuthUrl($redirect = false, $scope = false) {
-        if (!$scope) { $scope = $this->settings->oauth_scope; }
+        if (!$scope) { $scope = self::$settings->oauth_scope; }
 
         return self::_host()
         . 'oauth/v2/authenticate?client_id='
