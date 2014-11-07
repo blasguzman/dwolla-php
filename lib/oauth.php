@@ -37,7 +37,7 @@ class OAuth extends RestClient {
 
         return self::_host()
         . 'oauth/v2/authenticate?client_id='
-        . urlencode($this->settings->client_id)
+        . urlencode(self::$settings->client_id)
         . "&response_type=code&scope="
         . urlencode($scope)
         . ($redirect ? "&redirect_uri=" . urlencode($redirect) : "");
