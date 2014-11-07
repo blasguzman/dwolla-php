@@ -242,7 +242,11 @@ class RestClient {
 
         $p = [
             'defaults' => [
-                'headers' => ['Content-Type' => 'application/json'],
+                'headers' =>
+                            [
+                                'Content-Type' => 'application/json',
+                                'User-Agent' => 'dwolla-php/2'
+                            ],
                 'timeout' => self::$settings->rest_timeout
             ]
         ];
