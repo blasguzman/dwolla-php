@@ -155,6 +155,7 @@ cd tests
 2.0.6
 * Log to file feature added (thank you @redzarf for your pull request).
 * Improved error handling, `getBody()` called on non-object error has been resolved for failing requests.
+* Fix for ISE with OAuth token retrieval.
 
 2.0.5
 * Fixed "stuck hostname" bug.
