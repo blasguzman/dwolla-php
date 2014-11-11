@@ -56,14 +56,14 @@ class OAuth extends RestClient {
         if (!$code) { return self::_error("get() requires `$code` parameter.\n"); }
 
         $params = [
-            'client_id' => urlencode(self::$settings->client_id),
-            'client_secret' => urlencode(self::$settings->client_secret),
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret,
             'grant_type' => 'authorization_code',
-            'code' => urlencode($code)
+            'code' => $code
         ];
 
         if ($redirect) { $params['redirect_uri'] = urlencode($redirect); }
-        return self::_get('token', $params, 'oauth/v2/', false);
+        return self::_post('token', $params, 'oauth/v2/', false);
     }
 
     /**
