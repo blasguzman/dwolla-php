@@ -33,11 +33,11 @@ class OAuth extends RestClient {
      * @return string
      */
     public function genAuthUrl($redirect = false, $scope = false) {
-        if (!$scope) { $scope = $this->settings->oauth_scope; }
+        if (!$scope) { $scope = self::$settings->oauth_scope; }
 
         return self::_host()
         . 'oauth/v2/authenticate?client_id='
-        . urlencode($this->settings->client_id)
+        . urlencode(self::$settings->client_id)
         . "&response_type=code&scope="
         . urlencode($scope)
         . ($redirect ? "&redirect_uri=" . urlencode($redirect) : "");
@@ -62,7 +62,7 @@ class OAuth extends RestClient {
             'code' => $code
         ];
 
-        if ($redirect) { $params['redirect_uri'] = $redirect; }
+        if ($redirect) { $params['redirect_uri'] = urlencode($redirect); }
         return self::_post('token', $params, 'oauth/v2/', false);
     }
 

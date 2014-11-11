@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.5
+2.0.6
 
 ## Installation
 
@@ -152,9 +152,14 @@ cd tests
 
 ## Changelog
 
+2.0.6
+* Log to file feature added (thank you @redzarf for your pull request).
+* Improved error handling, `getBody()` called on non-object error has been resolved for failing requests.
+* Fix for ISE with OAuth token retrieval.
+
 2.0.5
 * Fixed "stuck hostname" bug.
-* Fixed improper class resolution (thanks @redzalf!).
+* Fixed improper class resolution (thanks @redzarf!).
 * Added PHP magic methods `__get()` and `__set()` for compliance with PHP strict (`E_STRICT`).
 * All tests are now set to also test against *all* PHP errors with `error_reporting(-1)`.
 

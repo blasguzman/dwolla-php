@@ -14,8 +14,14 @@
  */
 
 // We need the OAuth class in order to do anything
-require '../lib/oauth.php';
+require '../vendor/autoload.php';
 $OAuth = new Dwolla\OAuth();
+
+$OAuth->settings->sandbox = false;
+$OAuth->settings->debug = true;
+
+$OAuth->settings->client_id = "zbDwIC0dWCVU7cQtfvGwVwVjvxwQfjaTgkVi+FZOmKqPBzK5JG";
+$OAuth->settings->client_secret = "ckmgwJz9h/fZ09unyXxpupCyrmAMe0bnUiMHF/0+SDaR9RHe99";
 
 /**
  * Step 1: Generate an OAuth permissions page URL
@@ -34,7 +40,7 @@ $OAuth = new Dwolla\OAuth();
  * out yourself. The choice remains yours.
  */
 
-print($OAuth->genAuthUrl("http://requestb.in/19n5szz1"));
+print($OAuth->genAuthUrl("http://requestb.in/yxlywryx"));
 
 /**
  * Step 2: The redirect should provide you with a `code`
@@ -42,8 +48,8 @@ print($OAuth->genAuthUrl("http://requestb.in/19n5szz1"));
  * and refresh token pair.
  */
 
-$access_set = $OAuth->get("J9kkk2JbX7Yjl4L28fM13il46QI=", "http://requestb.in/19n5szz1");
-print_r($access_set);
+$access_set = $OAuth->get("Z/KHDIyWO/LboIGn3wGGs1+sRWg=", "http://requestb.in/yxlywryx");
+print($access_set);
 
 
 /**
