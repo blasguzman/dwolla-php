@@ -136,6 +136,7 @@ class RestClient {
                 $this->_console("Server Response:\n");
                 $this->_console($response['Response']);
             }
+            return $response['Message'];
         }
         return $response['Response'];
     }

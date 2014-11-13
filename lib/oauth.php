@@ -62,7 +62,7 @@ class OAuth extends RestClient {
             'code' => $code
         ];
 
-        if ($redirect) { $params['redirect_uri'] = urlencode($redirect); }
+        if ($redirect) { $params['redirect_uri'] = $redirect; }
         return self::_post('token', $params, 'oauth/v2/', false);
     }
 
