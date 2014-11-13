@@ -114,9 +114,9 @@ class Checkouts extends RestClient {
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
         $id = self::_post('/offsitegateway/checkouts', $p);
-        if ($id['CheckoutId']) {
+        if ($id) {
             return array_merge($id,
-                [ 'URL' => self::_host() . "payment/checkout/" . $id['CheckoutId' ]]);
+                [ 'URL' => self::_host() . "payment/checkout/" . array_key_exists('CheckoutId', $id)? $id['CheckoutId'] : null]);
         }
         else {
             return self::_error("Unable to create checkout due to API error.");
