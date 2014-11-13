@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.6
+2.0.7
 
 ## Installation
 
@@ -151,6 +151,10 @@ cd tests
 ```
 
 ## Changelog
+
+2.0.7
+* OAuth->get() bug has been fixed.
+* _dwollaparse() now returns error messages from API if any exist.
 
 2.0.6
 * Log to file feature added (thank you @redzarf for your pull request).
