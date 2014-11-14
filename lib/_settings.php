@@ -27,7 +27,7 @@ class Settings {
     public $refresh_token = "REFRESH TOKENS GO HERE";
 
     // Hostnames, endpoints
-    public $production_host = 'https://dwolla.com/';
+    public $production_host = 'https://www.dwolla.com/';
     public $sandbox_host = 'https://uat.dwolla.com/';
     public $default_postfix = 'oauth/rest';
 

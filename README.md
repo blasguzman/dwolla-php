@@ -152,6 +152,9 @@ cd tests
 
 ## Changelog
 
+2.0.8
+* Changed `production_host` variable to `http://www.dwolla.com` to mitigate HTTP 500 on some requests (namely OAuth).
+
 2.0.7
 * OAuth->get() bug has been fixed.
 * _dwollaparse() now returns error messages from API if any exist.

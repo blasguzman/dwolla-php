@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.0.7
+ * @version 2.0.8
  * @link http://developers.dwolla.com
  */
 
