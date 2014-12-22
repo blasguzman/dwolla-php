@@ -153,7 +153,8 @@ cd tests
 ## Changelog
 
 2.0.9
-* Fixed `number_format` bug to allow amounts greater than 999.99. Thanks, @tylermenezes!
+* Fixed `number_format` bug to allow amounts greater than 999.99. 
+* Fixed use of `$this` accessor vs. `self::` in checkouts `verify()` module. Thanks, @tylermenezes!
 
 2.0.8
 * Changed `production_host` variable to `http://www.dwolla.com` to mitigate HTTP 500 on some requests (namely OAuth).
