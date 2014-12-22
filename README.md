@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.8
+2.0.9
 
 ## Installation
 
@@ -151,6 +151,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.0.9
+* Fixed `number_format` bug to allow amounts greater than 999.99. Thanks, @tylermenezes!
 
 2.0.8
 * Changed `production_host` variable to `http://www.dwolla.com` to mitigate HTTP 500 on some requests (namely OAuth).
