@@ -110,7 +110,7 @@ class Checkouts extends RestClient {
             $p['purchaseOrder']['total'] += $p['purchaseOrder']['discount'];
         }
 
-        $p['purchaseOrder']['total'] = number_format($p['purchaseOrder']['total'], 2);
+        $p['purchaseOrder']['total'] = number_format($p['purchaseOrder']['total'], 2, '.', '');
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
         $id = self::_post('/offsitegateway/checkouts', $p);
@@ -174,7 +174,7 @@ class Checkouts extends RestClient {
         if (!$amount) { return self::_error("verify() requires `$amount` parameter.\n"); }
 
         // Normalize amount
-        $amount = number_format($amount, 2);
+        $amount = number_format($amount, 2, '.', '');
 
         // Make signature for matching, return comparison
         $proposed = hash_hmac("sha1", $id . "&" . $amount, $this->settings->client_secret);
