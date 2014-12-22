@@ -177,7 +177,7 @@ class Checkouts extends RestClient {
         $amount = number_format($amount, 2, '.', '');
 
         // Make signature for matching, return comparison
-        $proposed = hash_hmac("sha1", $id . "&" . $amount, $this->settings->client_secret);
+        $proposed = hash_hmac("sha1", $id . "&" . $amount, self::$settings->client_secret);
         return $sig == $proposed;
     }
 }
