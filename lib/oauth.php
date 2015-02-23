@@ -83,6 +83,6 @@ class OAuth extends RestClient {
             'refresh_token' => $refreshToken
         ];
 
-        return self::_post('token', $params, 'oauth/v2/', false);
+        return self::_post('/token', $params, 'oauth/v2', false);
     }
 }
