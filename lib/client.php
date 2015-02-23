@@ -161,7 +161,7 @@ class RestClient {
         try {
             $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
             if (self::$settings->debug){
-                $this->_console("Post Request to $endpoint\n");
+                $this->_console("POST Request to $endpoint\n");
                 $this->_console("    " . json_encode($request));
             }
         }
@@ -205,7 +205,7 @@ class RestClient {
         try {
             $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
             if (self::$settings->debug){
-                $this->_console("Get Request to $endpoint\n");
+                $this->_console("GET Request to $endpoint\n");
                 $this->_console("    " . json_encode($query));
             }
         }

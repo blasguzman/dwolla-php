@@ -153,6 +153,7 @@ cd tests
 ## Changelog
 
 2.1.0
+* Fix bug in offsite-gateway checkout URL generation. 
 * Show request made if debug flag is toggled (thanks, @redzarf)!
 
 2.0.9
