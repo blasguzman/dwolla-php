@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.0.9
+ * @version 2.1.0
  * @link http://developers.dwolla.com
  */
 
@@ -129,7 +129,7 @@ class RestClient {
                 $this->_console("Server Response:\n");
                 $this->_console($response['Response']);
             }
-            return array('error' => $response['Message']);
+            return array('Error' => $response['Message']);
         }
         else {
             return $response['Response'];
