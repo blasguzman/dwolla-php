@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.0.9
+2.1.0
 
 ## Installation
 
@@ -151,6 +151,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.0
+* Show request made if debug flag is toggled (thanks, @redzarf)!
 
 2.0.9
 * Fixed `number_format` bug to allow amounts greater than 999.99. 

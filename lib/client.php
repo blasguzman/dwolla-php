@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.0.9
+ * @version 2.1.0
  * @link http://developers.dwolla.com
  */
 
@@ -72,13 +72,6 @@ class RestClient {
      */
     protected function _logtofile($data) {
         if (!empty(self::$settings->logfilePath) && file_exists(self::$settings->logfilePath . "/")) {
-            /*
-            $t             = microtime(true);
-            $micro         = sprintf("%06d", ($t - floor($t)) * 1000000);
-            $d             = new DateTime(date('Y-m-d H:i:s.' . $micro, $t));
-            $logDate       =;
-            $logEntry      = date("Y/m/d H:i:s") . "  $message\n";
-            */
             file_put_contents(
                 self::$settings->logfilePath . "/" . date("Y-m-d") . ".log",
                 date("Y-m-d H:i:s") . '  ' . (is_array($data) ? print_r($data) : trim($data)) . "\n",
@@ -99,11 +92,11 @@ class RestClient {
                 print("<script>console.log(");
                 is_array($data) ? print_r($data) : print($data);
                 print(");</script>\n\n");
+                is_array($data) ? (print_r($data) && print("\n")) : print($data . "\n");
             }
             if (!empty(self::$settings->logfilePath)) {
                 $this->_logtofile($data);
             }
-            is_array($data) ? (print_r($data) && print("\n")) : print($data . "\n");
         }
     }
 
@@ -136,9 +129,11 @@ class RestClient {
                 $this->_console("Server Response:\n");
                 $this->_console($response['Response']);
             }
-            return $response['Message'];
+            return array('Error' => $response['Message']);
         }
-        return $response['Response'];
+        else {
+            return $response['Response'];
+        }
     }
 
 
@@ -165,6 +160,10 @@ class RestClient {
         // First, we try to catch any errors as the request "goes out the door"
         try {
             $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
+            if (self::$settings->debug){
+                $this->_console("Post Request to $endpoint\n");
+                $this->_console("    " . json_encode($request));
+            }
         }
         catch (RequestException $exception) {
             $response = false;
@@ -205,6 +204,10 @@ class RestClient {
         // First, we try to catch any errors as the request "goes out the door"
         try {
             $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
+            if (self::$settings->debug){
+                $this->_console("Get Request to $endpoint\n");
+                $this->_console("    " . json_encode($query));
+            }
         }
         catch (RequestException $exception) {
             $response = false;
