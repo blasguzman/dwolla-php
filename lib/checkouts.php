@@ -46,10 +46,10 @@ class Checkouts extends RestClient {
      * @param $quantity {Integer} Product quantity.
      */
     public function addToCart($name, $desc, $cost, $quantity) {
-        if (!$name) { return self::_error("addToCart() requires `$name` parameter.\n"); }
-        if (!$desc) { return self::_error("addToCart() requires `$desc` parameter.\n"); }
-        if (!$cost) { return self::_error("addToCart() requires `$cost` parameter.\n"); }
-        if (!$quantity) { return self::_error("addToCart() requires `$quantity` parameter.\n"); }
+        if (!$name) { return self::_error("addToCart() requires `\$name` parameter.\n"); }
+        if (!$desc) { return self::_error("addToCart() requires `\$desc` parameter.\n"); }
+        if (!$cost) { return self::_error("addToCart() requires `\$cost` parameter.\n"); }
+        if (!$quantity) { return self::_error("addToCart() requires `\$quantity` parameter.\n"); }
 
         if (!is_array($this->cart)) { $this->cart = []; }
 
@@ -76,12 +76,12 @@ class Checkouts extends RestClient {
      */
 
     public function create($purchaseOrder, $params = false) {
-        if (!$purchaseOrder) { return self::_error("create() requires `$purchaseOrder` parameter.\n"); }
+        if (!$purchaseOrder) { return self::_error("create() requires `\$purchaseOrder` parameter.\n"); }
         if (is_array($purchaseOrder)) {
             if (!$purchaseOrder['destinationId']) { return self::_error("`$purchaseOrder` has no `destinationId` key."); }
             if (!$this->cart && !$purchaseOrder['total']) { return self::_error("`$purchaseOrder` has no `total` amount. Create a cart or pass in a total order amount."); }
         }
-        else { return self::_error("createCheckout() requires `$purchaseOrder` to be of type array."); }
+        else { return self::_error("createCheckout() requires `\$purchaseOrder` to be of type array."); }
 
         $p = [
             'client_id' => self::$settings->client_id,
@@ -132,7 +132,7 @@ class Checkouts extends RestClient {
      * @return mixed|null
      */
     public function get($id) {
-        if (!$id) { return self::_error("get() requires `$id` parameter.\n"); }
+        if (!$id) { return self::_error("get() requires `\$id` parameter.\n"); }
 
         return self::_get('/offsitegateway/checkouts/'. $id,
             [
@@ -149,7 +149,7 @@ class Checkouts extends RestClient {
      * @return null
      */
     public function complete($id) {
-        if (!$id) { return self::_error("complete() requires `$id` parameter.\n"); }
+        if (!$id) { return self::_error("complete() requires `\$id` parameter.\n"); }
 
         return self::_post('/offsitegateway/checkouts/' . $id . '/complete',
             [
@@ -169,9 +169,9 @@ class Checkouts extends RestClient {
      * @return {Bool} Check success or failure.
      */
     public function verify($sig, $id, $amount) {
-        if (!$id) { return self::_error("verify() requires `$id` parameter.\n"); }
-        if (!$sig) { return self::_error("verify() requires `$sig` parameter.\n"); }
-        if (!$amount) { return self::_error("verify() requires `$amount` parameter.\n"); }
+        if (!$id) { return self::_error("verify() requires `\$id` parameter.\n"); }
+        if (!$sig) { return self::_error("verify() requires `\$sig` parameter.\n"); }
+        if (!$amount) { return self::_error("verify() requires `\$amount` parameter.\n"); }
 
         // Normalize amount
         $amount = number_format($amount, 2, '.', '');

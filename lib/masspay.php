@@ -34,8 +34,8 @@ class MassPay extends RestClient {
      * @return null
      */
     public function create($fundsSource, $items, $params = false) {
-        if (!$fundsSource) { return self::_error("create() requires `$fundsSource` parameter.\n"); }
-        if (!$items) { return self::_error("create() requires `$items` parameter.\n"); }
+        if (!$fundsSource) { return self::_error("create() requires `\$fundsSource` parameter.\n"); }
+        if (!$items) { return self::_error("create() requires `\$items` parameter.\n"); }
 
         $p = [
             'oauth_token' => self::$settings->oauth_token,
@@ -58,7 +58,7 @@ class MassPay extends RestClient {
      * @return null
      */
     public function getJob($id) {
-        if (!$id) { return self::_error("getJob() requires `$id` parameter.\n"); }
+        if (!$id) { return self::_error("getJob() requires `\$id` parameter.\n"); }
 
         return self::_get('/masspay/' . $id,
             [
@@ -75,7 +75,7 @@ class MassPay extends RestClient {
      * @return null
      */
     public function getJobItems($id, $params = false) {
-        if (!$id) { return self::_error("getJobItems() requires `$id` parameter.\n"); }
+        if (!$id) { return self::_error("getJobItems() requires `\$id` parameter.\n"); }
 
         $p = [
             'oauth_token' => self::$settings->oauth_token
@@ -95,8 +95,8 @@ class MassPay extends RestClient {
      * @return null
      */
     public function getItem($job_id, $item_id) {
-        if (!$job_id) { return self::_error("getItem() requires `$job_id` parameter.\n"); }
-        if (!$item_id) { return self::_error("getItem() requires `$item_id` parameter.\n"); }
+        if (!$job_id) { return self::_error("getItem() requires `\$job_id` parameter.\n"); }
+        if (!$item_id) { return self::_error("getItem() requires `\$item_id` parameter.\n"); }
 
         return self::_get('/masspay/' . $job_id . '/items/' . $item_id,
             [
