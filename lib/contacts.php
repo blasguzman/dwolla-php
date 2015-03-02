@@ -48,8 +48,8 @@ class Contacts extends RestClient {
      * @return {Array} Returned spots.
      */
     public function nearby($lat, $lon, $params = false) {
-        if (!$lat) { return self::_error("nearby() requires `$lat` parameter.\n"); }
-        if (!$lon) { return self::_error("nearby() requires `$lon` parameter.\n"); }
+        if (!$lat) { return self::_error("nearby() requires `\$lat` parameter.\n"); }
+        if (!$lon) { return self::_error("nearby() requires `\$lon` parameter.\n"); }
 
         $p = [
             'client_id' => self::$settings->client_id,

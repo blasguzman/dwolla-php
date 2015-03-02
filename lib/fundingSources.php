@@ -33,7 +33,7 @@ class fundingSources extends RestClient {
      * @return {Array} Funding ID info.
      */
     public function info($funding_id) {
-        if (!$funding_id) { return self::_error("info() requires `$funding_id` parameter.\n"); }
+        if (!$funding_id) { return self::_error("info() requires `\$funding_id` parameter.\n"); }
 
         return self::_get('/fundingsources/' . $funding_id,
             [
@@ -71,10 +71,10 @@ class fundingSources extends RestClient {
      * @return null
      */
     public function add($account, $routing, $type, $name) {
-        if (!$account) { return self::_error("add() requires `$account` parameter.\n"); }
-        if (!$routing) { return self::_error("add() requires `$routing` parameter.\n"); }
-        if (!$type) { return self::_error("add() requires `$type` parameter.\n"); }
-        if (!$name) { return self::_error("add() requires `$name` parameter.\n"); }
+        if (!$account) { return self::_error("add() requires `\$account` parameter.\n"); }
+        if (!$routing) { return self::_error("add() requires `\$routing` parameter.\n"); }
+        if (!$type) { return self::_error("add() requires `\$type` parameter.\n"); }
+        if (!$name) { return self::_error("add() requires `\$name` parameter.\n"); }
 
         return self::_post('/fundingsources/',
             [
@@ -98,9 +98,9 @@ class fundingSources extends RestClient {
      * @return null
      */
     public function verify($dep1, $dep2, $funding_id) {
-        if (!$dep1) { return self::_error("verify() requires `$dep1` parameter.\n"); }
-        if (!$dep2) { return self::_error("verify() requires `$dep2` parameter.\n"); }
-        if (!$funding_id) { return self::_error("verify() requires `$funding_id` parameter.\n"); }
+        if (!$dep1) { return self::_error("verify() requires `\$dep1` parameter.\n"); }
+        if (!$dep2) { return self::_error("verify() requires `\$dep2` parameter.\n"); }
+        if (!$funding_id) { return self::_error("verify() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/verify',
             [
@@ -121,8 +121,8 @@ class fundingSources extends RestClient {
      * @return null
      */
     public function withdraw($amount, $funding_id) {
-        if (!$amount) { return self::_error("withdraw() requires `$amount` parameter.\n"); }
-        if (!$funding_id) { return self::_error("withdraw() requires `$funding_id` parameter.\n"); }
+        if (!$amount) { return self::_error("withdraw() requires `\$amount` parameter.\n"); }
+        if (!$funding_id) { return self::_error("withdraw() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/withdraw',
             [
@@ -143,8 +143,8 @@ class fundingSources extends RestClient {
      * @return null
      */
     public function deposit($amount, $funding_id) {
-        if (!$amount) { return self::_error("deposit() requires `$amount` parameter.\n"); }
-        if (!$funding_id) { return self::_error("deposit() requires `$funding_id` parameter.\n"); }
+        if (!$amount) { return self::_error("deposit() requires `\$amount` parameter.\n"); }
+        if (!$funding_id) { return self::_error("deposit() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/deposit',
             [
