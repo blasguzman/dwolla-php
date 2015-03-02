@@ -7,7 +7,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.0
+2.1.1
 
 ## Installation
 
@@ -151,6 +151,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.1
+* Fixed unescaped variables in error messages (thanks @PrplHaz4)!
 
 2.1.0
 * Fix bug in offsite-gateway checkout URL generation. 
