@@ -1,6 +1,8 @@
 dwolla-php
 =========
 
+[![Join the chat at https://gitter.im/Dwolla/dwolla-php](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Dwolla/dwolla-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-php.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-php)
 
 The new and improved Dwolla library based off of the Guzzle REST client. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
