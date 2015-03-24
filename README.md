@@ -69,6 +69,11 @@ $Account->settings->sandbox = true;
 print_r($Account->basic('812-121-7199'));
 ```
 
+## Certificate Authority Bundle
+It has come to our attention that CURL will reject sending a request (error 60) over HTTPS if a certificate authority bundle is not configured on your system. Due to security reasons (trusted CAs change frequently), we are not bundling a bundle with the library. 
+
+You should fetch the CA bundle from a trusted source. We recommend using the one maintained by CURL's authors [and available on their page, here](http://curl.haxx.se/ca/cacert.pem).
+
 ---
 
 There are 8 quickstart files which will walk you through working with `dwolla-php`'s classes/endpoint groupings. 
