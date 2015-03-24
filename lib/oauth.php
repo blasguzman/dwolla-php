@@ -27,8 +27,8 @@ class OAuth extends RestClient {
      * the redirect in the Dwolla Application Settings will be used.
      * If no scope is set, the scope in the settings object will be used.
      *
-     * @param $redirect {String} Redirect destination.
-     * @param $scope {String} Optional. Scope string to override default scope in settings object.
+     * @param string $redirect Redirect destination.
+     * @param string $scope Optional. Scope string to override default scope in settings object.
      *
      * @return string
      */
@@ -47,10 +47,10 @@ class OAuth extends RestClient {
      * Returns an OAuth token + refresh pair in an array. If no redirect
      * is set, the redirect in the Dwolla Application Settings will be used.
      *
-     * @param $code {String} Code from redirect response.
-     * @param $redirect {String} Redirect destination.
+     * @param string $code Code from redirect response.
+     * @param string $redirect Redirect destination.
      *
-     * @return {Array} Access and refresh token pair.
+     * @return string[] Access and refresh token pair.
      */
     public function get($code, $redirect = false) {
         if (!$code) { return self::_error("get() requires `\$code` parameter.\n"); }
@@ -69,9 +69,9 @@ class OAuth extends RestClient {
     /**
      * Returns a newly refreshed access token and refresh token pair.
      *
-     * @param $refreshToken {String} Refresh token from initial OAuth handshake.
+     * @param string $refreshToken Refresh token from initial OAuth handshake.
      *
-     * @return {Array} Access and refresh token pair.
+     * @return string[] Access and refresh token pair.
      */
     public function refresh($refreshToken) {
         if (!$refreshToken) { return self::_error("refresh() requires `\$refreshToken` parameter.\n"); }

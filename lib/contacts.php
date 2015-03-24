@@ -24,9 +24,9 @@ class Contacts extends RestClient {
     /**
      * Get contacts from user associated with OAuth token.
      *
-     * @param $params {Array} Additional parameters.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} Contacts.
+     * @return string[] Contacts.
      */
     public function get($params = false) {
         $p = [
@@ -41,11 +41,11 @@ class Contacts extends RestClient {
     /**
      * Returns Dwolla spots near the specified geographical location.
      *
-     * @param $lat {Double} Latitudinal coordinates.
-     * @param $lon {Double} Longitudinal coordinates.
-     * @param bool $params {Array} Additional parameters.
+     * @param double $lat Latitudinal coordinates.
+     * @param double $lon Longitudinal coordinates.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} Returned spots.
+     * @return string[] Returned spots.
      */
     public function nearby($lat, $lon, $params = false) {
         if (!$lat) { return self::_error("nearby() requires `\$lat` parameter.\n"); }

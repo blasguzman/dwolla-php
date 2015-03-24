@@ -27,11 +27,11 @@ class Transactions extends RestClient {
     /**
      * Sends money to the specified destination user.
      *
-     * @param $destinationId {String} Dwolla ID to send funds to.
-     * @param $amount {Double} Amount to send.
-     * @param $params {Array} Additional parameters.
+     * @param string $destinationId Dwolla ID to send funds to.
+     * @param double $amount Amount to send.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Integer} Transaction ID of sent funds.
+     * @return int Transaction ID of sent funds.
      */
     public function send($destinationId, $amount, $params = false) {
         if (!$destinationId) { return self::_error("send() requires `\$destinationId` parameter.\n"); }
@@ -53,9 +53,9 @@ class Transactions extends RestClient {
      * Lists transactions for the user associated with
      * the current OAuth token.
      *
-     * @param $params {Array} Additional parameters.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} List of transactions,
+     * @return string[] List of transactions,
      */
     public function get($params = false) {
         $p = [
@@ -73,9 +73,9 @@ class Transactions extends RestClient {
      * Returns transaction information for the transaction
      * associated with the passed transaction ID.
      *
-     * @param $id {String} Transaction ID.
+     * @param string $id Transaction ID.
      *
-     * @return {Array} Information about transaction.
+     * @return string[] Information about transaction.
      */
     public function info($id) {
         if (!$id) { return self::_error("info() requires `\$id` parameter.\n"); }
@@ -92,12 +92,12 @@ class Transactions extends RestClient {
      * Refunds (either completely or partially) funds to
      * the sending user for a transaction.
      *
-     * @param $id {String} Transaction ID.
-     * @param $fundingSource {String} Funding source for refund transaction.
-     * @param $amount {Double} Amount to refund.
-     * @param $params {Array} Additional parameters.
+     * @param string $id Transaction ID.
+     * @param string $fundingSource Funding source for refund transaction.
+     * @param double $amount Amount to refund.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} Information about refund transaction.
+     * @return string[] Information about refund transaction.
      */
     public function refund($id, $fundingSource, $amount, $params = false) {
         if (!$id) { return self::_error("refund() requires `\$id` parameter.\n"); }
@@ -121,8 +121,8 @@ class Transactions extends RestClient {
      * Retrieves transaction statistics for
      * the user associated with the current OAuth token.
      *
-     * @param $params {Array} Additional parameters.
-     * @return {Array} Transaction statistics.
+     * @param string[] $params Additional parameters.
+     * @return string[] Transaction statistics.
      */
     public function stats($params = false) {
         $p = [

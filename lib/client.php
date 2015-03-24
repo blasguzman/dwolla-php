@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.1.1
+ * @version 2.1.2
  * @link http://developers.dwolla.com
  */
 
@@ -103,7 +103,7 @@ class RestClient {
     /**
      * Small error message wrapper for missing parameters, etc.
      *
-     * @param $message {String} Error message.
+     * @param string $message Error message.
      * @return bool
      */
     protected function _error($message) {
@@ -115,9 +115,9 @@ class RestClient {
     /**
      * Parses API response out of envelope and informs user of issues if they arise.
      *
-     * @param $response {Array} Response body
+     * @param String[] $response Response body
      *
-     * @return {Array} Data from API
+     * @return String[] Data from API
      */
     private function _dwollaparse($response)
     {
@@ -140,7 +140,7 @@ class RestClient {
     /**
      * Returns default host URL dependent on sandbox flag.
      *
-     * @return {String} Host
+     * @return string Host
      */
     protected function _host() {
         return self::$settings->sandbox ? self::$settings->sandbox_host : self::$settings->production_host;
@@ -149,12 +149,12 @@ class RestClient {
     /**
      * Wrapper around Guzzle POST request.
      *
-     * @param $endpoint {String} API endpoint string
-     * @param $request {Array} Request body. JSON encoding is optional.
-     * @param $customPostfix {Bool} Use default REST postfix?
-     * @param $dwollaParse {Bool} Parse out of message envelope?
+     * @param string $endpoint API endpoint string
+     * @param string $request Request body. JSON encoding is optional.
+     * @param bool $customPostfix Use default REST postfix?
+     * @param bool $dwollaParse Parse out of message envelope?
      *
-     * @return null {Array} Response body.
+     * @return String[] Response body.
      */
     protected function _post($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
@@ -193,12 +193,12 @@ class RestClient {
     /**
      * Wrapper around Guzzle GET request.
      *
-     * @param $endpoint {String} API endpoint string
-     * @param $query {Array} Array of URLEncoded query items in key-value pairs.
-     * @param $customPostfix {Bool} Use default REST postfix?
-     * @param $dwollaParse {Bool} Parse out of message envelope?
+     * @param string $endpoint API endpoint string
+     * @param string[] $query Array of URLEncoded query items in key-value pairs.
+     * @param bool $customPostfix Use default REST postfix?
+     * @param bool $dwollaParse Parse out of message envelope?
      *
-     * @return {Array} Response body.
+     * @return string[] Response body.
      */
     protected function _get($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"

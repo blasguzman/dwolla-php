@@ -28,9 +28,9 @@ class fundingSources extends RestClient {
     /**
      * Retrieves information about a funding source by ID.
      *
-     * @param $funding_id {String} Funding ID of account to retrieve information for.
+     * @param string[] $funding_id Funding ID of account to retrieve information for.
      *
-     * @return {Array} Funding ID info.
+     * @return string[] Funding ID info.
      */
     public function info($funding_id) {
         if (!$funding_id) { return self::_error("info() requires `\$funding_id` parameter.\n"); }
@@ -45,9 +45,9 @@ class fundingSources extends RestClient {
      * Returns a list of funding sources associated to the account
      * under the current OAuth token.
      *
-     * @param $params {Array} Additional parameters.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} List of funding sources.
+     * @return string[] List of funding sources.
      */
     public function get($params = false) {
         $p = [
@@ -63,10 +63,10 @@ class fundingSources extends RestClient {
      * Adds a funding source to the account under the current
      * OAuth token.
      *
-     * @param $account {String} Account number
-     * @param $routing {String} Routing number
-     * @param $type {String} Account type
-     * @param $name {String} User defined name for account.
+     * @param string $account Account number
+     * @param string $routing Routing number
+     * @param string $type Account type
+     * @param string $name User defined name for account.
      *
      * @return null
      */
@@ -91,9 +91,9 @@ class fundingSources extends RestClient {
      * with the funding ID under the current OAuth token via
      * the two micro-deposits.
      *
-     * @param $dep1 {Double} Micro-deposit 1
-     * @param $dep2 {Double} Micro-deposit 2
-     * @param $funding_id {String} Funding ID.
+     * @param double $dep1 Micro-deposit 1
+     * @param double $dep2 Micro-deposit 2
+     * @param string $funding_id Funding ID.
      *
      * @return null
      */
@@ -115,8 +115,8 @@ class fundingSources extends RestClient {
      * associated with the passed ID, under the account associated
      * with the current OAuth token.
      *
-     * @param $amount {Double} Amount to withdraw.
-     * @param $funding_id {String} Funding ID to withdraw to.
+     * @param double $amount Amount to withdraw.
+     * @param string $funding_id Funding ID to withdraw to.
      *
      * @return null
      */
@@ -137,8 +137,8 @@ class fundingSources extends RestClient {
      * OAuth token from the funding ID associated with the passed
      * ID.
      *
-     * @param $amount {Double} Amount to deposit.
-     * @param $funding_id  {String} Funding ID to deposit from.
+     * @param double $amount Amount to deposit.
+     * @param string $funding_id Funding ID to deposit from.
      *
      * @return null
      */

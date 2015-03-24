@@ -29,9 +29,9 @@ class Account extends RestClient {
      * Returns basic account information for the account associated
      * with the passed account ID.
      *
-     * @param $account_id {String} Account ID.
+     * @param string $account_id Account ID.
      *
-     * @return {Array} Array of basic account information.
+     * @return String[] Array of basic account information.
      */
     public function basic($id) {
         if (!$id) { return self::_error("basic() requires `\$id` parameter.\n"); }
@@ -47,7 +47,7 @@ class Account extends RestClient {
      * Returns full account information for the account associated
      * with the current OAuth token.
      *
-     * @return {Array} Array of full account information.
+     * @return String[] Array of full account information.
      */
     public function full() {
         return self::_get('/users/',
@@ -60,7 +60,7 @@ class Account extends RestClient {
      * Returns balance of the account associated with the current
      * OAuth token.
      *
-     * @return {Integer} Balance of account.
+     * @return int Balance of account.
      */
     public function balance() {
         return self::_get('/balance/',
@@ -75,7 +75,7 @@ class Account extends RestClient {
      * @param $lat {String} Latitudinal coordinates.
      * @param $lon {String} Longitudinal coordinates.
      *
-     * @return {Array} Array with users, venues, and relevant info.
+     * @return String[] Array with users, venues, and relevant info.
      */
     public function nearby($lat, $lon) {
         if (!$lat) { return self::_error("nearby() requires `\$lat` parameter.\n"); }
@@ -94,7 +94,7 @@ class Account extends RestClient {
      * Gets auto-withdrawal status of the account associated
      * with the current OAuth token.
      *
-     * @return {Array} Status (with funding id if applicable)
+     * @return String[] Status (with funding id if applicable)
      */
     public function getAutoWithdrawalStatus() {
         return self::_get('/accounts/features/auto_withdrawl',
@@ -108,10 +108,10 @@ class Account extends RestClient {
      * with the current OAuth token under the specified
      * funding ID.
      *
-     * @param $status {Bool} Auto-withdrawal boolean.
-     * @param $fundingId {String} Funding ID of target account.
+     * @param bool $status Auto-withdrawal boolean.
+     * @param string $fundingId Funding ID of target account.
      *
-     * @return {String} Either "Enabled" or "Disabled"
+     * @return string Either "Enabled" or "Disabled"
      */
     public function toggleAutoWithdrawalStatus($status, $fundingId) {
         if (!$status) { return self::_error("toggleAutoWithdrawalStatus() requires `\$status` parameter.\n"); }

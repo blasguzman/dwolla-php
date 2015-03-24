@@ -40,10 +40,10 @@ class Checkouts extends RestClient {
     /**
      * Adds an item to the checkout session cart.
      *
-     * @param $name {String} Product name.
-     * @param $desc {String} Product description.
-     * @param $cost {Double} Product cost.
-     * @param $quantity {Integer} Product quantity.
+     * @param string $name Product name.
+     * @param string $desc Product description.
+     * @param double $cost Product cost.
+     * @param int quantity Product quantity.
      */
     public function addToCart($name, $desc, $cost, $quantity) {
         if (!$name) { return self::_error("addToCart() requires `\$name` parameter.\n"); }
@@ -69,8 +69,8 @@ class Checkouts extends RestClient {
      * 'purchaseOrder'. If items are provided, but no total, the library
      * will calculate a total for you.
      *
-     * @param $purchaseOrder {Array} 'purchaseOrder' parameters
-     * @param $params {Array} Additional parameters.
+     * @param string[] $purchaseOrder 'purchaseOrder' parameters
+     * @param string[] $params Additional parameters.
      *
      * @return null
      */
@@ -127,7 +127,7 @@ class Checkouts extends RestClient {
      * Retrieves information (status, etc.) from an existing
      * checkout.
      *
-     * @param $id {String} Checkout ID.
+     * @param string $id Checkout ID.
      *
      * @return mixed|null
      */
@@ -144,7 +144,7 @@ class Checkouts extends RestClient {
     /**
      * Completes an offsite-gateway "Pay Later" checkout session.
      *
-     * @param $id {String} Checkout ID.
+     * @param string $id Checkout ID.
      *
      * @return null
      */
@@ -162,11 +162,11 @@ class Checkouts extends RestClient {
      * Verifies offsite-gateway signature hash against
      * server-provided hash.
      *
-     * @param $sig {String} Server provided signature.
-     * @param $id  {String} Checkout ID.
-     * @param $amount {Double} Amount of checkout session.
+     * @param string $sig Server provided signature.
+     * @param string $id Checkout ID.
+     * @param double $amount Amount of checkout session.
      *
-     * @return {Bool} Check success or failure.
+     * @return bool Check success or failure.
      */
     public function verify($sig, $id, $amount) {
         if (!$id) { return self::_error("verify() requires `\$id` parameter.\n"); }

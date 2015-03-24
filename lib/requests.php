@@ -28,11 +28,11 @@ class Requests extends RestClient {
      * Requests money from a user for a user associated with
      * the current OAuth token.
      *
-     * @param $sourceId {String} Dwolla ID to request funds from.
-     * @param $amount {Double} Amount to request.
-     * @param $params {Array} Additional parameters.
+     * @param string $sourceId Dwolla ID to request funds from.
+     * @param double $amount Amount to request.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Integer} Request ID of submitted request.
+     * @return int Request ID of submitted request.
      */
     public function create($sourceId, $amount, $params = false) {
         if (!$sourceId) { return self::_error("create() requires `\$sourceId` parameter.\n"); }
@@ -53,9 +53,9 @@ class Requests extends RestClient {
      * Retrieves a list of pending money requests for the user
      * associated with the current OAuth token.
      *
-     * @param $params {Array} Additional parameters.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} Pending money requests and relevant data.
+     * @return string[] Pending money requests and relevant data.
      */
     public function get($params = false) {
         $p = [
@@ -71,9 +71,9 @@ class Requests extends RestClient {
      * Retrieves additional information about a pending money
      * request.
      *
-     * @param $request_id {String} Request ID to retrieve info for.
+     * @param string $request_id Request ID to retrieve info for.
      *
-     * @return {Array} Information relevant to the request.
+     * @return string[] Information relevant to the request.
      */
     public function info($request_id) {
         if (!$request_id) { return self::_error("info() requires `\$request_id` parameter.\n"); }
@@ -87,7 +87,7 @@ class Requests extends RestClient {
     /**
      * Cancels a pending money request.
      *
-     * @param $request_id {String} Request ID to cancel.
+     * @param string $request_id Request ID to cancel.
      *
      * @return null
      */
@@ -103,11 +103,11 @@ class Requests extends RestClient {
     /**
      * Fulfills a pending money request.
      *
-     * @param $request_id {String} Request ID to fulfill.
-     * @param $amount {Double} Amount to fulfill.
-     * @param bool $params {Array} Additional parameters.
+     * @param string $request_id Request ID to fulfill.
+     * @param double $amount Amount to fulfill.
+     * @param string[] $params Additional parameters.
      *
-     * @return {Array} Information (transaction/request IDs) relevant to fulfilled request.
+     * @return string[] Information (transaction/request IDs) relevant to fulfilled request.
      */
     public function fulfill($request_id, $amount, $params = false) {
         if (!$request_id) { return self::_error("fulfill() requires `\$request_id` parameter.\n"); }

@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.1
+2.1.2
 
 ## Installation
 
@@ -153,6 +153,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.2
+* Purely cosmetic: revised docstrings to meet PHP standards. Thanks for the tip, @fraserredmond!
 
 2.1.1
 * Fixed unescaped variables in error messages (thanks @PrplHaz4)!

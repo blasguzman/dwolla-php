@@ -27,9 +27,9 @@ class MassPay extends RestClient {
     /**
      * Creates a MassPay job. Must pass in an array of items.
      *
-     * @param $fundsSource {String} Funding Source for job.
-     * @param $items {Array} Item array.
-     * @param $params {Array} Additional parameters.
+     * @param string $fundsSource Funding Source for job.
+     * @param string[] $items Item array.
+     * @param string[] $params Additional parameters.
      *
      * @return null
      */
@@ -53,7 +53,7 @@ class MassPay extends RestClient {
      * Checks the status of an existing MassPay job and
      * returns additional information.
      *
-     * @param $id {String} MassPay job ID.
+     * @param string[] $id MassPay job ID.
      *
      * @return null
      */
@@ -69,8 +69,8 @@ class MassPay extends RestClient {
     /**
      * Gets all items from a created MassPay job.
      *
-     * @param $id {String} MassPay job ID.
-     * @param $params {Array} Additional parameters.
+     * @param string $id MassPay job ID.
+     * @param string[] $params Additional parameters.
      *
      * @return null
      */
@@ -89,8 +89,8 @@ class MassPay extends RestClient {
     /**
      * Gets an item from a created MassPay job.
      *
-     * @param $job_id {String} MassPay job ID.
-     * @param $item_id {String} Item ID.
+     * @param string $job_id MassPay job ID.
+     * @param string[] $item_id Item ID.
      *
      * @return null
      */
@@ -108,7 +108,7 @@ class MassPay extends RestClient {
      * Lists all MassPay jobs for the user under
      * the current OAuth token.
      *
-     * @return {Array} MassPay jobs.
+     * @return string[] MassPay jobs.
      */
     public function listJobs() {
         return self::_get('/masspay/',
