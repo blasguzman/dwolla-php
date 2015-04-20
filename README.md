@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.2
+2.1.3
 
 ## Installation
 
@@ -67,6 +67,19 @@ $Account->settings->sandbox = true;
  * a Dwolla user using their Dwolla ID.
  */
 print_r($Account->basic('812-121-7199'));
+```
+
+### Use `$alternate_token`
+
+```
+require '../lib/account.php';
+$Account = new Dwolla\Account();
+
+/**
+ * Example 1: Get full information for
+ * a Dwolla user using their OAuth token via `alternate_token`
+ */
+print_r($Account->full('oh-look-another-oauth-token-goes-here'));
 ```
 
 ## Certificate Authority Bundle
@@ -158,6 +171,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.3
+* Added `alternate_token` parameter to allow functions which use an `oauth_token` to be overriden in cases where the user would have to continuously set/get the variable in the `settings`.
 
 2.1.2
 * Purely cosmetic: revised docstrings to meet PHP standards. Thanks for the tip, @fraserredmond!

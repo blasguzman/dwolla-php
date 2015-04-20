@@ -25,12 +25,14 @@ class Contacts extends RestClient {
      * Get contacts from user associated with OAuth token.
      *
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string[] Contacts.
      */
-    public function get($params = false) {
+    public function get($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => self::$settings->oauth_token
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }

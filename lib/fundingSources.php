@@ -29,15 +29,17 @@ class fundingSources extends RestClient {
      * Retrieves information about a funding source by ID.
      *
      * @param string[] $funding_id Funding ID of account to retrieve information for.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string[] Funding ID info.
      */
-    public function info($funding_id) {
+    public function info($funding_id, $alternate_token = false) {
         if (!$funding_id) { return self::_error("info() requires `\$funding_id` parameter.\n"); }
 
         return self::_get('/fundingsources/' . $funding_id,
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -46,12 +48,14 @@ class fundingSources extends RestClient {
      * under the current OAuth token.
      *
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string[] List of funding sources.
      */
-    public function get($params = false) {
+    public function get($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => self::$settings->oauth_token
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -67,10 +71,12 @@ class fundingSources extends RestClient {
      * @param string $routing Routing number
      * @param string $type Account type
      * @param string $name User defined name for account.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function add($account, $routing, $type, $name) {
+    public function add($account, $routing, $type, $name, $alternate_token = false) {
         if (!$account) { return self::_error("add() requires `\$account` parameter.\n"); }
         if (!$routing) { return self::_error("add() requires `\$routing` parameter.\n"); }
         if (!$type) { return self::_error("add() requires `\$type` parameter.\n"); }
@@ -78,7 +84,7 @@ class fundingSources extends RestClient {
 
         return self::_post('/fundingsources/',
             [
-                'oauth_token' => self::$settings->oauth_token,
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'account_number' => $account,
                 'routing_number' => $routing,
                 'account_type' => $type,
@@ -94,17 +100,19 @@ class fundingSources extends RestClient {
      * @param double $dep1 Micro-deposit 1
      * @param double $dep2 Micro-deposit 2
      * @param string $funding_id Funding ID.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function verify($dep1, $dep2, $funding_id) {
+    public function verify($dep1, $dep2, $funding_id, $alternate_token = false) {
         if (!$dep1) { return self::_error("verify() requires `\$dep1` parameter.\n"); }
         if (!$dep2) { return self::_error("verify() requires `\$dep2` parameter.\n"); }
         if (!$funding_id) { return self::_error("verify() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/verify',
             [
-                'oauth_token' => self::$settings->oauth_token,
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'deposit1' => $dep1,
                 'deposit2' => $dep2
             ]);
@@ -117,16 +125,18 @@ class fundingSources extends RestClient {
      *
      * @param double $amount Amount to withdraw.
      * @param string $funding_id Funding ID to withdraw to.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function withdraw($amount, $funding_id) {
+    public function withdraw($amount, $funding_id, $alternate_token = false) {
         if (!$amount) { return self::_error("withdraw() requires `\$amount` parameter.\n"); }
         if (!$funding_id) { return self::_error("withdraw() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/withdraw',
             [
-                'oauth_token' => self::$settings->oauth_token,
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => self::$settings->pin,
                 'amount' => $amount
             ]);
@@ -139,16 +149,18 @@ class fundingSources extends RestClient {
      *
      * @param double $amount Amount to deposit.
      * @param string $funding_id Funding ID to deposit from.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function deposit($amount, $funding_id) {
+    public function deposit($amount, $funding_id, $alternate_token = false) {
         if (!$amount) { return self::_error("deposit() requires `\$amount` parameter.\n"); }
         if (!$funding_id) { return self::_error("deposit() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/deposit',
             [
-                'oauth_token' => self::$settings->oauth_token,
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => self::$settings->pin,
                 'amount' => $amount
             ]);

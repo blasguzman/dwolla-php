@@ -31,15 +31,17 @@ class Requests extends RestClient {
      * @param string $sourceId Dwolla ID to request funds from.
      * @param double $amount Amount to request.
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return int Request ID of submitted request.
      */
-    public function create($sourceId, $amount, $params = false) {
+    public function create($sourceId, $amount, $params = false, $alternate_token = false) {
         if (!$sourceId) { return self::_error("create() requires `\$sourceId` parameter.\n"); }
         if (!$amount) { return self::_error("create() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => self::$settings->oauth_token,
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'sourceId' => $sourceId,
             'amount' => $amount
         ];
@@ -54,12 +56,14 @@ class Requests extends RestClient {
      * associated with the current OAuth token.
      *
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string[] Pending money requests and relevant data.
      */
-    public function get($params = false) {
+    public function get($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => self::$settings->oauth_token
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -72,15 +76,17 @@ class Requests extends RestClient {
      * request.
      *
      * @param string $request_id Request ID to retrieve info for.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string[] Information relevant to the request.
      */
-    public function info($request_id) {
+    public function info($request_id, $alternate_token = false) {
         if (!$request_id) { return self::_error("info() requires `\$request_id` parameter.\n"); }
 
         return self::_get('/requests/' . $request_id,
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -88,15 +94,17 @@ class Requests extends RestClient {
      * Cancels a pending money request.
      *
      * @param string $request_id Request ID to cancel.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function cancel($request_id) {
+    public function cancel($request_id, $alternate_token = false) {
         if (!$request_id) { return self::_error("cancel() requires `\$request_id` parameter.\n"); }
 
         return self::_post('/requests/' . $request_id . '/cancel',
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -106,15 +114,17 @@ class Requests extends RestClient {
      * @param string $request_id Request ID to fulfill.
      * @param double $amount Amount to fulfill.
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string[] Information (transaction/request IDs) relevant to fulfilled request.
      */
-    public function fulfill($request_id, $amount, $params = false) {
+    public function fulfill($request_id, $amount, $params = false, $alternate_token = false) {
         if (!$request_id) { return self::_error("fulfill() requires `\$request_id` parameter.\n"); }
         if (!$amount) { return self::_error("fulfill() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => self::$settings->oauth_token,
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => self::$settings->pin,
             'amount' => $amount
         ];

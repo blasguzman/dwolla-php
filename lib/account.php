@@ -47,12 +47,15 @@ class Account extends RestClient {
      * Returns full account information for the account associated
      * with the current OAuth token.
      *
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
      * @return String[] Array of full account information.
      */
-    public function full() {
+    public function full($alternate_token = false) {
         return self::_get('/users/',
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -60,12 +63,15 @@ class Account extends RestClient {
      * Returns balance of the account associated with the current
      * OAuth token.
      *
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
      * @return int Balance of account.
      */
-    public function balance() {
+    public function balance($alternate_token = false) {
         return self::_get('/balance/',
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -94,12 +100,15 @@ class Account extends RestClient {
      * Gets auto-withdrawal status of the account associated
      * with the current OAuth token.
      *
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
      * @return String[] Status (with funding id if applicable)
      */
-    public function getAutoWithdrawalStatus() {
+    public function getAutoWithdrawalStatus($alternate_token = false) {
         return self::_get('/accounts/features/auto_withdrawl',
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -110,16 +119,18 @@ class Account extends RestClient {
      *
      * @param bool $status Auto-withdrawal boolean.
      * @param string $fundingId Funding ID of target account.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return string Either "Enabled" or "Disabled"
      */
-    public function toggleAutoWithdrawalStatus($status, $fundingId) {
+    public function toggleAutoWithdrawalStatus($status, $fundingId, $alternate_token = false) {
         if (!$status) { return self::_error("toggleAutoWithdrawalStatus() requires `\$status` parameter.\n"); }
         if (!$fundingId) { return self::_error("toggleAutoWithdrawalStatus() requires `\$fundingId` parameter.\n"); }
 
         return self::_post('/accounts/features/auto_withdrawl',
             [
-                'oauth_token' => self::$settings->oauth_token,
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'enabled' => $status,
                 'fundingId' => $fundingId
             ]);

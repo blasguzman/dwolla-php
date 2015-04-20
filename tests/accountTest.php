@@ -36,6 +36,13 @@ class AccountTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->Account->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);
     }
 
+    public function testFullWithOverride() {
+        $this->Account->full('TEST OVERRIDE TOKEN');
+
+        $this->assertEquals('/oauth/rest/users/', $this->history->getLastRequest()->getPath());
+        $this->assertEquals('TEST OVERRIDE TOKEN', $this->history->getLastRequest()->getQuery()['oauth_token']);
+    }
+
     public function testBalance() {
         $this->Account->balance();
 

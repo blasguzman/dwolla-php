@@ -30,15 +30,17 @@ class MassPay extends RestClient {
      * @param string $fundsSource Funding Source for job.
      * @param string[] $items Item array.
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function create($fundsSource, $items, $params = false) {
+    public function create($fundsSource, $items, $params = false, $alternate_token = false) {
         if (!$fundsSource) { return self::_error("create() requires `\$fundsSource` parameter.\n"); }
         if (!$items) { return self::_error("create() requires `\$items` parameter.\n"); }
 
         $p = [
-            'oauth_token' => self::$settings->oauth_token,
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => self::$settings->pin,
             'fundsSource' => $fundsSource,
             'items' => $items
@@ -54,15 +56,17 @@ class MassPay extends RestClient {
      * returns additional information.
      *
      * @param string[] $id MassPay job ID.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function getJob($id) {
+    public function getJob($id, $alternate_token = false) {
         if (!$id) { return self::_error("getJob() requires `\$id` parameter.\n"); }
 
         return self::_get('/masspay/' . $id,
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -71,14 +75,16 @@ class MassPay extends RestClient {
      *
      * @param string $id MassPay job ID.
      * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function getJobItems($id, $params = false) {
+    public function getJobItems($id, $params = false, $alternate_token = false) {
         if (!$id) { return self::_error("getJobItems() requires `\$id` parameter.\n"); }
 
         $p = [
-            'oauth_token' => self::$settings->oauth_token
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -91,16 +97,18 @@ class MassPay extends RestClient {
      *
      * @param string $job_id MassPay job ID.
      * @param string[] $item_id Item ID.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
      *
      * @return null
      */
-    public function getItem($job_id, $item_id) {
+    public function getItem($job_id, $item_id, $alternate_token = false) {
         if (!$job_id) { return self::_error("getItem() requires `\$job_id` parameter.\n"); }
         if (!$item_id) { return self::_error("getItem() requires `\$item_id` parameter.\n"); }
 
         return self::_get('/masspay/' . $job_id . '/items/' . $item_id,
             [
-                'oauth_token' => self::$settings->oauth_token
+                $alternate_token ? $alternate_token : 'oauth_token' => self::$settings->oauth_token
             ]);
     }
 
@@ -108,12 +116,15 @@ class MassPay extends RestClient {
      * Lists all MassPay jobs for the user under
      * the current OAuth token.
      *
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
      * @return string[] MassPay jobs.
      */
-    public function listJobs() {
+    public function listJobs($alternate_token = false) {
         return self::_get('/masspay/',
             [
-                'oauth_token' => self::$settings->oauth_token
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 }
