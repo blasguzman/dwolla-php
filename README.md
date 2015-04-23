@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.3
+2.1.4
 
 ## Installation
 
@@ -171,6 +171,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.4
+* Added `$OAuth->catalog()` for the new catalog endpoint, along with unit tests and examples.
 
 2.1.3
 * Added `alternate_token` parameter to allow functions which use an `oauth_token` to be overriden in cases where the user would have to continuously set/get the variable in the `settings`.
