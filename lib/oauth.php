@@ -99,6 +99,6 @@ class OAuth extends RestClient {
         return self::_get('/catalog',
             [
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ])['_links'];
+            ], false, false)['_links'];
     }
 }
