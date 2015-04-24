@@ -144,4 +144,35 @@ class Transactions extends RestClient {
 
         return self::_get('/transactions/stats', $p);
     }
+
+    /**
+     * Schedules a transaction on behalf of the currently assigned/passed
+     * OAuth token
+     * 
+     * @param string $destinationId Dwolla ID to send funds to.
+     * @param double $amount Amount to send.
+     * @param string ('YYYY-MM-DD') $scheduleDate Date to send on.
+     * @param string[] $params Additional parameters
+     * @param string $alternate_token Alternate OAuth token 
+     * 
+     * @return mixed[] Information about scheduled transaction
+     */
+    public function schedule($destinationId, $amount, $scheduleDate, $params = false, $alternate_token = false) {
+        if (!$destinationId) { return self::_error("send() requires `\$destinationId` parameter.\n"); }
+        if (!$amount) { return self::_error("send() requires `\$amount` parameter.\n"); }
+        if (!$scheduleDate) { return self::_error("send() requires `\$scheduleDate` parameter.\n"); }
+
+
+        $p = [
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
+            'destinationId' => $destinationId,
+            'amount' => $amount,
+            'scheduleDate' => $scheduleDate
+        ];
+
+        if ($params && is_array($params)) { $p = array_merge($p, $params); }
+
+        return self::_post('/transactions/scheduled', $p);
+    }
 }
