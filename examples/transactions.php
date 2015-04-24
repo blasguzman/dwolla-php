@@ -44,3 +44,9 @@ print_r($Transactions->info('123456'));
  * associated with the current OAuth token.
  */
 print_r($Transactions->stats());
+
+/**
+ * Example 6: Send $5.50 to a Dwolla ID,
+ * on 2018-01-01
+ */
+print_r($Transactions->send('812-197-4121', 5.50, '2018-01-01'));

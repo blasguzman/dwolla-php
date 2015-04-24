@@ -168,7 +168,7 @@ class Transactions extends RestClient {
             'pin' => self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount,
-            'scheduleDate' => $scheduleDate
+            'ScheduleDate' => $scheduleDate
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }

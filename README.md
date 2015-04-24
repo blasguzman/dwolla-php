@@ -154,6 +154,7 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
  * `get()`: Lists transactions for user
  * `info()`: Get information for transaction by ID.
  * `stats()`: Get transaction statistics for current user.
+ * `schedule()`: Schedule a transaction to occur at a later date.
 
 ### Internal Use
 
