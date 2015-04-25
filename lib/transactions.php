@@ -152,15 +152,17 @@ class Transactions extends RestClient {
      * @param string $destinationId Dwolla ID to send funds to.
      * @param double $amount Amount to send.
      * @param string ('YYYY-MM-DD') $scheduleDate Date to send on.
+     * @param string $fundsSource Funding Source ID to fund scheduled transaction.
      * @param string[] $params Additional parameters
      * @param string $alternate_token Alternate OAuth token 
      * 
      * @return mixed[] Information about scheduled transaction
      */
-    public function schedule($destinationId, $amount, $scheduleDate, $params = false, $alternate_token = false) {
-        if (!$destinationId) { return self::_error("send() requires `\$destinationId` parameter.\n"); }
-        if (!$amount) { return self::_error("send() requires `\$amount` parameter.\n"); }
-        if (!$scheduleDate) { return self::_error("send() requires `\$scheduleDate` parameter.\n"); }
+    public function schedule($destinationId, $amount, $scheduleDate, $fundsSource, $params = false, $alternate_token = false) {
+        if (!$destinationId) { return self::_error("schedule() requires `\$destinationId` parameter.\n"); }
+        if (!$amount) { return self::_error("schedule() requires `\$amount` parameter.\n"); }
+        if (!$scheduleDate) { return self::_error("schedule() requires `\$scheduleDate` parameter.\n"); }
+        if (!$fundsSource) { return self::_error("schedule() requires `\$fundsSource` parameter.\n"); }
 
 
         $p = [
@@ -168,7 +170,8 @@ class Transactions extends RestClient {
             'pin' => self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount,
-            'ScheduleDate' => $scheduleDate
+            'scheduleDate' => $scheduleDate,
+            'fundsSource' => $fundsSource
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }

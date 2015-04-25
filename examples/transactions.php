@@ -47,6 +47,7 @@ print_r($Transactions->stats());
 
 /**
  * Example 6: Send $5.50 to a Dwolla ID,
- * on 2018-01-01
+ * on 2018-01-01, from funding source with ID
+ * "ashfdjh8f9df89"
  */
-print_r($Transactions->send('812-197-4121', 5.50, '2018-01-01'));
+print_r($Transactions->send('812-197-4121', 5.50, '2018-01-01', 'ashfdjh8f9df89'));
