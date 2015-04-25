@@ -77,7 +77,7 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->Transactions->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
         $this->assertEquals('812-111-1111', json_decode($this->history->getLastRequest()->getBody(), true)['destinationId']);
         $this->assertEquals(5, json_decode($this->history->getLastRequest()->getBody(), true)['amount']);
-        $this->assertEquals('2051-01-01', json_decode($this->history->getLastRequest()->getBody(), true)['ScheduleDate']);
+        $this->assertEquals('2051-01-01', json_decode($this->history->getLastRequest()->getBody(), true)['scheduleDate']);
         $this->assertEquals('ashfdjh8f9df89', json_decode($this->history->getLastRequest()->getBody(), true)['fundsSource']);
     }
 }
