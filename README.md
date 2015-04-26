@@ -175,7 +175,8 @@ cd tests
 
 2.1.4
 * Added `$OAuth->catalog()` for the new catalog endpoint, along with unit tests and examples.
-* Added `$Transactions->schedule()` for the new scheduled transactions endpoint, along with unit tests and examples
+* Added the new scheduled transactions endpoints, along with unit tests and examples.
+* Added an `$alternate_pin` parameter to functions which take PINs.
 
 2.1.3
 * Added `alternate_token` parameter to allow functions which use an `oauth_token` to be overriden in cases where the user would have to continuously set/get the variable in the `settings`.

@@ -130,14 +130,14 @@ class fundingSources extends RestClient {
      *
      * @return null
      */
-    public function withdraw($amount, $funding_id, $alternate_token = false) {
+    public function withdraw($amount, $funding_id, $alternate_token = false, $alternate_pin = false) {
         if (!$amount) { return self::_error("withdraw() requires `\$amount` parameter.\n"); }
         if (!$funding_id) { return self::_error("withdraw() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/withdraw',
             [
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
-                'pin' => self::$settings->pin,
+                'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
                 'amount' => $amount
             ]);
     }
@@ -154,14 +154,14 @@ class fundingSources extends RestClient {
      *
      * @return null
      */
-    public function deposit($amount, $funding_id, $alternate_token = false) {
+    public function deposit($amount, $funding_id, $alternate_token = false, $alternate_pin = false) {
         if (!$amount) { return self::_error("deposit() requires `\$amount` parameter.\n"); }
         if (!$funding_id) { return self::_error("deposit() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/deposit',
             [
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
-                'pin' => self::$settings->pin,
+                'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
                 'amount' => $amount
             ]);
     }

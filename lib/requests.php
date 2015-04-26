@@ -119,13 +119,13 @@ class Requests extends RestClient {
      *
      * @return string[] Information (transaction/request IDs) relevant to fulfilled request.
      */
-    public function fulfill($request_id, $amount, $params = false, $alternate_token = false) {
+    public function fulfill($request_id, $amount, $params = false, $alternate_token = false, $alternate_pin = false) {
         if (!$request_id) { return self::_error("fulfill() requires `\$request_id` parameter.\n"); }
         if (!$amount) { return self::_error("fulfill() requires `\$amount` parameter.\n"); }
 
         $p = [
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
-            'pin' => self::$settings->pin,
+            'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'amount' => $amount
         ];
 
