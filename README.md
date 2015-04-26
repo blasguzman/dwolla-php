@@ -142,6 +142,7 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
  * `genAuthUrl()`: Generates OAuth permission link URL
  * `get()`: Retrieves OAuth + Refresh token pair from Dwolla servers.
  * `refresh()`: Retrieves OAuth + Refresh pair with refresh token.
+ * `catalog()`: Retrieves all endpoints elligible for use with current OAuth token. 
 * `Requests()`:
  * `create()`: Request money from user.
  * `get()`: Lists all pending money requests.
