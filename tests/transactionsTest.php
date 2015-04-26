@@ -80,4 +80,41 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2051-01-01', json_decode($this->history->getLastRequest()->getBody(), true)['scheduleDate']);
         $this->assertEquals('ashfdjh8f9df89', json_decode($this->history->getLastRequest()->getBody(), true)['fundsSource']);
     }
+
+    public function testScheduled() {
+        $this->Transactions->scheduled();
+
+        $this->assertEquals('/oauth/rest/transactions/scheduled', $this->history->getLastRequest()->getPath());
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);       
+    }
+
+    public function testScheduledById() {
+        $this->Transactions->scheduledById('anid');
+
+        $this->assertEquals('/oauth/rest/transactions/scheduled/anid', $this->history->getLastRequest()->getPath());
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);
+    }
+
+    public function testEditScheduled() {
+        $this->Transactions->editScheduled('anid', ['amount' => 5.50]);
+
+        $this->assertEquals('/oauth/rest/transactions/scheduled/anid', $this->history->getLastRequest()->getPath());
+        $this->assertEquals($this->Transactions->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
+        $this->assertEquals(5.50, json_decode($this->history->getLastRequest()->getBody(), true)['amount']);
+    }
+
+    public function testDeleteScheduledById() {
+        $this->Transactions->deleteScheduledById('anid');
+
+        $this->assertEquals('/oauth/rest/transactions/scheduled/anid', $this->history->getLastRequest()->getPath());
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);
+    }
+
+    public function testDeleteAllScheduled() {
+        $this->Transactions->deleteAllScheduled();
+
+        $this->assertEquals('/oauth/rest/transactions/scheduled', $this->history->getLastRequest()->getPath());
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);
+    }
+
 }

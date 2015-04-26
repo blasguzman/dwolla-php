@@ -155,6 +155,11 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
  * `info()`: Get information for transaction by ID.
  * `stats()`: Get transaction statistics for current user.
  * `schedule()`: Schedule a transaction to occur at a later date.
+ * `scheduled()`: Get all scheduled transactions.
+ * `scheduledById()`: Get a scheduled transaction by its ID.
+ * `editScheduledById()`: Edit scheduled transaction by its ID.
+ * `deleteScheduledById()`: Delete a scheduled transaction by its ID.
+ * `deleteAllScheduled()`: Delete all scheduled transactions.
 
 ### Internal Use
 

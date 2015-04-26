@@ -211,11 +211,11 @@ class Transactions extends RestClient {
      * @return mixed[] Requested scheduled transaction
      */
     public function scheduledById($id, $alternate_token = false) {
-        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+        if (!$id) { return self::_error("scheduled() requires `\$id` parameter.\n"); }
 
-        return self::_get('/transactions/scheduled/' + $id, 
+        return self::_get('/transactions/scheduled/' . $id, 
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
             ]);
     }
 
@@ -230,7 +230,7 @@ class Transactions extends RestClient {
      * @return mixed[] Edited scheduled transaction
      */
     public function editScheduled($id, $params = false, $alternate_token = false, $alternate_pin = false) {
-        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+        if (!$id) { return self::_error("editScheduled() requires `\$id` parameter.\n"); }
 
         $p = [
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
@@ -239,7 +239,7 @@ class Transactions extends RestClient {
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
-        return self::_put('/transactions/scheduled/' + $id, $p);
+        return self::_put('/transactions/scheduled/' . $id, $p);
     }
 
     /**
@@ -255,7 +255,7 @@ class Transactions extends RestClient {
     public function deleteScheduledById($id, $alternate_token = false, $alternate_pin = false) {
         if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
 
-        return self::_delete('/transactions/scheduled/' + $id, 
+        return self::_delete('/transactions/scheduled/' . $id, 
             [
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin
@@ -272,8 +272,7 @@ class Transactions extends RestClient {
      *
      * @return mixed[] Edited scheduled transaction
      */
-    public function deleteAllScheduled($id, $alternate_token = false, $alternate_pin = false) {
-        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+    public function deleteAllScheduled($alternate_token = false, $alternate_pin = false) {
 
         return self::_delete('/transactions/scheduled', 
             [
