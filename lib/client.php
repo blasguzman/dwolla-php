@@ -191,6 +191,50 @@ class RestClient {
     }
 
     /**
+     * Wrapper around Guzzle PUT request.
+     *
+     * @param string $endpoint API endpoint string
+     * @param string $request Request body. JSON encoding is optional.
+     * @param bool $customPostfix Use default REST postfix?
+     * @param bool $dwollaParse Parse out of message envelope?
+     *
+     * @return String[] Response body.
+     */
+    protected function _put($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
+        // First, we try to catch any errors as the request "goes out the door"
+        try {
+            $response = $this->client->put($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
+            if (self::$settings->debug){
+                $this->_console("PUT Request to $endpoint\n");
+                $this->_console("    " . json_encode($request));
+            }
+        }
+        catch (RequestException $exception) {
+            $response = false;
+            if (self::$settings->debug){
+                $this->_console("DwollaPHP: An error has occurred during a PUT request.\nRequest Body:\n");
+                $this->_console($exception->getRequest());
+                if ($exception->hasResponse()) {
+                    $this->_console("Server Response:\n");
+                    $this->_console($exception->getResponse());
+                }
+            }
+        }
+        if ($response) {
+            if ($response->getBody()) {
+                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+            }
+        }
+        else {
+            if (self::$settings->debug) {
+                $this->_console("DwollaPHP: An error has occurred; the response body is empty");
+            }
+            return null;
+        }
+    }    
+
+    /**
      * Wrapper around Guzzle GET request.
      *
      * @param string $endpoint API endpoint string
@@ -213,6 +257,50 @@ class RestClient {
             $response = false;
             if (self::$settings->debug){
                 $this->_console("DwollaPHP: An error has occurred during a GET request.\nRequest Body:\n");
+                $this->_console($exception->getRequest());
+                if ($exception->hasResponse()) {
+                    $this->_console("Server Response:\n");
+                    $this->_console($exception->getResponse());
+                }
+            }
+        }
+        if ($response) {
+            if ($response->getBody()) {
+                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+            }
+        }
+        else {
+            if (self::$settings->debug) {
+                $this->_console("DwollaPHP: An error has occurred; the response body is empty");
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Wrapper around Guzzle DELETE request.
+     *
+     * @param string $endpoint API endpoint string
+     * @param string[] $query Array of URLEncoded query items in key-value pairs.
+     * @param bool $customPostfix Use default REST postfix?
+     * @param bool $dwollaParse Parse out of message envelope?
+     *
+     * @return string[] Response body.
+     */
+    protected function _delete($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
+        // First, we try to catch any errors as the request "goes out the door"
+        try {
+            $response = $this->client->delete($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
+            if (self::$settings->debug){
+                $this->_console("DELETE Request to $endpoint\n");
+                $this->_console("    " . json_encode($query));
+            }
+        }
+        catch (RequestException $exception) {
+            $response = false;
+            if (self::$settings->debug){
+                $this->_console("DwollaPHP: An error has occurred during a DELETE request.\nRequest Body:\n");
                 $this->_console($exception->getRequest());
                 if ($exception->hasResponse()) {
                     $this->_console("Server Response:\n");

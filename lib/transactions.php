@@ -178,4 +178,108 @@ class Transactions extends RestClient {
 
         return self::_post('/transactions/scheduled', $p);
     }
+
+    /**
+     * Lists scheduled transactions for the user associated with
+     * the current OAuth token.
+     *
+     * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return mixed[] List of scheduled transactions
+     */
+    public function scheduled($params = false, $alternate_token = false) {
+        $p = [
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'client_id' => self::$settings->client_id,
+            'client_secret' => self::$settings->client_secret
+        ];
+
+        if ($params && is_array($params)) { $p = array_merge($p, $params); }
+
+        return self::_get('/transactions/scheduled', $p);
+    }
+
+    /**
+     * Retrieve a scheduled transaction by ID for the user associated with
+     * the current OAuth token.
+     *
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return mixed[] Requested scheduled transaction
+     */
+    public function scheduledById($id, $alternate_token = false) {
+        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+
+        return self::_get('/transactions/scheduled/' + $id, 
+            [
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            ]);
+    }
+
+    /**
+     * Edit a scheduled transaction by ID
+     * for the user associated with the current OAuth token.
+     *
+     * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return mixed[] Edited scheduled transaction
+     */
+    public function editScheduled($id, $params = false, $alternate_token = false) {
+        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+
+        $p = [
+            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'pin' => self::$settings->pin,
+        ];
+
+        if ($params && is_array($params)) { $p = array_merge($p, $params); }
+
+        return self::_put('/transactions/scheduled/' + $id, $p);
+    }
+
+    /**
+     * Delete a scheduled transaction by ID
+     * for the user associated with the current OAuth token.
+     *
+     * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return mixed[] Edited scheduled transaction
+     */
+    public function deleteScheduledById($id, $alternate_token = false) {
+        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+
+        return self::_delete('/transactions/scheduled/' + $id, 
+            [
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'pin' => self::$settings->pin
+            ]);
+    }
+
+    /**
+     * Delete all scheduled transactions
+     * for the user associated with the current OAuth token.
+     *
+     * @param string[] $params Additional parameters.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return mixed[] Edited scheduled transaction
+     */
+    public function deleteScheduledById($id, $alternate_token = false) {
+        if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
+
+        return self::_delete('/transactions/scheduled', 
+            [
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'pin' => self::$settings->pin
+            ]);
+    }
+
 }
