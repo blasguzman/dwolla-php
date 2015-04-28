@@ -22,7 +22,7 @@ class Settings {
     public $client_secret = "YOUR SECRET HERE";
     public $pin = 1337;
 
-    public $oauth_scope = "Send|Transactions|Balance|Request|Contacts|AccountInfoFull|Funding|ManageAccount";
+    public $oauth_scope = "Send|Transactions|Balance|Request|Contacts|AccountInfoFull|Funding|ManageAccount|Scheduled";
     public $oauth_token = "OAUTH TOKENS GO HERE";
     public $refresh_token = "REFRESH TOKENS GO HERE";
 

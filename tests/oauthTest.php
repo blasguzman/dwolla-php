@@ -47,4 +47,12 @@ class OAuthTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('refresh_token', json_decode($this->history->getLastRequest()->getBody(), true)['grant_type']);
         $this->assertEquals('ABCDEF', json_decode($this->history->getLastRequest()->getBody(), true)['refresh_token']);
     }
+
+    public function testCatalog() {
+
+        $this->OAuth->catalog('Catalog Test Token');
+
+        $this->assertEquals('/oauth/rest/catalog', $this->history->getLastRequest()->getPath());
+        $this->assertEquals('Catalog Test Token', $this->history->getLastRequest()->getQuery()['oauth_token']);
+    }
 }

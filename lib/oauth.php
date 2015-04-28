@@ -85,4 +85,20 @@ class OAuth extends RestClient {
 
         return self::_post('/token', $params, 'oauth/v2', false);
     }
+
+    /**
+     * Returns a "catalog" of endpoints that are available for use
+     * with the current/passed OAuth token
+     * 
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     * 
+     * @return string[] Catalog of endpoints and their URIs
+     */
+    public function catalog($alternate_token = false) {
+        return self::_get('/catalog',
+            [
+                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+            ], false, false)['_links'];
+    }
 }

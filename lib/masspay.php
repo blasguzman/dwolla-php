@@ -35,13 +35,13 @@ class MassPay extends RestClient {
      *
      * @return null
      */
-    public function create($fundsSource, $items, $params = false, $alternate_token = false) {
+    public function create($fundsSource, $items, $params = false, $alternate_token = false, $alternate_pin = false) {
         if (!$fundsSource) { return self::_error("create() requires `\$fundsSource` parameter.\n"); }
         if (!$items) { return self::_error("create() requires `\$items` parameter.\n"); }
 
         $p = [
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
-            'pin' => self::$settings->pin,
+            'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'fundsSource' => $fundsSource,
             'items' => $items
         ];

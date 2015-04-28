@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.3
+2.1.4
 
 ## Installation
 
@@ -142,6 +142,7 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
  * `genAuthUrl()`: Generates OAuth permission link URL
  * `get()`: Retrieves OAuth + Refresh token pair from Dwolla servers.
  * `refresh()`: Retrieves OAuth + Refresh pair with refresh token.
+ * `catalog()`: Retrieves all endpoints elligible for use with current OAuth token. 
 * `Requests()`:
  * `create()`: Request money from user.
  * `get()`: Lists all pending money requests.
@@ -154,6 +155,12 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
  * `get()`: Lists transactions for user
  * `info()`: Get information for transaction by ID.
  * `stats()`: Get transaction statistics for current user.
+ * `schedule()`: Schedule a transaction to occur at a later date.
+ * `scheduled()`: Get all scheduled transactions.
+ * `scheduledById()`: Get a scheduled transaction by its ID.
+ * `editScheduledById()`: Edit scheduled transaction by its ID.
+ * `deleteScheduledById()`: Delete a scheduled transaction by its ID.
+ * `deleteAllScheduled()`: Delete all scheduled transactions.
 
 ### Internal Use
 
@@ -171,6 +178,11 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.4
+* Added `$OAuth->catalog()` for the new catalog endpoint, along with unit tests and examples.
+* Added the new scheduled transactions endpoints, along with unit tests and examples.
+* Added an `$alternate_pin` parameter to functions which take PINs.
 
 2.1.3
 * Added `alternate_token` parameter to allow functions which use an `oauth_token` to be overriden in cases where the user would have to continuously set/get the variable in the `settings`.

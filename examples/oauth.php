@@ -57,4 +57,13 @@ print($access_set);
  * access/refresh token pair.
  */
 
-print_r($OAuth->refresh($access_set['refresh_token']));
+$access_set = $OAuth->refresh($access_set['refresh_token']); 
+print_r($access_set);
+
+/**
+ * Step 4: Retrieve the catalog of endpoints that 
+ * are available to the OAuth token which you just 
+ * retrieved.
+ */
+
+print_r($OAuth->catalog($access_set['access_token']));
