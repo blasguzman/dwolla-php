@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.4
+2.1.5
 
 ## Installation
 
@@ -178,6 +178,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.5
+* Added `$verified_account` flag to `$OAuth-genAuthUrl()`.
 
 2.1.4
 * Added `$OAuth->catalog()` for the new catalog endpoint, along with unit tests and examples.

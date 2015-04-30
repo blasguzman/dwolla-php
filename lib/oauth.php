@@ -29,10 +29,11 @@ class OAuth extends RestClient {
      *
      * @param string $redirect Redirect destination.
      * @param string $scope Optional. Scope string to override default scope in settings object.
+     * @param bool $verified_account Optional verified account flag.
      *
      * @return string
      */
-    public function genAuthUrl($redirect = false, $scope = false) {
+    public function genAuthUrl($redirect = false, $scope = false, $verified_account = false) {
         if (!$scope) { $scope = self::$settings->oauth_scope; }
 
         return self::_host()
@@ -40,7 +41,8 @@ class OAuth extends RestClient {
         . urlencode(self::$settings->client_id)
         . "&response_type=code&scope="
         . urlencode($scope)
-        . ($redirect ? "&redirect_uri=" . urlencode($redirect) : "");
+        . ($redirect ? "&redirect_uri=" . urlencode($redirect) : "")
+        . ($verified_account ? "&verified_account=true" : "");
     }
 
     /**
