@@ -179,7 +179,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json(), true)) : json_decode($response->json(), true);
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
@@ -223,7 +223,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json(), true)) : json_decode($response->json(), true);
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
@@ -267,7 +267,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json(), true)) : json_decode($response->json(), true);
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
@@ -311,7 +311,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json(), true)) : json_decode($response->json(), true);
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
