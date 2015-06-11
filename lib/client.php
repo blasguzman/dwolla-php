@@ -13,9 +13,9 @@
 
  * @package Dwolla
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
- * @copyright Copyright (C) 2014 Dwolla Inc.
+ * @copyright Copyright (C) 2015 Dwolla Inc, David Stancu.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.1.5
+ * @version 2.1.6
  * @link http://developers.dwolla.com
  */
 
@@ -179,7 +179,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json())) : json_decode($response->json());
             }
         }
         else {
@@ -223,7 +223,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json())) : json_decode($response->json());
             }
         }
         else {
@@ -267,7 +267,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json())) : json_decode($response->json());
             }
         }
         else {
@@ -311,7 +311,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->json())) : json_decode($response->json());
             }
         }
         else {
