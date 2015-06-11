@@ -9,7 +9,7 @@ The new and improved Dwolla library based off of the Guzzle REST client. `dwolla
 
 ## Version
 
-2.1.5
+2.1.6
 
 ## Installation
 
@@ -178,6 +178,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.6
+* Changed version constraint for GuzzleHttp causing the library to fail due to PSR7 update.
 
 2.1.5
 * Added `$verified_account` flag to `$OAuth-genAuthUrl()`.
