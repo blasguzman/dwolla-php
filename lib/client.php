@@ -23,11 +23,6 @@ namespace Dwolla;
 
 require_once '_settings.php';
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Exception\RequestException;
-
 class RestClient {
 
     /**
@@ -323,6 +318,90 @@ class RestClient {
     }
 
     /**
+     * Use cURL to create HTTP requests. Parameters for 'GET' 
+     * and 'DELETE' requests must be urlencoded and appended
+     * to the URL in order to be fired correctly. 
+     *
+     * @param string $url URL string with endpoint
+     * @param string $method HTTP verb used for request
+     * @param array $params Parameters for request
+     *
+     * @return String[] Response body
+     */
+    protected function curl($url, $method, $params = false)
+    {
+        $valid_methods = array('GET', 'DELETE', 'PUT', 'POST');
+
+        if (!in_array($method, $valid_methods)) {
+            return $this->_console("DwollaPHP: Invalid HTTP verb.");
+        }
+
+        if (self::$settings->debug){
+            $this->_console("$method Request to $url\n");
+            if ($params) {
+                $this->_console("    " . json_encode($params));
+            }
+        }
+
+        // Set up cURL
+        $curl_req = curl_init();        
+        curl_setopt($curl_req, CURLOPT_URL, $url);
+        curl_setopt($curl_req, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($curl_req, CURLOPT_TIMEOUT, 15);
+        curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl_req, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl_req, CURLOPT_HEADER, false);
+
+        $headers = array('Accept: application/json', 'Content-Type: application/json');
+
+        // Configure appropriately for HTTP verb
+        switch ($method) {
+            case 'GET':
+                curl_setopt($curl_req, CURLOPT_CUSTOMREQUEST, $method);
+            case 'DELETE':
+                curl_setopt($curl_req, CURLOPT_CUSTOMREQUEST, $method);
+            case 'POST':
+                $data = json_encode($params);
+                $headers[] = 'Content-Length: ' . strlen($data);
+                curl_setopt($curl_req, CURLOPT_POSTFIELDS, $data);
+            case 'PUT':
+                $data = json_encode($params);
+                $headers[] = 'Content-Length: ' . strlen($data);
+                curl_setopt($curl_req, CURLOPT_POSTFIELDS, $data);
+        }
+
+        // Set headers
+        curl_setopt($curl_req, CURLOPT_HTTPHEADER, $headers);
+
+        // cacert workaround
+        if (strtoupper(substr(PHP_OS, 0,3)) == 'WIN') {
+          $ca = dirname(__FILE__);
+          curl_setopt($curl_req, CURLOPT_CAINFO, $ca); 
+          curl_setopt($curl_req, CURLOPT_CAINFO, $ca . '/cacert.pem'); 
+        }
+
+        // Fire request, check for OK, close socket.
+        $response = curl_exec($curl_req);
+
+        if (curl_getinfo($curl_req, CURLINFO_HTTP_CODE) !== 200) {
+            if (self::$settings->debug) {
+                echo "DwollaPHP: We didn't get a 200 OK, here is what cURL says: \n";
+                print_r(curl_getinfo($curl_req));
+                print_r(curl_error($curl_req));
+            }
+            else { 
+                return array(
+                    'Success' => false,
+                    'Message' => "Request failed. Server responded with: {$code}"
+                );
+            }
+        }
+
+        curl_close($curl_req);
+        return json_decode($response, true);
+    }
+
+    /**
      * Constructor. Takes no arguments.
      */
     public function __construct() {
@@ -331,21 +410,6 @@ class RestClient {
         self::$settings->host = self::$settings->sandbox ?  self::$settings->sandbox_host : self::$settings->production_host;
 
         $this->settings = self::$settings;
-
-        $p = [
-            'defaults' => [
-                'headers' =>
-                            [
-                                'Content-Type' => 'application/json',
-                                'User-Agent' => 'dwolla-php/2'
-                            ],
-                'timeout' => self::$settings->rest_timeout
-            ]
-        ];
-
-        if (self::$settings->proxy) { $p['proxy'] = self::$settings->proxy; }
-
-        $this->client = new Client($p);
     }
 }
 
