@@ -142,7 +142,7 @@ class RestClient {
     }
 
     /**
-     * Wrapper around Guzzle POST request.
+     * Wrapper around cURL POST request.
      *
      * @param string $endpoint API endpoint string
      * @param string $request Request body. JSON encoding is optional.
@@ -152,30 +152,17 @@ class RestClient {
      * @return String[] Response body.
      */
     protected function _post($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
-        // First, we try to catch any errors as the request "goes out the door"
-        try {
-            $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
-            if (self::$settings->debug){
-                $this->_console("POST Request to $endpoint\n");
-                $this->_console("    " . json_encode($request));
-            }
+
+        $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, 'POST', $request);
+
+        if (self::$settings->debug){
+            $this->_console("POST Request to $endpoint\n");
+            $this->_console("    " . json_encode($request));
         }
-        catch (RequestException $exception) {
-            $response = false;
-            if (self::$settings->debug){
-                $this->_console("DwollaPHP: An error has occurred during a POST request.\nRequest Body:\n");
-                $this->_console($exception->getRequest());
-                if ($exception->hasResponse()) {
-                    $this->_console("Server Response:\n");
-                    $this->_console($exception->getResponse());
-                }
-            }
-        }
+
         if ($response) {
-            if ($response->getBody()) {
-                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
-            }
+            // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+            return $dwollaParse ? $this->_dwollaparse($response) : $response;
         }
         else {
             if (self::$settings->debug) {
@@ -196,30 +183,17 @@ class RestClient {
      * @return String[] Response body.
      */
     protected function _put($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
-        // First, we try to catch any errors as the request "goes out the door"
-        try {
-            $response = $this->client->put($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
-            if (self::$settings->debug){
-                $this->_console("PUT Request to $endpoint\n");
-                $this->_console("    " . json_encode($request));
-            }
+
+        $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, 'PUT', $request);
+
+        if (self::$settings->debug){
+            $this->_console("PUT Request to $endpoint\n");
+            $this->_console("    " . json_encode($request));
         }
-        catch (RequestException $exception) {
-            $response = false;
-            if (self::$settings->debug){
-                $this->_console("DwollaPHP: An error has occurred during a PUT request.\nRequest Body:\n");
-                $this->_console($exception->getRequest());
-                if ($exception->hasResponse()) {
-                    $this->_console("Server Response:\n");
-                    $this->_console($exception->getResponse());
-                }
-            }
-        }
+
         if ($response) {
-            if ($response->getBody()) {
-                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
-            }
+            // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+            return $dwollaParse ? $this->_dwollaparse($response) : $response;
         }
         else {
             if (self::$settings->debug) {
