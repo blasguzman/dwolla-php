@@ -96,9 +96,11 @@ class OAuth extends RestClient {
      * @return string[] Catalog of endpoints and their URIs
      */
     public function catalog($alternate_token = false) {
-        return self::_get('/catalog',
+        $catalog = self::_get('/catalog',
             array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ), false, false)['_links'];
+            ), false, false);
+
+        return $catalog['_links'];
     }
 }

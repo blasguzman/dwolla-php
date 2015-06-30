@@ -14,7 +14,7 @@
  */
 
 // We need the OAuth class in order to do anything
-require '../vendor/autoload.php';
+require '../lib/oauth.php';
 $OAuth = new OAuth();
 
 $OAuth->settings->sandbox = false;
