@@ -155,11 +155,6 @@ class RestClient {
 
         $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, 'POST', $request);
 
-        if (self::$settings->debug){
-            $this->_console("POST Request to $endpoint\n");
-            $this->_console("    " . json_encode($request));
-        }
-
         if ($response) {
             // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
             return $dwollaParse ? $this->_dwollaparse($response) : $response;
@@ -173,7 +168,7 @@ class RestClient {
     }
 
     /**
-     * Wrapper around Guzzle PUT request.
+     * Wrapper around cURL PUT request.
      *
      * @param string $endpoint API endpoint string
      * @param string $request Request body. JSON encoding is optional.
@@ -185,11 +180,6 @@ class RestClient {
     protected function _put($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
 
         $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, 'PUT', $request);
-
-        if (self::$settings->debug){
-            $this->_console("PUT Request to $endpoint\n");
-            $this->_console("    " . json_encode($request));
-        }
 
         if ($response) {
             // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
@@ -204,7 +194,7 @@ class RestClient {
     }    
 
     /**
-     * Wrapper around Guzzle GET request.
+     * Wrapper around cURL GET request.
      *
      * @param string $endpoint API endpoint string
      * @param string[] $query Array of URLEncoded query items in key-value pairs.
@@ -214,29 +204,13 @@ class RestClient {
      * @return string[] Response body.
      */
     protected function _get($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
-        // First, we try to catch any errors as the request "goes out the door"
-        try {
-            $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
-            if (self::$settings->debug){
-                $this->_console("GET Request to $endpoint\n");
-                $this->_console("    " . json_encode($query));
-            }
-        }
-        catch (RequestException $exception) {
-            $response = false;
-            if (self::$settings->debug){
-                $this->_console("DwollaPHP: An error has occurred during a GET request.\nRequest Body:\n");
-                $this->_console($exception->getRequest());
-                if ($exception->hasResponse()) {
-                    $this->_console("Server Response:\n");
-                    $this->_console($exception->getResponse());
-                }
-            }
-        }
+
+        $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint . '?' . http_build_query($query), 'GET');
+
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse($response) : $response;
             }
         }
         else {
@@ -258,29 +232,13 @@ class RestClient {
      * @return string[] Response body.
      */
     protected function _delete($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
-        // First, we try to catch any errors as the request "goes out the door"
-        try {
-            $response = $this->client->delete($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
-            if (self::$settings->debug){
-                $this->_console("DELETE Request to $endpoint\n");
-                $this->_console("    " . json_encode($query));
-            }
-        }
-        catch (RequestException $exception) {
-            $response = false;
-            if (self::$settings->debug){
-                $this->_console("DwollaPHP: An error has occurred during a DELETE request.\nRequest Body:\n");
-                $this->_console($exception->getRequest());
-                if ($exception->hasResponse()) {
-                    $this->_console("Server Response:\n");
-                    $this->_console($exception->getResponse());
-                }
-            }
-        }
+
+        $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint . '?' . http_build_query($query), 'DELETE');
+
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse($response) : $response;
             }
         }
         else {
