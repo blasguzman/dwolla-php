@@ -15,7 +15,7 @@
 
 // We need the Transactions class in order to do anything
 require '../lib/transactions.php';
-$Transactions = new Dwolla\Transactions();
+$Transactions = new Transactions();
 
 /**
  * Example 1: Send $5.50 to a Dwolla ID.
@@ -67,7 +67,7 @@ print_r($Transactions->scheduledById('abdgdsfd35353'));
  * Example 9: Edit scheduled transaction with ID
  * 'abdgdsfd35353' to reflect amount 20.50
  */
-print_r($Transactions->editScheduled('abdgdsfd35353', ['amount' => 20.50]));
+print_r($Transactions->editScheduled('abdgdsfd35353', array('amount' => 20.50)));
 
 /**
  * Example 10: Delete scheduled transaction with ID

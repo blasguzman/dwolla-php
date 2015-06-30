@@ -15,7 +15,7 @@
 
 // We need the Account class in order to do anything
 require '../lib/account.php';
-$Account = new Dwolla\Account();
+$Account = new Account();
 
 // Let us set our key, secret, and enable sandbox mode
 $Account->settings->client_id = "MY CLIENT ID";

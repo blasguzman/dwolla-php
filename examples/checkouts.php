@@ -15,7 +15,7 @@
 
 // We need the Checkouts class in order to do anything
 require '../lib/checkouts.php';
-$Checkouts = new Dwolla\Checkouts();
+$Checkouts = new Checkouts();
 
 /**
  * Optional:
@@ -41,8 +41,8 @@ $Checkouts->addToCart("Coffee 2", "Another coffee!", 2.25, 1);
  */
 
 $test = $Checkouts->create(
-    [ 'destinationId' => '812-111-7219' ],
-    [ 'redirect' => 'http://requestb.in/1fglpx81' ]
+    array('destinationId' => '812-111-7219' ),
+    array('redirect' => 'http://requestb.in/1fglpx81')
 );
 print_r($test);
 

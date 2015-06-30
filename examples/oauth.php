@@ -15,7 +15,7 @@
 
 // We need the OAuth class in order to do anything
 require '../vendor/autoload.php';
-$OAuth = new Dwolla\OAuth();
+$OAuth = new OAuth();
 
 $OAuth->settings->sandbox = false;
 $OAuth->settings->debug = true;

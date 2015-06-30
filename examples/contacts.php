@@ -15,7 +15,7 @@
 
 // We need the Contacts class in order to do anything
 require '../lib/contacts.php';
-$Account = new Dwolla\Contacts();
+$Account = new Contacts();
 
 /**
  * Example 1: Get the first 10 contacts from the user
@@ -29,10 +29,7 @@ print_r($Account->get());
  * associated with the current OAuth token.
  */
 
-print_r($Account->get(
-    ['limit' => 2
-    ])
-);
+print_r($Account->get(array('limit' => 2)));
 
 /**
  * Example 3: Get Dwolla spots near NYC's official

@@ -15,7 +15,7 @@
 
 // We need the Requests class in order to do anything
 require '../lib/requests.php';
-$Requests = new Dwolla\Requests();
+$Requests = new Requests();
 
 /**
  * Example 1: Request $5 from 812-740-3809

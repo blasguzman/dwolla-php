@@ -15,7 +15,7 @@
 
 // We need the OAuth class in order to do anything
 require '../lib/masspay.php';
-$MassPay = new Dwolla\MassPay();
+$MassPay = new MassPay();
 
 /**
  * Example 1: Create a MassPay job with two items to
@@ -24,16 +24,16 @@ $MassPay = new Dwolla\MassPay();
  */
 
 $info = $MassPay->create('Balance',
-    [
-        [
+    array(
+        array(
             'amount' => 1.00,
             'destination' => '812-197-4121',
-        ],
-        [
+        ),
+        array(
             'amount' => 2.00,
             'destination' => '812-174-9528'
-        ]
-    ]);
+        )
+    ));
 print_r($info);
 
 /**

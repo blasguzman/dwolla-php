@@ -15,7 +15,7 @@
 
 // We need the fundingSources class in order to do anything
 require '../lib/fundingSources.php';
-$FS = new Dwolla\fundingSources();
+$FS = new fundingSources();
 
 /**
  * Example 1: Get information about a funding ID
