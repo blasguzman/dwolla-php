@@ -35,7 +35,7 @@ print_r($Account->full());
  * the Dwolla user associated with the current OAuth token.
  */
 
-print($Account->balance() . "\n");
+print_r($Account->balance());
 
 /**
  * Example 4: Get users near a certain geographical location.
