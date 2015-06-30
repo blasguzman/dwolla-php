@@ -284,16 +284,20 @@ class RestClient {
         switch ($method) {
             case 'GET':
                 curl_setopt($curl_req, CURLOPT_CUSTOMREQUEST, $method);
+                break;
             case 'DELETE':
                 curl_setopt($curl_req, CURLOPT_CUSTOMREQUEST, $method);
+                break;
             case 'POST':
                 $data = json_encode($params);
                 $headers[] = 'Content-Length: ' . strlen($data);
                 curl_setopt($curl_req, CURLOPT_POSTFIELDS, $data);
+                break;
             case 'PUT':
                 $data = json_encode($params);
                 $headers[] = 'Content-Length: ' . strlen($data);
                 curl_setopt($curl_req, CURLOPT_POSTFIELDS, $data);
+                break;
         }
 
         // Set headers
