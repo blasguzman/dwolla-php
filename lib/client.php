@@ -318,7 +318,7 @@ class RestClient {
             else { 
                 return array(
                     'Success' => false,
-                    'Message' => "Request failed. Server responded with: {$code}"
+                    'Message' => "Request failed."
                 );
             }
         }
