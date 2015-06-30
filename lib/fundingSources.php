@@ -19,8 +19,6 @@
  * deposit(): Deposit to Dwolla from funding source.
  */
 
-namespace Dwolla;
-
 require_once('client.php');
 
 class fundingSources extends RestClient {
@@ -38,9 +36,9 @@ class fundingSources extends RestClient {
         if (!$funding_id) { return self::_error("info() requires `\$funding_id` parameter.\n"); }
 
         return self::_get('/fundingsources/' . $funding_id,
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            );
     }
 
     /**
@@ -54,9 +52,9 @@ class fundingSources extends RestClient {
      * @return string[] List of funding sources.
      */
     public function get($params = false, $alternate_token = false) {
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -83,13 +81,13 @@ class fundingSources extends RestClient {
         if (!$name) { return self::_error("add() requires `\$name` parameter.\n"); }
 
         return self::_post('/fundingsources/',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'account_number' => $account,
                 'routing_number' => $routing,
                 'account_type' => $type,
                 'name' => $name
-            ]);
+            ));
     }
 
     /**
@@ -111,11 +109,11 @@ class fundingSources extends RestClient {
         if (!$funding_id) { return self::_error("verify() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/verify',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'deposit1' => $dep1,
                 'deposit2' => $dep2
-            ]);
+            ));
     }
 
     /**
@@ -135,11 +133,11 @@ class fundingSources extends RestClient {
         if (!$funding_id) { return self::_error("withdraw() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/withdraw',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
                 'amount' => $amount
-            ]);
+            ));
     }
 
     /**
@@ -159,10 +157,10 @@ class fundingSources extends RestClient {
         if (!$funding_id) { return self::_error("deposit() requires `\$funding_id` parameter.\n"); }
 
         return self::_post('/fundingsources/' . $funding_id . '/deposit',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
                 'amount' => $amount
-            ]);
+            ));
     }
 }

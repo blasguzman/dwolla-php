@@ -19,8 +19,6 @@
  * @link http://developers.dwolla.com
  */
 
-namespace Dwolla;
-
 require_once '_settings.php';
 
 class RestClient {
@@ -208,10 +206,8 @@ class RestClient {
         $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint . '?' . http_build_query($query), 'GET');
 
         if ($response) {
-            if ($response->getBody()) {
-                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response) : $response;
-            }
+            // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+            return $dwollaParse ? $this->_dwollaparse($response) : $response;
         }
         else {
             if (self::$settings->debug) {
@@ -236,10 +232,8 @@ class RestClient {
         $response = $this->curl($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint . '?' . http_build_query($query), 'DELETE');
 
         if ($response) {
-            if ($response->getBody()) {
-                // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response) : $response;
-            }
+            // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
+            return $dwollaParse ? $this->_dwollaparse($response) : $response;
         }
         else {
             if (self::$settings->debug) {
@@ -344,4 +338,3 @@ class RestClient {
         $this->settings = self::$settings;
     }
 }
-

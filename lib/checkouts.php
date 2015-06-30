@@ -19,8 +19,6 @@
  * verify(): Verifies a checkout session.
  */
 
-namespace Dwolla;
-
 include_once('client.php');
 
 class Checkouts extends RestClient {
@@ -54,12 +52,12 @@ class Checkouts extends RestClient {
         if (!is_array($this->cart)) { $this->cart = []; }
 
         array_push($this->cart,
-            [
+            array(
                 'name' => $name,
                 'description' => $desc,
                 'price' => $cost,
                 'quantity' => $quantity
-            ]);
+            ));
     }
 
     /**
@@ -83,11 +81,11 @@ class Checkouts extends RestClient {
         }
         else { return self::_error("createCheckout() requires `\$purchaseOrder` to be of type array."); }
 
-        $p = [
+        $p = array(
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret,
             'purchaseOrder' => $purchaseOrder
-        ];
+        );
 
         if (is_array($this->cart)) {
             $p['purchaseOrder']['total'] = 0;
@@ -116,7 +114,7 @@ class Checkouts extends RestClient {
         $id = self::_post('/offsitegateway/checkouts', $p);
         if (is_array($id)) {
             return array_merge($id,
-                [ 'URL' => self::_host() . "payment/checkout/" . (array_key_exists('CheckoutId', $id) ? $id['CheckoutId'] : null)]);
+                array('URL' => self::_host() . "payment/checkout/" . (array_key_exists('CheckoutId', $id) ? $id['CheckoutId'] : null)));
         }
         else {
             return self::_error("Unable to create checkout due to API error.");
@@ -135,10 +133,10 @@ class Checkouts extends RestClient {
         if (!$id) { return self::_error("get() requires `\$id` parameter.\n"); }
 
         return self::_get('/offsitegateway/checkouts/'. $id,
-            [
+            array(
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret
-            ]);
+            ));
     }
 
     /**
@@ -152,10 +150,10 @@ class Checkouts extends RestClient {
         if (!$id) { return self::_error("complete() requires `\$id` parameter.\n"); }
 
         return self::_post('/offsitegateway/checkouts/' . $id . '/complete',
-            [
+            array(
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret
-            ]);
+            ));
     }
 
     /**

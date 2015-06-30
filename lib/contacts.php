@@ -15,8 +15,6 @@
  * nearby(): Get spots near a location.
  */
 
-namespace Dwolla;
-
 require_once('client.php');
 
 class Contacts extends RestClient {
@@ -31,9 +29,9 @@ class Contacts extends RestClient {
      * @return string[] Contacts.
      */
     public function get($params = false, $alternate_token = false) {
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -53,12 +51,12 @@ class Contacts extends RestClient {
         if (!$lat) { return self::_error("nearby() requires `\$lat` parameter.\n"); }
         if (!$lon) { return self::_error("nearby() requires `\$lon` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret,
             'latitude' => $lat,
             'longitude' => $lon
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 

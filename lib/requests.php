@@ -18,8 +18,6 @@
  * fulfill(): Fulfills a money request.
  */
 
-namespace Dwolla;
-
 require_once('client.php');
 
 class Requests extends RestClient {
@@ -40,11 +38,11 @@ class Requests extends RestClient {
         if (!$sourceId) { return self::_error("create() requires `\$sourceId` parameter.\n"); }
         if (!$amount) { return self::_error("create() requires `\$amount` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'sourceId' => $sourceId,
             'amount' => $amount
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -62,9 +60,9 @@ class Requests extends RestClient {
      * @return string[] Pending money requests and relevant data.
      */
     public function get($params = false, $alternate_token = false) {
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -85,9 +83,9 @@ class Requests extends RestClient {
         if (!$request_id) { return self::_error("info() requires `\$request_id` parameter.\n"); }
 
         return self::_get('/requests/' . $request_id,
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            );
     }
 
     /**
@@ -103,9 +101,9 @@ class Requests extends RestClient {
         if (!$request_id) { return self::_error("cancel() requires `\$request_id` parameter.\n"); }
 
         return self::_post('/requests/' . $request_id . '/cancel',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            );
     }
 
     /**
@@ -123,11 +121,11 @@ class Requests extends RestClient {
         if (!$request_id) { return self::_error("fulfill() requires `\$request_id` parameter.\n"); }
         if (!$amount) { return self::_error("fulfill() requires `\$amount` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'amount' => $amount
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 

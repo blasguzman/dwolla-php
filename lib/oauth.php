@@ -16,8 +16,6 @@
  * refresh(): Retrieves OAuth + Refresh pair with refresh token.
  */
 
-namespace Dwolla;
-
 require_once('client.php');
 
 class OAuth extends RestClient {
@@ -57,12 +55,12 @@ class OAuth extends RestClient {
     public function get($code, $redirect = false) {
         if (!$code) { return self::_error("get() requires `\$code` parameter.\n"); }
 
-        $params = [
+        $params = array(
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret,
             'grant_type' => 'authorization_code',
             'code' => $code
-        ];
+        );
 
         if ($redirect) { $params['redirect_uri'] = $redirect; }
         return self::_post('token', $params, 'oauth/v2/', false);
@@ -78,12 +76,12 @@ class OAuth extends RestClient {
     public function refresh($refreshToken) {
         if (!$refreshToken) { return self::_error("refresh() requires `\$refreshToken` parameter.\n"); }
 
-        $params = [
+        $params = array(
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret,
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken
-        ];
+        );
 
         return self::_post('/token', $params, 'oauth/v2', false);
     }
@@ -99,8 +97,8 @@ class OAuth extends RestClient {
      */
     public function catalog($alternate_token = false) {
         return self::_get('/catalog',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ], false, false)['_links'];
+            ), false, false)['_links'];
     }
 }

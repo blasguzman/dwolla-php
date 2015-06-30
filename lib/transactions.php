@@ -18,8 +18,6 @@
  * stats(): Get transaction statistics for current user.
  */
 
-namespace Dwolla;
-
 require_once('client.php');
 
 class Transactions extends RestClient {
@@ -39,12 +37,12 @@ class Transactions extends RestClient {
         if (!$destinationId) { return self::_error("send() requires `\$destinationId` parameter.\n"); }
         if (!$amount) { return self::_error("send() requires `\$amount` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -62,11 +60,11 @@ class Transactions extends RestClient {
      * @return string[] List of transactions,
      */
     public function get($params = false, $alternate_token = false) {
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -87,11 +85,11 @@ class Transactions extends RestClient {
         if (!$id) { return self::_error("info() requires `\$id` parameter.\n"); }
 
         return self::_get('/transactions/' . $id,
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret
-            ]);
+            ));
     }
 
     /**
@@ -112,13 +110,13 @@ class Transactions extends RestClient {
         if (!$fundingSource) { return self::_error("refund() requires `\$fundingSource` parameter.\n"); }
         if (!$amount) { return self::_error("refund() requires `\$amount` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
 	        'fundsSource' => $fundingSource,
             'transactionId' => $id,
             'amount' => $amount
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -136,9 +134,9 @@ class Transactions extends RestClient {
      * @return string[] Transaction statistics.
      */
     public function stats($params = false, $alternate_token = false) {
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -165,14 +163,14 @@ class Transactions extends RestClient {
         if (!$fundsSource) { return self::_error("schedule() requires `\$fundsSource` parameter.\n"); }
 
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount,
             'scheduleDate' => $scheduleDate,
             'fundsSource' => $fundsSource
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -190,11 +188,11 @@ class Transactions extends RestClient {
      * @return mixed[] List of scheduled transactions
      */
     public function scheduled($params = false, $alternate_token = false) {
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -214,9 +212,9 @@ class Transactions extends RestClient {
         if (!$id) { return self::_error("scheduled() requires `\$id` parameter.\n"); }
 
         return self::_get('/transactions/scheduled/' . $id, 
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            ));
     }
 
     /**
@@ -232,10 +230,10 @@ class Transactions extends RestClient {
     public function editScheduled($id, $params = false, $alternate_token = false, $alternate_pin = false) {
         if (!$id) { return self::_error("editScheduled() requires `\$id` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -256,10 +254,10 @@ class Transactions extends RestClient {
         if (!$id) { return self::_error("schedule() requires `\$id` parameter.\n"); }
 
         return self::_delete('/transactions/scheduled/' . $id, 
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin
-            ]);
+            ));
     }
 
     /**
@@ -275,10 +273,10 @@ class Transactions extends RestClient {
     public function deleteAllScheduled($alternate_token = false, $alternate_pin = false) {
 
         return self::_delete('/transactions/scheduled', 
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin
-            ]);
+            ));
     }
 
 }

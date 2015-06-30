@@ -15,13 +15,13 @@
 
 // We need the Account class in order to do anything
 require '../lib/account.php';
-$Account = new Dwolla\Account();
+$Account = new Account();
 
 /**
  * Example 1: Get basic information for
  * a Dwolla user using their Dwolla ID.
  */
-print_r($Account->basic('812-121-7199'));
+print_r($Account->basic("812-121-7199"));
 
 /**
  * Example 2: Get full account information for

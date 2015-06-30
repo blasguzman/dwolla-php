@@ -19,8 +19,6 @@
  * toggleAutoWithdrawal(): Toggle auto-withdrawal
  */
 
-namespace Dwolla;
-
 require_once('client.php');
 
 class Account extends RestClient {
@@ -37,10 +35,10 @@ class Account extends RestClient {
         if (!$id) { return self::_error("basic() requires `\$id` parameter.\n"); }
 
         return self::_get('/users/' . $id,
-            [
+            array(
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret
-            ]);
+            ));
     }
 
     /**
@@ -54,9 +52,9 @@ class Account extends RestClient {
      */
     public function full($alternate_token = false) {
         return self::_get('/users/',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            ));
     }
 
     /**
@@ -70,9 +68,9 @@ class Account extends RestClient {
      */
     public function balance($alternate_token = false) {
         return self::_get('/balance/',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            ));
     }
 
     /**
@@ -88,12 +86,12 @@ class Account extends RestClient {
         if (!$lon) { return self::_error("nearby() requires `\$lon` parameter.\n"); }
 
         return self::_get('/users/nearby',
-            [
+            array(
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret,
                 'latitude' => $lat,
                 'longitude' => $lon
-            ]);
+            ));
     }
 
     /**
@@ -107,9 +105,9 @@ class Account extends RestClient {
      */
     public function getAutoWithdrawalStatus($alternate_token = false) {
         return self::_get('/accounts/features/auto_withdrawl',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            ));
     }
 
     /**
@@ -129,10 +127,10 @@ class Account extends RestClient {
         if (!$fundingId) { return self::_error("toggleAutoWithdrawalStatus() requires `\$fundingId` parameter.\n"); }
 
         return self::_post('/accounts/features/auto_withdrawl',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
                 'enabled' => $status,
                 'fundingId' => $fundingId
-            ]);
+            ));
     }
 }

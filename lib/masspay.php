@@ -18,8 +18,6 @@
  * listJobs(): Lists all MassPay jobs.
  */
 
-namespace Dwolla;
-
 include_once('client.php');
 
 class MassPay extends RestClient {
@@ -39,12 +37,12 @@ class MassPay extends RestClient {
         if (!$fundsSource) { return self::_error("create() requires `\$fundsSource` parameter.\n"); }
         if (!$items) { return self::_error("create() requires `\$items` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'fundsSource' => $fundsSource,
             'items' => $items
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -65,9 +63,9 @@ class MassPay extends RestClient {
         if (!$id) { return self::_error("getJob() requires `\$id` parameter.\n"); }
 
         return self::_get('/masspay/' . $id,
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            ));
     }
 
     /**
@@ -83,9 +81,9 @@ class MassPay extends RestClient {
     public function getJobItems($id, $params = false, $alternate_token = false) {
         if (!$id) { return self::_error("getJobItems() requires `\$id` parameter.\n"); }
 
-        $p = [
+        $p = array(
             'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-        ];
+        );
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
 
@@ -107,9 +105,9 @@ class MassPay extends RestClient {
         if (!$item_id) { return self::_error("getItem() requires `\$item_id` parameter.\n"); }
 
         return self::_get('/masspay/' . $job_id . '/items/' . $item_id,
-            [
+            array(
                 $alternate_token ? $alternate_token : 'oauth_token' => self::$settings->oauth_token
-            ]);
+            ));
     }
 
     /**
@@ -123,8 +121,8 @@ class MassPay extends RestClient {
      */
     public function listJobs($alternate_token = false) {
         return self::_get('/masspay/',
-            [
+            array(
                 'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
-            ]);
+            ));
     }
 }

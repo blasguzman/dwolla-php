@@ -12,8 +12,6 @@
  * All recommended user configurable options are available below.
  */
 
-namespace Dwolla;
-
 // Instead of manually setting multiple variables in the main constructor, we just use one big settings class.
 
 class Settings {
