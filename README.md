@@ -1,33 +1,21 @@
-dwolla-php
+dwolla-php legacy
 =========
 
 [![Join the chat at https://gitter.im/Dwolla/dwolla-php](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Dwolla/dwolla-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/Dwolla/dwolla-php.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-php)
+The new and improved Dwolla library based off of the PHP cURL extension. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
 
-The new and improved Dwolla library based off of the Guzzle REST client. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
+**NOTE:** Do you use PHP 5.3+? [Use the non-legacy release!](https://github.com/Dwolla/dwolla-php).
 
 ## Version
 
-2.1.6
+2.1.6 (legacy branch)
 
 ## Installation
 
-`dwolla-php` is available on [Packagist](https://packagist.org/packages/dwolla/dwolla-php), and therefore can be installed automagically via [Composer](http://getcomposer.org).
-
 **The PHP JSON and CURL extensions are required for `dwolla-php` to operate.** 
 
-*To install without adding to `composer.json`:*
-
-```
-composer require dwolla/dwolla-php
-```
-
-*To add to `composer.json` and make this a permanent dependency of your package:*
-```
-composer require "dwolla/dwolla-php=2.*"
-composer update && composer install
-```
+`dwolla-php` legacy must be manually downloaded and added to your project. Clone the Git repository in order to easily `git pull` updates to this library.
 
 ## Quickstart
 
@@ -41,7 +29,7 @@ composer update && composer install
 
 ```php
 require '../lib/account.php';
-$Account = new Dwolla\Account();
+$Account = new Account();
 
 /**
  * Example 1: Get basic information for
@@ -56,7 +44,7 @@ print_r($Account->basic('812-121-7199'));
 
 ```php
 require '../lib/account.php';
-$Account = new Dwolla\Account();
+$Account = new Account();
 
 $Account->settings->client_id = "MY KEY";
 $Account->settings->client_secret = "MY SECRET";
@@ -83,7 +71,7 @@ print_r($Account->full('oh-look-another-oauth-token-goes-here'));
 ```
 
 ## Certificate Authority Bundle
-It has come to our attention that CURL will reject sending a request (error 60) over HTTPS if a certificate authority bundle is not configured on your system. Due to security reasons (trusted CAs change frequently), we are not bundling a bundle with the library. 
+It has come to our attention that cURL will reject sending a request (error 60) over HTTPS if a certificate authority bundle is not configured on your system. Due to security reasons (trusted CAs change frequently), we are not bundling a bundle with the library. 
 
 You should fetch the CA bundle from a trusted source. We recommend using the one maintained by CURL's authors [and available on their page, here](http://curl.haxx.se/ca/cacert.pem).
 
@@ -168,9 +156,7 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
 
 ## Unit Testing
 
-`dwolla-php` uses [PHPUnit](https://phpunit.de/) for unit testing. These tests do not test integration and will occassionally show console API errors due to 'dummy' data being used. Integration testing is planned sometime in the future. 
-
-To run the tests, install `require\dev` from `composer.json` and run:
+This branch is identical to `master` other than its use of cURL and PHP 5.2 compliant syntax. We port features to this library after they are added to `master` -- which has a full suite of unit tests. If tests pass in `master`, we then move those features over and manually test by hand. 
 
 ```
 cd tests
