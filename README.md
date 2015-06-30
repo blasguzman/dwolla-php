@@ -158,11 +158,6 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
 
 This branch is identical to `master` other than its use of cURL and PHP 5.2 compliant syntax. We port features to this library after they are added to `master` -- which has a full suite of unit tests. If tests pass in `master`, we then move those features over and manually test by hand. 
 
-```
-cd tests
-../vendor/bin/phpunit
-```
-
 ## Changelog
 
 2.1.6
