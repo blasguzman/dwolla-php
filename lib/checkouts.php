@@ -49,7 +49,7 @@ class Checkouts extends RestClient {
         if (!$cost) { return self::_error("addToCart() requires `\$cost` parameter.\n"); }
         if (!$quantity) { return self::_error("addToCart() requires `\$quantity` parameter.\n"); }
 
-        if (!is_array($this->cart)) { $this->cart = []; }
+        if (!is_array($this->cart)) { $this->cart = array(); }
 
         array_push($this->cart,
             array(
