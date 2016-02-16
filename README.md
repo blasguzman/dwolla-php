@@ -7,6 +7,8 @@ dwolla-php
 
 The new and improved Dwolla library based off of the Guzzle REST client. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
 
+This library is designed for Dwolla's v1 transfer API - https://docs.dwolla.com/
+
 ## Version
 
 2.1.6
