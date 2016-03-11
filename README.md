@@ -11,7 +11,7 @@ This library is designed for Dwolla's v1 transfer API - https://docs.dwolla.com/
 
 ## Version
 
-2.1.6
+2.1.7
 
 ## Installation
 
@@ -180,6 +180,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.7
+* Allow GuzzleHttp version ~6.0
 
 2.1.6
 * Changed version constraint for GuzzleHttp causing the library to fail due to PSR7 update.
