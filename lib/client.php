@@ -136,7 +136,6 @@ class RestClient {
         }
     }
 
-
     /**
      * Returns default host URL dependent on sandbox flag.
      *
@@ -179,7 +178,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
@@ -223,7 +222,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
@@ -267,7 +266,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
@@ -311,7 +310,7 @@ class RestClient {
         if ($response) {
             if ($response->getBody()) {
                 // If we get a response, we parse it out of the Dwolla envelope and catch API errors.
-                return $dwollaParse ? $this->_dwollaparse($response->json()) : $response->json();
+                return $dwollaParse ? $this->_dwollaparse(json_decode($response->getBody(), true)) : json_decode($response->getBody(), true);
             }
         }
         else {
