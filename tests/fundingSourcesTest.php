@@ -1,11 +1,9 @@
 <?php
 
 require_once('../vendor/autoload.php');
+require_once('mockHttpClient.php');
 
 use Dwolla\fundingSources;
-
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Subscriber\History;
 
 class fundingSourcesTest extends PHPUnit_Framework_TestCase
 {
@@ -13,66 +11,64 @@ class fundingSourcesTest extends PHPUnit_Framework_TestCase
     public function setUp() {
         // As of 10/26/14 we test against all possible PHP errors.
         error_reporting(-1);
-
         $this->fS = new fundingSources();
-        $this->history = new History();
-
-        $this->fS->client->getEmitter()->attach($this->history);
+        $this->mock_client = new MockHttpClient();
+        $this->fS->client = $this->mock_client->getClient();
     }
 
     public function testInfo() {
         $this->fS->info('12345678');
 
-        $this->assertEquals('/oauth/rest/fundingsources/12345678', $this->history->getLastRequest()->getPath());
-        $this->assertEquals($this->fS->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);
+        $this->assertEquals('/oauth/rest/fundingsources/12345678', $this->mock_client->getLastPath());
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getLastOauthToken());
     }
 
     public function testGet() {
         $this->fS->get();
 
-        $this->assertEquals('/oauth/rest/fundingsources', $this->history->getLastRequest()->getPath());
-        $this->assertEquals($this->fS->settings->oauth_token, $this->history->getLastRequest()->getQuery()['oauth_token']);
+        $this->assertEquals('/oauth/rest/fundingsources', $this->mock_client->getLastPath());
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getLastOauthToken());
     }
 
     public function testAdd() {
         $this->fS->add('123456', '654321', 'Unit', 'Testing');
 
-        $this->assertEquals('/oauth/rest/fundingsources/', $this->history->getLastRequest()->getPath());
+        $this->assertEquals('/oauth/rest/fundingsources/', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
-        $this->assertEquals('123456', json_decode($this->history->getLastRequest()->getBody(), true)['account_number']);
-        $this->assertEquals('654321', json_decode($this->history->getLastRequest()->getBody(), true)['routing_number']);
-        $this->assertEquals('Unit', json_decode($this->history->getLastRequest()->getBody(), true)['account_type']);
-        $this->assertEquals('Testing', json_decode($this->history->getLastRequest()->getBody(), true)['name']);
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals('123456', $this->mock_client->getParamFromLastBody('account_number'));
+        $this->assertEquals('654321', $this->mock_client->getParamFromLastBody('routing_number'));
+        $this->assertEquals('Unit', $this->mock_client->getParamFromLastBody('account_type'));
+        $this->assertEquals('Testing', $this->mock_client->getParamFromLastBody('name'));
     }
 
     public function testVerify() {
         $this->fS->verify(0.04, 0.07, '123456');
 
-        $this->assertEquals('/oauth/rest/fundingsources/123456/verify', $this->history->getLastRequest()->getPath());
+        $this->assertEquals('/oauth/rest/fundingsources/123456/verify', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
-        $this->assertEquals('0.04', json_decode($this->history->getLastRequest()->getBody(), true)['deposit1']);
-        $this->assertEquals('0.07', json_decode($this->history->getLastRequest()->getBody(), true)['deposit2']);
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals('0.04', $this->mock_client->getParamFromLastBody('deposit1'));
+        $this->assertEquals('0.07', $this->mock_client->getParamFromLastBody('deposit2'));
     }
 
     public function testWithdraw() {
         $this->fS->withdraw(10, '123456');
 
-        $this->assertEquals('/oauth/rest/fundingsources/123456/withdraw', $this->history->getLastRequest()->getPath());
+        $this->assertEquals('/oauth/rest/fundingsources/123456/withdraw', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
-        $this->assertEquals($this->fS->settings->pin, json_decode($this->history->getLastRequest()->getBody(), true)['pin']);
-        $this->assertEquals('10', json_decode($this->history->getLastRequest()->getBody(), true)['amount']);
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->fS->settings->pin, $this->mock_client->getParamFromLastBody('pin'));
+        $this->assertEquals('10', $this->mock_client->getParamFromLastBody('amount'));
     }
 
     public function testDeposit() {
         $this->fS->deposit(15, '123456');
 
-        $this->assertEquals('/oauth/rest/fundingsources/123456/deposit', $this->history->getLastRequest()->getPath());
+        $this->assertEquals('/oauth/rest/fundingsources/123456/deposit', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, json_decode($this->history->getLastRequest()->getBody(), true)['oauth_token']);
-        $this->assertEquals($this->fS->settings->pin, json_decode($this->history->getLastRequest()->getBody(), true)['pin']);
-        $this->assertEquals('15', json_decode($this->history->getLastRequest()->getBody(), true)['amount']);
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->fS->settings->pin, $this->mock_client->getParamFromLastBody('pin'));
+        $this->assertEquals('15', $this->mock_client->getParamFromLastBody('amount'));
     }
 }
