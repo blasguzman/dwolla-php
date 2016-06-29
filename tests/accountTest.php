@@ -64,13 +64,43 @@ class AccountTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getLastOauthToken());
     }
 
-    public function testAWToggle() {
-        $this->Account->toggleAutoWithdrawalStatus(true, '12345678');
+    public function testAWToggleEnable() {
+        $fundingId = '12345678';
+        $this->Account->toggleAutoWithdrawalStatus(true, $fundingId);
 
+        $this->assertAutoWithdrawalEnabled($fundingId);
+    }
+
+    public function testAWToggleDisable() {
+        $this->Account->toggleAutoWithdrawalStatus(false, '');
+
+        $this->assertAutoWithdrawalDisabled();
+    }
+
+    public function testDisableAutoWithdrawal() {
+        $this->Account->disableAutoWithdrawal();
+
+        $this->assertAutoWithdrawalDisabled();
+    }
+
+    public function testEnableAutoWithdrawal() {
+        $fundingId = '12345678';
+        $this->Account->enableAutoWithdrawal('12345678');
+
+        $this->assertAutoWithdrawalEnabled($fundingId);
+    }
+
+    private function assertAutoWithdrawalDisabled() {
         $this->assertEquals('/oauth/rest/accounts/features/auto_withdrawl', $this->mock_client->getLastPath());
-
         $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
-        $this->assertEquals(1, $this->mock_client->getParamFromLastBody('enabled'));
+        $this->assertEquals(false, $this->mock_client->getParamFromLastBody('enabled'));
+        $this->assertEquals('', $this->mock_client->getParamFromLastBody('fundingId'));
+    }
+
+    private function assertAutoWithdrawalEnabled($fundingId) {
+        $this->assertEquals('/oauth/rest/accounts/features/auto_withdrawl', $this->mock_client->getLastPath());
+        $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals(true, $this->mock_client->getParamFromLastBody('enabled'));
         $this->assertEquals('12345678', $this->mock_client->getParamFromLastBody('fundingId'));
     }
 }
