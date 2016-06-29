@@ -11,7 +11,7 @@ This library is designed for Dwolla's v1 transfer API - https://docs.dwolla.com/
 
 ## Version
 
-2.1.7
+2.1.8
 
 ## Installation
 
@@ -117,6 +117,8 @@ Each endpoint class extends `RestClient` located in `client.php` (e.g. `RestClie
  * `nearby()`: Get nearby users
  * `getAutoWithdrawal()`: Get auto-withdrawal status
  * `toggleAutoWithdrawal()`: Toggle auto-withdrawal
+ * `disableAutoWithdrawal()`: Disable auto-withdrawal
+ * `enableAutoWithdrawal()`: Enable auto-withdrawal
 * `Checkouts()`:
  * `resetCart()`: Clears out item cart.
  * `addToCart()`: Adds item to cart.
@@ -180,6 +182,10 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.8
+* Fix disable auto-withdrawal bug
+* Add convenience methods to enable and disable autowithdrawal
 
 2.1.7
 * Allow GuzzleHttp version ~6.0

@@ -17,6 +17,8 @@
  * nearby(): Get nearby users
  * getAutoWithdrawal(): Get auto-withdrawal status
  * toggleAutoWithdrawal(): Toggle auto-withdrawal
+ * disableAutoWithdrawal(): Disable auto-withdrawal
+ * enableAutoWithdrawal(): Enable auto-withdrawal
  */
 
 namespace Dwolla;
@@ -125,8 +127,8 @@ class Account extends RestClient {
      * @return string Either "Enabled" or "Disabled"
      */
     public function toggleAutoWithdrawalStatus($status, $fundingId, $alternate_token = false) {
-        if (!$status) { return self::_error("toggleAutoWithdrawalStatus() requires `\$status` parameter.\n"); }
-        if (!$fundingId) { return self::_error("toggleAutoWithdrawalStatus() requires `\$fundingId` parameter.\n"); }
+        if (!isset($status)) { return self::_error("toggleAutoWithdrawalStatus() requires `\$status` parameter.\n"); }
+        if (!isset($fundingId)) { return self::_error("toggleAutoWithdrawalStatus() requires `\$fundingId` parameter.\n"); }
 
         return self::_post('/accounts/features/auto_withdrawl',
             [
@@ -134,5 +136,33 @@ class Account extends RestClient {
                 'enabled' => $status,
                 'fundingId' => $fundingId
             ]);
+    }
+
+    /**
+     * Disables auto-withdrawal status of the account associated
+     * with the current OAuth token.
+     *
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return string Either "Enabled" or "Disabled"
+     */
+    public function disableAutoWithdrawal($alternate_token = false) {
+        return self::toggleAutoWithdrawalStatus(false, '', $alternate_token);
+    }
+
+    /**
+     * Enables auto-withdrawal status of the account associated
+     * with the current OAuth token under the specified
+     * funding ID.
+     *
+     * @param string $fundingId Funding ID of target account.
+     * @param string $alternate_token OAuth token value to be used
+     * instead of the current setting in the Settings class.
+     *
+     * @return string Either "Enabled" or "Disabled"
+     */
+    public function enableAutoWithdrawal($fundingId, $alternate_token = false) {
+        return self::toggleAutoWithdrawalStatus(true, $fundingId, $alternate_token);
     }
 }
