@@ -1,17 +1,18 @@
-dwolla-php
-=========
+# dwolla-php
 
-[![Join the chat at https://gitter.im/Dwolla/dwolla-php](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Dwolla/dwolla-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Official PHP wrapper for Dwolla's v1 API
 
-[![Build Status](https://travis-ci.org/Dwolla/dwolla-php.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-php)
+## Deprecation warning
 
-The new and improved Dwolla library based off of the Guzzle REST client. `dwolla-php` includes support for all API endpoints, and is the new library officially supported by Dwolla. 
+This repository is for an old version of our API and is no longer actively maintained. Please use our [new SDKs](https://developers.dwolla.com/pages/sdks.html).
 
-This library is designed for Dwolla's v1 transfer API - https://docs.dwolla.com/
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 ## Version
 
 2.1.8
+
+[![Build Status](https://travis-ci.org/Dwolla/dwolla-php.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-php)
 
 ## Installation
 
