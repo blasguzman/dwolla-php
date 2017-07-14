@@ -57,7 +57,7 @@ class Account extends RestClient {
     public function full($alternate_token = false) {
         return self::_get('/users/',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+                'oauth_token' => $alternate_token
             ]);
     }
 
@@ -73,7 +73,7 @@ class Account extends RestClient {
     public function balance($alternate_token = false) {
         return self::_get('/balance/',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+                'oauth_token' => $alternate_token
             ]);
     }
 
@@ -110,7 +110,7 @@ class Account extends RestClient {
     public function getAutoWithdrawalStatus($alternate_token = false) {
         return self::_get('/accounts/features/auto_withdrawl',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+                'oauth_token' => $alternate_token
             ]);
     }
 
@@ -132,7 +132,7 @@ class Account extends RestClient {
 
         return self::_post('/accounts/features/auto_withdrawl',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'enabled' => $status,
                 'fundingId' => $fundingId
             ]);

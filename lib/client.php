@@ -15,7 +15,7 @@
  * @author Dwolla (David Stancu): api@dwolla.com, david@dwolla.com
  * @copyright Copyright (C) 2014 Dwolla Inc.
  * @license  MIT (http://opensource.org/licenses/MIT)
- * @version 2.1.8
+ * @version 2.1.9
  * @link http://developers.dwolla.com
  */
 
@@ -158,10 +158,11 @@ class RestClient {
     protected function _post($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->post($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
+            $data = $this->parseData($request, 'json');
+            $response = $this->client->post($this->buildUrl($endpoint, $customPostfix), $data);
             if (self::$settings->debug){
                 $this->_console("POST Request to $endpoint\n");
-                $this->_console("    " . json_encode($request));
+                $this->_console("    " . json_encode($data['json']));
             }
         }
         catch (RequestException $exception) {
@@ -202,10 +203,11 @@ class RestClient {
     protected function _put($endpoint, $request, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->put($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['json' => $request]);
+            $data = $this->parseData($request, 'json');
+            $response = $this->client->put($this->buildUrl($endpoint, $customPostfix), $data);
             if (self::$settings->debug){
                 $this->_console("PUT Request to $endpoint\n");
-                $this->_console("    " . json_encode($request));
+                $this->_console("    " . json_encode($data['json']));
             }
         }
         catch (RequestException $exception) {
@@ -246,10 +248,11 @@ class RestClient {
     protected function _get($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->get($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
+            $data = $this->parseData($query);
+            $response = $this->client->get($this->buildUrl($endpoint, $customPostfix), $data);
             if (self::$settings->debug){
                 $this->_console("GET Request to $endpoint\n");
-                $this->_console("    " . json_encode($query));
+                $this->_console("    " . json_encode($data['query']));
             }
         }
         catch (RequestException $exception) {
@@ -290,10 +293,11 @@ class RestClient {
     protected function _delete($endpoint, $query, $customPostfix = false, $dwollaParse = true) {
         // First, we try to catch any errors as the request "goes out the door"
         try {
-            $response = $this->client->delete($this->_host() . ($customPostfix ? $customPostfix : self::$settings->default_postfix) . $endpoint, ['query' => $query]);
+            $data = $this->parseData($query);
+            $response = $this->client->delete($this->buildUrl($endpoint, $customPostfix), $data);
             if (self::$settings->debug){
                 $this->_console("DELETE Request to $endpoint\n");
-                $this->_console("    " . json_encode($query));
+                $this->_console("    " . json_encode($data['query']));
             }
         }
         catch (RequestException $exception) {
@@ -333,11 +337,6 @@ class RestClient {
 
         $p = [
             'defaults' => [
-                'headers' =>
-                            [
-                                'Content-Type' => 'application/json',
-                                'User-Agent' => 'dwolla-php/2'
-                            ],
                 'timeout' => self::$settings->rest_timeout
             ]
         ];
@@ -345,6 +344,21 @@ class RestClient {
         if (self::$settings->proxy) { $p['proxy'] = self::$settings->proxy; }
 
         $this->client = new Client($p);
+    }
+
+    private function buildUrl($endpoint, $postFix = false) {
+        return $this->_host() . ($postFix ? $postFix : self::$settings->default_postfix) . $endpoint;
+    }
+
+    private function parseData($params = false, $dataName = 'query') {
+        $headers = array('Content-Type' => 'application/json', 'User-Agent' => 'dwolla-php/2');
+        if ($params && is_array($params) && array_key_exists('oauth_token', $params)){
+            $token = $params['oauth_token'];
+            unset($params['oauth_token']);
+            $token = $token ? $token : self::$settings->oauth_token;
+            $headers['Authorization'] = 'Bearer ' . $token;
+        }
+        return array('headers' => $headers, $dataName => $params);
     }
 }
 

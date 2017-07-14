@@ -22,6 +22,10 @@ class MockHttpClient
         return $this->client;
     }
 
+    public function getHeader($key) {
+        return $this->getLastRequest()->getHeader($key)[0];
+    }
+
     public function getLastRequest() {
         return $this->container[0]['request'];
     }
@@ -31,7 +35,7 @@ class MockHttpClient
     }
 
     public function getLastOauthToken() {
-        return $this->getPartFromLastQuery('oauth_token');
+        return str_replace('Bearer ', '', $this->getLastRequest()->getHeader('Authorization')[0]);
     }
 
     public function getLastClientId() {
@@ -50,12 +54,12 @@ class MockHttpClient
        return $this->getLastBody()[$param];
     }
 
+    public function getQuery() {
+        parse_str($this->getLastRequest()->getUri()->getQuery(), $output);
+        return $output;
+    }
+
     public function getPartFromLastQuery($key) {
-         foreach (explode('&', $this->getLastRequest()->getUri()->getQuery()) as $part) {
-             $value = explode('=', $part);
-             if ($value[0] == $key) {
-                return urldecode($value[1]);
-             };
-         }
+        return urlDecode($this->getQuery()[$key]);
     }
 }

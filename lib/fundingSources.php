@@ -39,7 +39,7 @@ class fundingSources extends RestClient {
 
         return self::_get('/fundingsources/' . $funding_id,
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+                'oauth_token' => $alternate_token
             ]);
     }
 
@@ -55,7 +55,7 @@ class fundingSources extends RestClient {
      */
     public function get($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+            'oauth_token' => $alternate_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -84,7 +84,7 @@ class fundingSources extends RestClient {
 
         return self::_post('/fundingsources/',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'account_number' => $account,
                 'routing_number' => $routing,
                 'account_type' => $type,
@@ -112,7 +112,7 @@ class fundingSources extends RestClient {
 
         return self::_post('/fundingsources/' . $funding_id . '/verify',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'deposit1' => $dep1,
                 'deposit2' => $dep2
             ]);
@@ -136,7 +136,7 @@ class fundingSources extends RestClient {
 
         return self::_post('/fundingsources/' . $funding_id . '/withdraw',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
                 'amount' => $amount
             ]);
@@ -160,7 +160,7 @@ class fundingSources extends RestClient {
 
         return self::_post('/fundingsources/' . $funding_id . '/deposit',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
                 'amount' => $amount
             ]);

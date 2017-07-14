@@ -40,7 +40,7 @@ class Transactions extends RestClient {
         if (!$amount) { return self::_error("send() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'oauth_token' => $alternate_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount
@@ -63,7 +63,7 @@ class Transactions extends RestClient {
      */
     public function get($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'oauth_token' => $alternate_token,
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret
         ];
@@ -88,7 +88,7 @@ class Transactions extends RestClient {
 
         return self::_get('/transactions/' . $id,
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'client_id' => self::$settings->client_id,
                 'client_secret' => self::$settings->client_secret
             ]);
@@ -113,7 +113,7 @@ class Transactions extends RestClient {
         if (!$amount) { return self::_error("refund() requires `\$amount` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'oauth_token' => $alternate_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
 	        'fundsSource' => $fundingSource,
             'transactionId' => $id,
@@ -137,7 +137,7 @@ class Transactions extends RestClient {
      */
     public function stats($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+            'oauth_token' => $alternate_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }
@@ -166,7 +166,7 @@ class Transactions extends RestClient {
 
 
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'oauth_token' => $alternate_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
             'destinationId' => $destinationId,
             'amount' => $amount,
@@ -191,7 +191,7 @@ class Transactions extends RestClient {
      */
     public function scheduled($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'oauth_token' => $alternate_token,
             'client_id' => self::$settings->client_id,
             'client_secret' => self::$settings->client_secret
         ];
@@ -215,7 +215,7 @@ class Transactions extends RestClient {
 
         return self::_get('/transactions/scheduled/' . $id, 
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+                'oauth_token' => $alternate_token
             ]);
     }
 
@@ -233,7 +233,7 @@ class Transactions extends RestClient {
         if (!$id) { return self::_error("editScheduled() requires `\$id` parameter.\n"); }
 
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+            'oauth_token' => $alternate_token,
             'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin,
         ];
 
@@ -257,7 +257,7 @@ class Transactions extends RestClient {
 
         return self::_delete('/transactions/scheduled/' . $id, 
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin
             ]);
     }
@@ -276,7 +276,7 @@ class Transactions extends RestClient {
 
         return self::_delete('/transactions/scheduled', 
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token,
+                'oauth_token' => $alternate_token,
                 'pin' => $alternate_pin ? $alternate_pin : self::$settings->pin
             ]);
     }

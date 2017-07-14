@@ -100,7 +100,7 @@ class OAuth extends RestClient {
     public function catalog($alternate_token = false) {
         return self::_get('/catalog',
             [
-                'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+                'oauth_token' => $alternate_token
             ], false, false)['_links'];
     }
 }

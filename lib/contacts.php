@@ -32,7 +32,7 @@ class Contacts extends RestClient {
      */
     public function get($params = false, $alternate_token = false) {
         $p = [
-            'oauth_token' => $alternate_token ? $alternate_token : self::$settings->oauth_token
+            'oauth_token' => $alternate_token
         ];
 
         if ($params && is_array($params)) { $p = array_merge($p, $params); }

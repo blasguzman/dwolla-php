@@ -21,7 +21,7 @@ class MassPayTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/masspay/', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->MassPay->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->MassPay->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals($this->MassPay->settings->pin, $this->mock_client->getParamFromLastBody('pin'));
         $this->assertEquals('123456', $this->mock_client->getParamFromLastBody('fundsSource'));
         $this->assertEquals([ 'unit' => 'test' ], $this->mock_client->getParamFromLastBody('items'));

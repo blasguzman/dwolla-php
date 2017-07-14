@@ -21,7 +21,7 @@ class RequestsTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/requests/', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->Requests->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Requests->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals('812-111-1111', $this->mock_client->getParamFromLastBody('sourceId'));
         $this->assertEquals(5.00, $this->mock_client->getParamFromLastBody('amount'));
     }
@@ -44,7 +44,7 @@ class RequestsTest extends PHPUnit_Framework_TestCase
         $this->Requests->cancel('12345678');
 
         $this->assertEquals('/oauth/rest/requests/12345678/cancel', $this->mock_client->getLastPath());
-        $this->assertEquals($this->Requests->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Requests->settings->oauth_token, $this->mock_client->getLastOauthToken());
     }
 
     public function testFulfill() {
@@ -52,7 +52,7 @@ class RequestsTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/requests/12345678/fulfill', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->Requests->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Requests->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals(7.50, $this->mock_client->getParamFromLastBody('amount'));
     }
 }

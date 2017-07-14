@@ -21,7 +21,7 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/transactions/send', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals('812-111-1111', $this->mock_client->getParamFromLastBody('destinationId'));
         $this->assertEquals(5, $this->mock_client->getParamFromLastBody('amount'));
     }
@@ -51,7 +51,7 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/transactions/refund', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals($this->Transactions->settings->pin, $this->mock_client->getParamFromLastBody('pin'));
         $this->assertEquals('12345', $this->mock_client->getParamFromLastBody('transactionId'));
         $this->assertEquals('Balance', $this->mock_client->getParamFromLastBody('fundsSource'));
@@ -70,7 +70,7 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/transactions/scheduled', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals('812-111-1111', $this->mock_client->getParamFromLastBody('destinationId'));
         $this->assertEquals(5, $this->mock_client->getParamFromLastBody('amount'));
         $this->assertEquals('2051-01-01', $this->mock_client->getParamFromLastBody('scheduleDate'));
@@ -95,7 +95,7 @@ class TransactionsTest extends PHPUnit_Framework_TestCase
         $this->Transactions->editScheduled('anid', ['amount' => 5.50]);
 
         $this->assertEquals('/oauth/rest/transactions/scheduled/anid', $this->mock_client->getLastPath());
-        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Transactions->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals(5.50, $this->mock_client->getParamFromLastBody('amount'));
     }
 

@@ -35,7 +35,7 @@ class fundingSourcesTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/fundingsources/', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals('123456', $this->mock_client->getParamFromLastBody('account_number'));
         $this->assertEquals('654321', $this->mock_client->getParamFromLastBody('routing_number'));
         $this->assertEquals('Unit', $this->mock_client->getParamFromLastBody('account_type'));
@@ -47,7 +47,7 @@ class fundingSourcesTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/fundingsources/123456/verify', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals('0.04', $this->mock_client->getParamFromLastBody('deposit1'));
         $this->assertEquals('0.07', $this->mock_client->getParamFromLastBody('deposit2'));
     }
@@ -57,7 +57,7 @@ class fundingSourcesTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/fundingsources/123456/withdraw', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals($this->fS->settings->pin, $this->mock_client->getParamFromLastBody('pin'));
         $this->assertEquals('10', $this->mock_client->getParamFromLastBody('amount'));
     }
@@ -67,7 +67,7 @@ class fundingSourcesTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/fundingsources/123456/deposit', $this->mock_client->getLastPath());
 
-        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->fS->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals($this->fS->settings->pin, $this->mock_client->getParamFromLastBody('pin'));
         $this->assertEquals('15', $this->mock_client->getParamFromLastBody('amount'));
     }

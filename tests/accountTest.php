@@ -23,12 +23,14 @@ class AccountTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($this->Account->settings->client_id, $this->mock_client->getLastClientId());
         $this->assertEquals($this->Account->settings->client_secret, $this->mock_client->getLastClientSecret());
+        $this->assertArrayNotHasKey('oauth_token', $this->mock_client->getQuery());
     }
 
     public function testFull() {
         $this->Account->full();
 
         $this->assertEquals('/oauth/rest/users/', $this->mock_client->getLastPath());
+        $this->assertArrayNotHasKey('oauth_token', $this->mock_client->getQuery());        
         $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getLastOauthToken());
     }
 
@@ -44,6 +46,14 @@ class AccountTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/oauth/rest/balance/', $this->mock_client->getLastPath());
         $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getLastOauthToken());
+    }
+
+    public function testBalanceWithOverride() {
+        $this->Account->balance('some other token');
+
+        $this->assertEquals('/oauth/rest/balance/', $this->mock_client->getLastPath());
+        $this->assertEquals('some other token', $this->mock_client->getLastOauthToken());
+        $this->assertArrayNotHasKey('oauth_token', $this->mock_client->getQuery());
     }
 
     public function testNearby() {
@@ -92,14 +102,14 @@ class AccountTest extends PHPUnit_Framework_TestCase
 
     private function assertAutoWithdrawalDisabled() {
         $this->assertEquals('/oauth/rest/accounts/features/auto_withdrawl', $this->mock_client->getLastPath());
-        $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals(false, $this->mock_client->getParamFromLastBody('enabled'));
         $this->assertEquals('', $this->mock_client->getParamFromLastBody('fundingId'));
     }
 
     private function assertAutoWithdrawalEnabled($fundingId) {
         $this->assertEquals('/oauth/rest/accounts/features/auto_withdrawl', $this->mock_client->getLastPath());
-        $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getParamFromLastBody('oauth_token'));
+        $this->assertEquals($this->Account->settings->oauth_token, $this->mock_client->getLastOauthToken());
         $this->assertEquals(true, $this->mock_client->getParamFromLastBody('enabled'));
         $this->assertEquals('12345678', $this->mock_client->getParamFromLastBody('fundingId'));
     }

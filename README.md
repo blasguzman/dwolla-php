@@ -10,7 +10,7 @@ This repository is for an old version of our API and is no longer actively maint
 
 ## Version
 
-2.1.8
+2.1.9
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-php.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-php)
 
@@ -183,6 +183,9 @@ cd tests
 ```
 
 ## Changelog
+
+2.1.9
+* Use Authorization header
 
 2.1.8
 * Fix disable auto-withdrawal bug
